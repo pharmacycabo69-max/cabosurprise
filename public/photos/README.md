@@ -38,3 +38,6 @@ Each service page has a hero and a 4-photo gallery. They currently hold copies o
 - `packages/hero.jpg`, `packages/gallery-1..4.jpg`
 - `proposals/gallery-1..4.jpg` (hero is `proposals-hero.jpg`)
 - Share images (1200x630): `og-birthday.jpg`, `og-bachelorette.jpg`, `og-honeymoon.jpg`, `og-packages.jpg`
+
+## Wellness pages (currently reuse existing photos as hero; replace with your own)
+`iv-therapy/hero.jpg`, `pharmacy-delivery/hero.jpg`, `consultations/hero.jpg`, plus share images `og-iv-therapy.jpg`, `og-pharmacy-delivery.jpg`, `og-consultations.jpg` (1200x630).

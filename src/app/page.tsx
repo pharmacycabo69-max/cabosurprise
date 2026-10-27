@@ -4,6 +4,7 @@ import Venues from "@/components/Venues";
 import AddOns from "@/components/AddOns";
 import Steps from "@/components/Steps";
 import Proof from "@/components/Proof";
+import WellnessSection from "@/components/WellnessSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import { site, steps } from "@/config/site";
@@ -48,6 +49,7 @@ export default function Home() {
       <AddOns />
       <Steps items={steps} />
       <Proof />
+      <WellnessSection />
       <FinalCta />
       <Footer />
     </main>
