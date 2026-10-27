@@ -24,3 +24,8 @@ Recommended: 2000px wide, under 400 KB each (compress with Squoosh/TinyPNG). Rea
 `gallery-1.jpg` through `gallery-8.jpg`: mix of décor, cakes, flowers, mariachi and reactions.
 
 Names and paths are defined in `src/config/site.ts`.
+
+## Status
+Real photos in place: hero, proposals-hero, og, og-proposals, welcome, birthday, bachelorette, anniversary, venue-yacht, venue-ranch, proposal-villa, proposal-beach, proposal-ranch, gallery-1..8.
+Still gradient placeholders: honeymoon, mariachi, venue-villa, venue-hotel, venue-beach.
+Note: venue-yacht / proposal-beach reuse an image that looks AI-generated; replace with a real Cabo shot.
