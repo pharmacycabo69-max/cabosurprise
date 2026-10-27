@@ -4,7 +4,7 @@ import WhatsAppLink from "./WhatsAppLink";
 export default function FinalCta({
   title = "Ready to make someone’s trip unforgettable?",
   text = "Tell us the occasion and the date. We’ll reply on WhatsApp with options and pricing.",
-  message = "Hi Cabo Surprise! I'd like to plan a surprise. Occasion: ___ . Date: ___ .",
+  message = "Hi, I'd like to plan a surprise in Cabo on [date].",
   label = "final_cta",
 }: { title?: string; text?: string; message?: string; label?: string }) {
   return (

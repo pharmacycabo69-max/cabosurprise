@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
@@ -7,16 +6,19 @@ import FaqList from "@/components/FaqList";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import WhatsAppLink from "@/components/WhatsAppLink";
-import { proposalAddOns, proposalFaqs, proposals, secretSteps } from "@/config/site";
+import Gallery from "@/components/Gallery";
+import { proposalAddOns, proposalFaqs, proposals, secretSteps, serviceSteps } from "@/config/site";
+import { proposalGallery } from "@/config/services";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Proposal in Cabo | Villa, Beach & Ranch Proposals",
+export const metadata = pageMeta({
+  title: "Proposal Planner in Cabo San Lucas | Cabo Surprise",
   description:
-    "Plan a proposal in Cabo: villa, sunset beach or private ranch with horses & mariachi. Fully set up, discreetly photographed and kept secret. From $1,190 USD.",
-  alternates: { canonical: "/proposals" },
+    "Plan a proposal in Cabo: villa, sunset beach or private ranch with horses and mariachi, fully set up before you arrive. Proposals from $1,190 USD.",
+  path: "/proposals/",
+  og: "og-proposals.jpg",
   keywords: ["proposal in cabo", "cabo proposal planner", "beach proposal los cabos", "ranch proposal cabo"],
-  openGraph: { title: "Say yes in Cabo.", url: "/proposals", images: ["/photos/og-proposals.jpg"] },
-};
+});
 
 const faqLd = {
   "@context": "https://schema.org",
@@ -34,9 +36,9 @@ export default function ProposalsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <Hero
         title="Say yes in Cabo."
-        subtitle="Villa, beach or private ranch. We build the moment, keep the secret and capture every second."
+        subtitle="Villa, beach or sunset ranch. We build the moment, keep the secret and capture every second."
         cta="Plan my proposal"
-        message="Hi Cabo Surprise! I'm planning a proposal in Cabo. Date: ___ . Preferred setting: ___ ."
+        message="Hi, I'd like to plan a proposal in Cabo on [date]."
         label="proposals_hero"
         photo="proposals-hero.jpg"
       />
@@ -54,10 +56,11 @@ export default function ProposalsPage() {
                   src={p.photo}
                   alt={`${p.name} in Los Cabos`}
                   className={`aspect-[4/5] rounded-3xl ${i % 2 ? "md:order-2" : ""}`}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
                 <div>
                   <h3 className="font-serif text-3xl md:text-4xl">{p.name}</h3>
-                  <p className="mt-2 font-serif text-2xl text-terracotta">From ${p.from.toLocaleString("en-US")}</p>
+                  <p className="mt-2 font-serif text-2xl text-terracotta">From ${p.from.toLocaleString("en-US")} USD</p>
                   <p className="mt-4 text-lg text-ink/75">{p.intro}</p>
                   <h4 className="mt-6 text-xs font-medium uppercase tracking-[0.2em] text-ink/50">What’s included</h4>
                   <ul className="mt-3 space-y-2">
@@ -70,7 +73,7 @@ export default function ProposalsPage() {
                   </div>
                   <WhatsAppLink
                     label={`proposal_${p.id}`}
-                    message={`Hi Cabo Surprise! I'd like details on the "${p.name}" (from $${p.from} USD). Date: ___ .`}
+                    message={`Hi, I'd like to plan the "${p.name}" (from $${p.from} USD) in Cabo on [date].`}
                     className="btn-primary mt-7"
                   >
                     Ask about this proposal
@@ -88,7 +91,7 @@ export default function ProposalsPage() {
             <p className="eyebrow">Add-on</p>
             <h2 className="h2 max-w-2xl">The hidden photographer.</h2>
             <p className="mt-4 max-w-2xl text-lg text-ink/70">
-              Proposals happen once. Our discreet photographer and videographer blend in and capture the build-up, the question and the happy tears.
+              Proposals happen once. Our photographer and videographer blend in and capture the build-up, the question and the happy tears.
             </p>
           </Reveal>
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -104,7 +107,9 @@ export default function ProposalsPage() {
         </div>
       </section>
 
-      <Steps items={secretSteps.slice(0, 4)} title="How we keep it a secret" />
+      <Gallery title="Proposal setups" files={proposalGallery} alt="Proposal setup in Cabo" />
+      <Steps items={serviceSteps} />
+      <Steps items={secretSteps.slice(0, 4)} title="How we keep it a secret" heading="Your partner never sees it coming." />
       <section className="mx-auto max-w-6xl px-5 pt-10">
         <p className="text-ink/70">
           <strong className="font-medium text-ink">{secretSteps[4].title}.</strong> {secretSteps[4].text}
@@ -122,7 +127,7 @@ export default function ProposalsPage() {
       <FinalCta
         title="Ready to ask the question?"
         text="Tell us the date and the setting you love. We’ll take it from there."
-        message="Hi Cabo Surprise! I'm planning a proposal in Cabo. Date: ___ . Preferred setting: ___ ."
+        message="Hi, I'd like to plan a proposal in Cabo on [date]."
         label="proposals_final"
       />
       <Footer />

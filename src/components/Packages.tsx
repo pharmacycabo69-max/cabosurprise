@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { occasions, packages, type Occasion } from "@/config/site";
-import Photo from "./Photo";
-import WhatsAppLink from "./WhatsAppLink";
+import PackageCard from "./PackageCard";
 import Reveal from "./Reveal";
 
 export default function Packages() {
@@ -34,36 +33,16 @@ export default function Packages() {
       <motion.div layout className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {list.map((p) => (
-            <motion.article
+            <motion.div
               layout
               key={p.id}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.35 }}
-              className="flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm"
             >
-              <Photo src={p.photo} alt={`${p.name} setup in Cabo`} className="aspect-[4/3]" />
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="font-serif text-2xl">{p.name}</h3>
-                <p className="mt-2 text-ink/70">{p.blurb}</p>
-                <ul className="mt-4 space-y-1 text-sm text-ink/80">
-                  {p.includes.map((i) => (
-                    <li key={i} className="flex gap-2"><span className="text-terracotta">✦</span>{i}</li>
-                  ))}
-                </ul>
-                <div className="mt-auto flex items-center justify-between pt-6">
-                  <p className="font-serif text-xl">From ${p.from.toLocaleString("en-US")}</p>
-                  <WhatsAppLink
-                    label={`package_${p.id}`}
-                    message={`Hi Cabo Surprise! I'm interested in the "${p.name}" package (from $${p.from} USD). Date: ___ . Where we're staying: ___ .`}
-                    className="btn-ghost"
-                  >
-                    Book on WhatsApp
-                  </WhatsAppLink>
-                </div>
-              </div>
-            </motion.article>
+              <PackageCard p={p} />
+            </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>

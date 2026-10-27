@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Header from "./Header";
 import WhatsAppLink from "./WhatsAppLink";
@@ -15,7 +16,7 @@ type Props = {
 export default function Hero({ title, subtitle, cta, message, label, photo }: Props) {
   return (
     <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-gradient-to-br from-terracotta via-[#D98466] to-blush">
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(/photos/${photo})` }} />
+      <Image src={`/photos/${photo}`} alt="" fill priority sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10" />
       <Header dark />
       <div className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-28 text-white">
@@ -23,7 +24,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo }: Pr
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: "easeOut" }}
-          className="max-w-3xl font-serif text-5xl [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] leading-[1.05] md:text-7xl"
+          className="max-w-3xl font-serif text-5xl leading-[1.05] [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] md:text-7xl"
         >
           {title}
         </motion.h1>

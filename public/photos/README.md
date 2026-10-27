@@ -29,3 +29,12 @@ Names and paths are defined in `src/config/site.ts`.
 All slots filled. AI-generated (no real people, decor scenes): honeymoon, mariachi, venue-villa, venue-hotel, venue-beach, venue-yacht, proposal-beach.
 Real photos: hero, proposals-hero, og, og-proposals, welcome, birthday, bachelorette, anniversary, venue-ranch, proposal-villa, proposal-ranch, gallery-1..8.
 Replace the AI ones with real Cabo Surprise work as it becomes available.
+
+## Per-page folders (replace with your own photos, same file names)
+Each service page has a hero and a 4-photo gallery. They currently hold copies of existing photos so no page is empty.
+- `birthday/hero.jpg`, `birthday/gallery-1..4.jpg`
+- `bachelorette/hero.jpg`, `bachelorette/gallery-1..4.jpg`
+- `honeymoon/hero.jpg`, `honeymoon/gallery-1..4.jpg`
+- `packages/hero.jpg`, `packages/gallery-1..4.jpg`
+- `proposals/gallery-1..4.jpg` (hero is `proposals-hero.jpg`)
+- Share images (1200x630): `og-birthday.jpg`, `og-bachelorette.jpg`, `og-honeymoon.jpg`, `og-packages.jpg`

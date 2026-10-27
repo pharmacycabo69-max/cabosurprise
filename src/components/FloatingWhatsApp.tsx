@@ -4,7 +4,7 @@ import WhatsAppLink from "./WhatsAppLink";
 export default function FloatingWhatsApp() {
   return (
     <WhatsAppLink
-      message="Hi Cabo Surprise! I'd like to plan a surprise."
+      message="Hi, I'd like to plan a surprise in Cabo on [date]."
       label="floating_button"
       className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 font-medium text-white shadow-xl transition hover:scale-105"
     >
