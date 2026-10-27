@@ -2,8 +2,8 @@
 export const site = {
   name: "Cabo Surprise",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cabosurprise.com",
-  // International format, digits only. PLACEHOLDER: replace with the real number.
-  whatsappNumber: "5216240000000",
+  // International format, digits only (52 = Mexico, 1 = mobile prefix for WhatsApp).
+  whatsappNumber: "5216242261023",
   email: "hello@cabosurprise.com",
   instagram: "https://instagram.com/cabosurprise",
   tagline: "Surprise someone in Cabo.",
