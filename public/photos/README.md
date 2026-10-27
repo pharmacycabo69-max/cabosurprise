@@ -26,6 +26,6 @@ Recommended: 2000px wide, under 400 KB each (compress with Squoosh/TinyPNG). Rea
 Names and paths are defined in `src/config/site.ts`.
 
 ## Status
-Real photos in place: hero, proposals-hero, og, og-proposals, welcome, birthday, bachelorette, anniversary, venue-yacht, venue-ranch, proposal-villa, proposal-beach, proposal-ranch, gallery-1..8.
-Still gradient placeholders: honeymoon, mariachi, venue-villa, venue-hotel, venue-beach.
-Note: venue-yacht / proposal-beach reuse an image that looks AI-generated; replace with a real Cabo shot.
+All slots filled. AI-generated (no real people, decor scenes): honeymoon, mariachi, venue-villa, venue-hotel, venue-beach, venue-yacht, proposal-beach.
+Real photos: hero, proposals-hero, og, og-proposals, welcome, birthday, bachelorette, anniversary, venue-ranch, proposal-villa, proposal-ranch, gallery-1..8.
+Replace the AI ones with real Cabo Surprise work as it becomes available.
