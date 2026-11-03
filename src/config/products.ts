@@ -24,6 +24,8 @@ export type Product = {
   galleryTitle: string;
   gallery: string[];
   og: string;
+  /** Show the "Find us" map (ranch products). */
+  showMap?: boolean;
 };
 
 const gal = (slug: string) => [1, 2, 3, 4].map((i) => `${slug}/gallery-${i}.jpg`);
@@ -121,6 +123,7 @@ export const products: Product[] = [
     galleryTitle: "At the ranch",
     gallery: gal("ranch-wedding-reception"),
     og: "og-ranch-wedding-reception.jpg",
+    showMap: true,
   },
   {
     slug: "ranch-cabin-stay",
@@ -149,6 +152,7 @@ export const products: Product[] = [
     galleryTitle: "The ranch",
     gallery: gal("ranch-cabin-stay"),
     og: "og-ranch-cabin-stay.jpg",
+    showMap: true,
   },
   {
     slug: "private-beach-horse-experience",
@@ -208,5 +212,6 @@ export const products: Product[] = [
     galleryTitle: "Celebrations at the ranch",
     gallery: gal("bachelorette-ranch-party"),
     og: "og-bachelorette-ranch-party.jpg",
+    showMap: true,
   },
 ];

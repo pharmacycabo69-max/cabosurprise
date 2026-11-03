@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import Experiences from "@/components/Experiences";
 import Marquee from "@/components/Marquee";
 import VenueBanner from "@/components/VenueBanner";
+import LocationMap from "@/components/LocationMap";
 import Statement from "@/components/Statement";
 import Venues from "@/components/Venues";
 import AddOns from "@/components/AddOns";
@@ -10,7 +11,7 @@ import Proof from "@/components/Proof";
 import WellnessSection from "@/components/WellnessSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
-import { site, steps } from "@/config/site";
+import { site, steps, venueLocation } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -43,6 +44,8 @@ const venueLd = {
   description: "A private ranch event venue in Cabo San Lucas with exclusive use for weddings and private celebrations.",
   maximumAttendeeCapacity: 220,
   address: { "@type": "PostalAddress", addressLocality: "Cabo San Lucas", addressRegion: "BCS", addressCountry: "MX" },
+  geo: { "@type": "GeoCoordinates", latitude: venueLocation.lat, longitude: venueLocation.lng },
+  hasMap: venueLocation.share,
   sameAs: [site.instagram],
 };
 
@@ -62,7 +65,7 @@ export default function Home() {
         secondary={{ label: "See experiences", href: "#packages" }}
       />
       <VenueBanner />
-      <Marquee className="bg-terracotta text-white" items={["Ranch weddings", "Private dinners", "Horseback experiences", "Beach photoshoots", "Ranch cabin stays", "Bachelorette parties"]} />
+      <Marquee className="hidden bg-terracotta text-white md:block" items={["Ranch weddings", "Private dinners", "Horseback experiences", "Beach photoshoots", "Ranch cabin stays", "Bachelorette parties"]} />
       <Statement />
       <Experiences />
       <div className="hidden md:block">
@@ -72,6 +75,7 @@ export default function Home() {
       <Steps items={steps} />
       <Proof />
       <WellnessSection />
+      <LocationMap />
       <FinalCta quote />
       <Footer />
     </main>

@@ -9,6 +9,7 @@ import PackageCard from "./PackageCard";
 import DepositLink from "./DepositLink";
 import WhatsAppLink from "./WhatsAppLink";
 import MobileFold from "./MobileFold";
+import LocationMap from "./LocationMap";
 import { faqsFor, featuredPackages, serviceSteps } from "@/config/site";
 import { payableItems } from "@/config/payments";
 import type { Product } from "@/config/products";
@@ -154,6 +155,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
         </div>
       </section>
 
+      {p.showMap && <LocationMap />}
       <FinalCta message={p.message} label={`${p.slug}_final`} />
       <Footer />
     </main>

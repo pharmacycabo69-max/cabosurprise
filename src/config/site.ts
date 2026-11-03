@@ -20,6 +20,14 @@ export const policy = {
   fullRefundDays: 14,
 };
 
+// Rancho McCoy, from the Google Maps listing "Rancho Mc Coy | Cabo Wedding & Event Venue".
+export const venueLocation = {
+  name: "Rancho McCoy",
+  lat: 22.9327953,
+  lng: -109.8857111,
+  share: "https://maps.app.goo.gl/tZLiZsPJfdhhTRKJ8",
+};
+
 export const occasions = [
   "Wedding",
   "Birthday",
