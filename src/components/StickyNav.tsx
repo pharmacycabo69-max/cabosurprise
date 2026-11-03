@@ -3,13 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import QuoteLauncher from "./QuoteLauncher";
 
-const links = [
-  { href: "/proposals/", label: "Proposals" },
-  { href: "/ranch-wedding-reception/", label: "Weddings" },
-  { href: "/private-anniversary-dinner/", label: "Dinners" },
-  { href: "/private-beach-horse-experience/", label: "Horses" },
-  { href: "/packages/", label: "Experiences" },
-];
+import { navLinks as links } from "@/config/nav";
 
 // Appears after the hero so the menu is always one scroll away.
 export default function StickyNav() {
@@ -27,9 +21,9 @@ export default function StickyNav() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <Link href="/" className="font-serif text-xl font-light tracking-wide" tabIndex={show ? 0 : -1}>Cabo Surprise</Link>
-        <nav className="hidden items-center gap-8 text-[11px] font-medium uppercase tracking-[0.22em] md:flex">
+        <nav className="hidden items-center gap-5 text-[11px] font-medium uppercase tracking-[0.18em] lg:flex xl:gap-8 xl:tracking-[0.22em]">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-ink/75 transition hover:text-terracotta" tabIndex={show ? 0 : -1}>{l.label}</Link>
+            <Link key={l.href} href={l.href} className="whitespace-nowrap text-ink/75 transition hover:text-terracotta" tabIndex={show ? 0 : -1}>{l.label}</Link>
           ))}
         </nav>
         <QuoteLauncher source="sticky_nav" className="btn-primary !px-5 !py-3">
