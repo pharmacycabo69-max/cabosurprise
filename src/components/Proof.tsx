@@ -13,6 +13,7 @@ const tiles = [
   "",
   "col-span-2 md:col-span-4",
 ];
+const hideOnPhone = (i: number) => (i >= 6 ? "hidden md:block " : "");
 
 export default function Proof() {
   return (
@@ -21,9 +22,9 @@ export default function Proof() {
         <p className="eyebrow">Gallery</p>
         <h2 className="h2 max-w-3xl">Moments from <em className="text-terracotta">our setups.</em></h2>
       </Reveal>
-      <div className="mt-14 grid auto-rows-[170px] grid-flow-dense grid-cols-2 gap-3 md:auto-rows-[230px] md:grid-cols-4 md:gap-4">
+      <div className="mt-10 grid auto-rows-[150px] md:mt-14 grid-flow-dense grid-cols-2 gap-3 md:auto-rows-[230px] md:grid-cols-4 md:gap-4">
         {gallery.map((g, i) => (
-          <Reveal key={g} delay={(i % 4) * 0.05} className={tiles[i] ?? ""}>
+          <Reveal key={g} delay={(i % 4) * 0.05} className={hideOnPhone(i) + (tiles[i] ?? "")}>
             <Photo
               src={g}
               alt={`Cabo Surprise setup ${i + 1}`}

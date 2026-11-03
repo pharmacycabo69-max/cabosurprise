@@ -22,7 +22,7 @@ body { background: #FBF6EF; color: #2B2420; }
   .btn-link {
     @apply inline-flex items-center gap-2 border-b border-ink/35 pb-0.5 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition hover:border-terracotta hover:text-terracotta;
   }
-  .section { @apply mx-auto max-w-6xl px-5 py-24 md:py-40; }
+  .section { @apply mx-auto max-w-6xl px-5 py-16 md:py-40; }
   .eyebrow { @apply mb-6 flex items-center gap-4 text-[11px] font-medium uppercase tracking-[0.32em] text-terracotta before:h-px before:w-12 before:bg-terracotta/70; }
   .h2 { @apply font-serif text-4xl font-light leading-[1.05] tracking-tight md:text-6xl; }
   .no-scrollbar { scrollbar-width: none; }

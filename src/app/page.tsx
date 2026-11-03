@@ -62,11 +62,13 @@ export default function Home() {
         secondary={{ label: "See experiences", href: "#packages" }}
       />
       <VenueBanner />
-      <Marquee className="bg-terracotta text-white" items={["Birthdays", "Proposals", "Honeymoons", "Bachelorettes", "Anniversaries", "Quinceañeras", "Just because"]} />
+      <Marquee className="bg-terracotta text-white" items={["Ranch weddings", "Private dinners", "Horseback experiences", "Beach photoshoots", "Ranch cabin stays", "Bachelorette parties"]} />
       <Statement />
       <Experiences />
-      <Venues />
-      <AddOns />
+      <div className="hidden md:block">
+        <Venues />
+        <AddOns />
+      </div>
       <Steps items={steps} />
       <Proof />
       <WellnessSection />

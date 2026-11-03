@@ -38,14 +38,14 @@ function Chapter({ p, i, total }: { p: Pkg; i: number; total: number }) {
           <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.3em] text-white/80">
             From ${p.from.toLocaleString("en-US")} USD{p.unit ? ` · ${p.unit}` : ""}
           </p>
-          <h2 className="mt-3 font-serif text-[2.3rem] font-light leading-[1.04] tracking-tight [text-shadow:0_2px_30px_rgb(0_0_0/0.35)] md:text-[3.6rem]">{p.name}</h2>
-          <p className="mt-4 max-w-lg text-base font-light leading-relaxed text-white/85 md:text-lg">{p.blurb}</p>
-          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-white/75">
+          <h2 className="mt-3 font-serif text-[2.05rem] font-light leading-[1.04] tracking-tight [text-shadow:0_2px_30px_rgb(0_0_0/0.35)] md:text-[3.6rem]">{p.name}</h2>
+          <p className="mt-4 line-clamp-2 max-w-lg text-base font-light leading-relaxed text-white/85 sm:line-clamp-none md:text-lg">{p.blurb}</p>
+          <ul className="mt-4 hidden flex-wrap gap-x-5 gap-y-1.5 text-sm text-white/75 sm:flex">
             {p.includes.slice(0, 3).map((x) => (
               <li key={x} className="flex items-center gap-2"><span className="text-[8px] text-champagne">◆</span>{x}</li>
             ))}
           </ul>
-          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-7">
             <DepositLink item={p.id} className="btn-light">{cta}</DepositLink>
             <Link href={p.href} onClick={() => trackPackage(p.name)} className="inline-flex items-center gap-2 border-b border-white/60 pb-0.5 text-[12px] font-medium uppercase tracking-[0.2em] transition hover:border-champagne hover:text-champagne">
               View the experience <span aria-hidden>→</span>
