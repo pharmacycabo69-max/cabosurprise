@@ -42,7 +42,7 @@ const venueLd = {
   name: "Rancho McCoy",
   url: `${site.url}/ranch-wedding-reception/`,
   description: "A private ranch event venue in Cabo San Lucas with exclusive use for weddings and private celebrations.",
-  maximumAttendeeCapacity: 220,
+  maximumAttendeeCapacity: 180,
   address: { "@type": "PostalAddress", addressLocality: "Cabo San Lucas", addressRegion: "BCS", addressCountry: "MX" },
   geo: { "@type": "GeoCoordinates", latitude: venueLocation.lat, longitude: venueLocation.lng },
   hasMap: venueLocation.share,

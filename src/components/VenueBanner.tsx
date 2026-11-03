@@ -13,9 +13,9 @@ const wedding = "ranch-wedding-reception";
 export default function VenueBanner() {
   const from = payableItems.find((p) => p.id === wedding)?.from ?? 6500;
   const facts = [
-    { k: "Up to 220", v: "guests" },
+    { k: "Up to 180", v: "guests" },
     { k: "6 hours", v: "of exclusive use" },
-    { k: "2 cabins", v: "private, for up to 6 guests" },
+    { k: "2 cabins", v: "private, 2 guests per cabin, up to 4" },
     { k: `From $${from.toLocaleString("en-US")}`, v: "USD per event" },
   ];
   return (
