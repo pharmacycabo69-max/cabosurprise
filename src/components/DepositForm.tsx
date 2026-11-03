@@ -6,8 +6,9 @@ import { policy } from "@/config/site";
 
 const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
 
-export default function DepositForm() {
-  const [item, setItem] = useState(payableItems[0].id);
+export default function DepositForm({ initialItem }: { initialItem?: string }) {
+  const valid = initialItem === CUSTOM_ID || payableItems.some((p) => p.id === initialItem);
+  const [item, setItem] = useState(valid && initialItem ? initialItem : payableItems[0].id);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const selected = payableItems.find((p) => p.id === item);

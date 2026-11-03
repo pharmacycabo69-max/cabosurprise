@@ -6,6 +6,8 @@ import FaqList from "@/components/FaqList";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import WhatsAppLink from "@/components/WhatsAppLink";
+import DepositLink from "@/components/DepositLink";
+import { payableItems } from "@/config/payments";
 import Gallery from "@/components/Gallery";
 import { proposalAddOns, proposalFaqs, proposals, secretSteps, serviceSteps } from "@/config/site";
 import { proposalGallery } from "@/config/services";
@@ -72,13 +74,18 @@ export default function ProposalsPage() {
                   <div className="mt-6 rounded-2xl bg-blush/30 p-4 text-sm">
                     <strong className="font-medium">Add-on:</strong> hidden photographer &amp; video, so you never miss her reaction.
                   </div>
-                  <WhatsAppLink
-                    label={`proposal_${p.id}`}
-                    message={`Hi, I'd like to plan the "${p.name}" (from $${p.from} USD) in Cabo on [date].`}
-                    className="btn-primary mt-7"
-                  >
-                    Ask about this proposal
-                  </WhatsAppLink>
+                  <div className="mt-7 flex flex-wrap gap-3">
+                    <DepositLink item={`proposal-${p.id}`} className="btn-primary">
+                      Pay deposit ${payableItems.find((x) => x.id === `proposal-${p.id}`)?.deposit.toLocaleString("en-US")}
+                    </DepositLink>
+                    <WhatsAppLink
+                      label={`proposal_${p.id}`}
+                      message={`Hi, I'd like to plan the "${p.name}" (from $${p.from} USD) in Cabo on [date].`}
+                      className="btn-ghost !px-7 !py-3.5 text-base"
+                    >
+                      Ask on WhatsApp
+                    </WhatsAppLink>
+                  </div>
                 </div>
               </article>
             </Reveal>

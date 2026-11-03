@@ -4,8 +4,11 @@ import type { Pkg } from "@/config/site";
 import { trackPackage } from "@/lib/whatsapp";
 import Photo from "./Photo";
 import WhatsAppLink from "./WhatsAppLink";
+import DepositLink from "./DepositLink";
+import { payableItems } from "@/config/payments";
 
 export default function PackageCard({ p, linked = true }: { p: Pkg; linked?: boolean }) {
+  const deposit = payableItems.find((x) => x.id === p.id)?.deposit;
   const photo = <Photo src={p.photo} alt={`${p.name} setup in Cabo`} className="aspect-[4/3]" />;
   const title = <h3 className="font-serif text-2xl">{p.name}</h3>;
   return (
@@ -29,16 +32,21 @@ export default function PackageCard({ p, linked = true }: { p: Pkg; linked?: boo
             <li key={i} className="flex gap-2"><span className="text-terracotta">✦</span>{i}</li>
           ))}
         </ul>
-        <div className="mt-auto flex items-center justify-between gap-3 pt-6">
+        <div className="mt-auto pt-6">
           <p className="font-serif text-xl">From ${p.from.toLocaleString("en-US")} USD</p>
-          <WhatsAppLink
-            label={`package_${p.id}`}
-            packageName={p.name}
-            message={`Hi, I'd like to book the "${p.name}" package (from $${p.from} USD) in Cabo on [date].`}
-            className="btn-ghost"
-          >
-            Book on WhatsApp
-          </WhatsAppLink>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <DepositLink item={p.id} className="btn-primary !px-5 !py-3 text-sm">
+              Pay deposit{deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}
+            </DepositLink>
+            <WhatsAppLink
+              label={`package_${p.id}`}
+              packageName={p.name}
+              message={`Hi, I'd like to book the "${p.name}" package (from $${p.from} USD) in Cabo on [date].`}
+              className="btn-ghost"
+            >
+              Ask on WhatsApp
+            </WhatsAppLink>
+          </div>
         </div>
       </div>
     </article>

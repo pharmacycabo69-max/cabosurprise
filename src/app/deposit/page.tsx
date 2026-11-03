@@ -11,14 +11,15 @@ export const metadata = pageMeta({
   index: false,
 });
 
-export default function DepositPage() {
+export default async function DepositPage({ searchParams }: { searchParams: Promise<{ item?: string }> }) {
+  const { item } = await searchParams;
   return (
     <main>
       <div className="mx-auto max-w-2xl px-5 py-16">
         <Link href="/" className="text-sm text-terracotta hover:underline">← Back home</Link>
         <h1 className="mt-6 font-serif text-4xl md:text-5xl">Secure your date.</h1>
         <p className="mt-3 text-ink/70">Pay your deposit by card in a minute. We confirm everything with you on WhatsApp right after.</p>
-        <div className="mt-10"><DepositForm /></div>
+        <div className="mt-10"><DepositForm initialItem={item} /></div>
       </div>
       <Footer />
     </main>

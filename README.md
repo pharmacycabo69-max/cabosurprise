@@ -39,3 +39,6 @@ Pricing, fee (4%) and deposit (40%) live in `src/lib/quote.ts`. The deposit is c
 
 ### Stripe webhook
 In Stripe > Developers > Webhooks add the endpoint `https://www.cabosurprise.com/api/stripe/webhook/` (use `www` and keep the trailing slash: Stripe does not follow redirects) with events `checkout.session.completed`, `checkout.session.async_payment_succeeded` and `checkout.session.async_payment_failed`. Put its signing secret in `STRIPE_WEBHOOK_SECRET`. Paid deposits are logged by `onDepositPaid` in `src/lib/deposits.ts`; add email/WhatsApp/CRM notifications there.
+
+### Email (Resend)
+When Stripe confirms a deposit, `onDepositPaid` (`src/lib/deposits.ts`) emails you (`NOTIFY_EMAIL`) and the customer. Set `RESEND_API_KEY`, `EMAIL_FROM` (an address on a domain verified in Resend) and `NOTIFY_EMAIL` in Vercel. Without `RESEND_API_KEY` emails are skipped and only logged.
