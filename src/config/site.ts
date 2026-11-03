@@ -120,7 +120,7 @@ export const featuredPackages: Pkg[] = [
     includes: ["Private chef dinner", "Terrace table styling", "Candles & flowers"],
     from: PLACEHOLDER_FROM,
     photo: "anniversary.jpg",
-    href: "/honeymoon/",
+    href: "/anniversary-dinner/",
     occasions: ["Anniversary", "Honeymoon", "Proposal", "Just Because"],
   },
   {
@@ -131,7 +131,7 @@ export const featuredPackages: Pkg[] = [
     from: PLACEHOLDER_FROM,
     photo: "proposals-hero.jpg",
     photoPosition: "50% 35%",
-    href: "/quote/",
+    href: "/beach-horse-photo-session/",
     occasions: ["Proposal", "Honeymoon", "Anniversary", "Just Because"],
   },
   {
@@ -142,7 +142,7 @@ export const featuredPackages: Pkg[] = [
     from: PLACEHOLDER_FROM,
     photo: "welcome-flowers.jpg",
     photoPosition: "50% 30%",
-    href: "/quote/",
+    href: "/wedding-reception/",
     occasions: ["Wedding", "Anniversary"],
   },
   {
@@ -152,7 +152,7 @@ export const featuredPackages: Pkg[] = [
     includes: ["Two cabins", "Rancho McCoy, Cabo San Lucas", "Per night"],
     from: PLACEHOLDER_FROM,
     photo: "venue-ranch.jpg",
-    href: "/quote/",
+    href: "/ranch-cabin-stay/",
     occasions: ["Wedding", "Bachelorette", "Honeymoon", "Birthday", "Just Because"],
   },
   {
@@ -163,7 +163,7 @@ export const featuredPackages: Pkg[] = [
     from: PLACEHOLDER_FROM,
     photo: "hero.jpg",
     photoPosition: "60% 40%",
-    href: "/quote/",
+    href: "/beach-horse-activity/",
     occasions: ["Birthday", "Bachelorette", "Honeymoon", "Just Because"],
   },
   {
