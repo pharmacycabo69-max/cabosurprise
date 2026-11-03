@@ -10,6 +10,8 @@ const config: Config = {
         blush: "#E8B4A6",
         ink: "#2B2420",
       },
+      keyframes: { marquee: { "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-50%)" } } },
+      animation: { marquee: "marquee 45s linear infinite" },
       fontFamily: {
         serif: ["var(--font-fraunces)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

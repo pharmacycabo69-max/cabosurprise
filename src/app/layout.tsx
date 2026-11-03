@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
+import StickyNav from "@/components/StickyNav";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { site } from "@/config/site";
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
+        <StickyNav />
         {children}
         <FloatingWhatsApp />
         <Analytics />

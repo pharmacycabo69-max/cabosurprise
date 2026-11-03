@@ -4,6 +4,7 @@
 
 html { scroll-behavior: smooth; }
 body { background: #FBF6EF; color: #2B2420; }
+::selection { background: #E8B4A6; color: #2B2420; }
 
 @layer components {
   .btn-primary {
@@ -12,7 +13,16 @@ body { background: #FBF6EF; color: #2B2420; }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-terracotta px-6 py-3 text-sm font-medium text-terracotta transition hover:bg-terracotta hover:text-white;
   }
-  .section { @apply mx-auto max-w-6xl px-5 py-20 md:py-28; }
-  .eyebrow { @apply mb-3 text-xs font-medium uppercase tracking-[0.22em] text-terracotta; }
-  .h2 { @apply font-serif text-3xl leading-tight md:text-5xl; }
+  .btn-glass {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/25;
+  }
+  .section { @apply mx-auto max-w-6xl px-5 py-24 md:py-36; }
+  .eyebrow { @apply mb-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.3em] text-terracotta before:h-px before:w-10 before:bg-terracotta; }
+  .h2 { @apply font-serif text-4xl leading-[1.04] tracking-tight md:text-6xl; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
 }

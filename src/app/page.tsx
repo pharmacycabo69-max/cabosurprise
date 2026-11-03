@@ -1,5 +1,7 @@
 import Hero from "@/components/Hero";
 import Packages from "@/components/Packages";
+import Marquee from "@/components/Marquee";
+import Statement from "@/components/Statement";
 import Venues from "@/components/Venues";
 import AddOns from "@/components/AddOns";
 import Steps from "@/components/Steps";
@@ -45,6 +47,8 @@ export default function Home() {
         photos={[{ src: "hero.jpg", position: "60% 40%" }, { src: "hero/home-2.jpg", position: "55% 50%" }, "hero/home-3.jpg", { src: "hero/home-4.jpg", position: "50% 60%" }]}
         secondary={{ label: "See packages", href: "#packages" }}
       />
+      <Marquee className="bg-terracotta text-white" items={["Birthdays", "Proposals", "Honeymoons", "Bachelorettes", "Anniversaries", "Quinceañeras", "Just because"]} />
+      <Statement />
       <Packages />
       <Venues />
       <AddOns />
