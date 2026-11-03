@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { site } from "@/config/site";
 import { CUSTOM_ID, customLimits } from "@/config/payments";
-import { depositFor } from "@/lib/pricing";
+import { depositFor, nightsBetween } from "@/lib/pricing";
 
 export const runtime = "nodejs";
 
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     description = label;
   } else {
     const r = Number(process.env.MXN_PER_USD);
-    const res = depositFor(itemId, b.guests, b.tier, Number.isFinite(r) && r > 0 ? r : null);
+    const res = depositFor(itemId, b.guests, b.tier, Number.isFinite(r) && r > 0 ? r : null, nightsBetween(date, b.endDate));
     if (!res.ok) return fail(res.error, res.status);
     cents = res.plan.usdCents;
     label = res.plan.name;
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   }
 
   const base = process.env.NODE_ENV === "production" ? site.url : new URL(req.url).origin;
-  const metadata = { ...extraMeta, service: label, event_date: date, venue, customer_name: name };
+  const metadata = { ...extraMeta, service: label, event_date: date, ...(typeof b.endDate === "string" && extraMeta.nights ? { check_out: b.endDate } : {}), venue, customer_name: name };
 
   try {
     const stripe = new Stripe(key);
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: "usd",
             unit_amount: cents,
-            product_data: { name: `Deposit: ${label}`, description: `${description}. Event date ${date}.` },
+            product_data: { name: `Deposit: ${label}`, description: `${description}. ${extraMeta.nights ? `Check-in ${date}, check-out ${String(b.endDate)}` : `Event date ${date}`}.` },
           },
         },
       ],

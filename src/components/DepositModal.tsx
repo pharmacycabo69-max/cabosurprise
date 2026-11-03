@@ -18,6 +18,16 @@ function tomorrow() {
   d.setDate(d.getDate() + 1);
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
+const short = (s: string) => {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+};
+const nightsOf = (a: string, b: string) => {
+  if (!a || !b) return 0;
+  const [y1, m1, d1] = a.split("-").map(Number);
+  const [y2, m2, d2] = b.split("-").map(Number);
+  return Math.round((Date.UTC(y2, m2 - 1, d2) - Date.UTC(y1, m1 - 1, d1)) / 86400000);
+};
 const pretty = (s: string) => {
   const [y, m, d] = s.split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
@@ -38,6 +48,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
   const it = payableItems.find((p) => p.id === item);
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [date, setDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [guestsText, setGuestsText] = useState(String(it?.party.start ?? 2));
   const [transport, setTransport] = useState(false);
   const [tier, setTier] = useState<Tier>("");
@@ -48,13 +59,16 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
   const min = tomorrow();
 
   const party = it?.party ?? { question: "How many guests?", label: "Number of guests", min: 1, max: 999, start: 2, quick: [2, 10, 25, 50, 100] };
+  const stay = !!it?.stay; // multi-night: check-in and check-out
+  const nights = stay ? nightsOf(date, endDate) : 0;
+  const datesReady = stay ? nights >= 1 : !!date;
   const quoteMode = !!it && !it.payOnline; // "Request a Custom Quote": no payment, ends on WhatsApp
   const guests = Number(guestsText);
   const quoted = !!it?.quoted;
   const limit = quoted ? Math.min(MAX_GUESTS, party.max) : party.max;
   const tooMany = Number.isInteger(guests) && guests > limit;
   const guestsOk = Number.isInteger(guests) && guests >= party.min && guests <= limit;
-  const TITLES = ["Choose your date", party.question, quoteMode ? "Review your request" : "Your details"];
+  const TITLES = [stay ? "Choose your stay" : "Choose your date", party.question, quoteMode ? "Review your request" : "Your details"];
   const canContinue = guestsOk && (!quoted || tier !== "");
 
   useEffect(() => {
@@ -81,7 +95,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
       const res = await fetch("/api/estimate/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ item, guests, tier: tier || undefined }),
+        body: JSON.stringify({ item, guests, tier: tier || undefined, date, endDate: stay ? endDate : undefined }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "We could not prepare your quote.");
@@ -101,7 +115,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          item, date, guests, tier: tier || undefined, transport,
+          item, date, endDate: stay ? endDate : undefined, guests, tier: tier || undefined, transport,
           name: f.get("name"), email: f.get("email"), venue: f.get("venue"), company: f.get("company"),
           terms: f.get("terms") === "on",
         }),
@@ -117,7 +131,8 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
   const slide = { initial: { opacity: 0, x: 24 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -24 }, transition: { duration: 0.2 } };
   const depositNow = est ? est.depositUsd : it.deposit;
-  const waMessage = `Hi, I'd like a custom quote for ${it.name} on ${date ? pretty(date) : "[date]"} for ${guestsText} ${party.label.toLowerCase().includes("participant") ? "participants" : party.label.toLowerCase().includes("people") ? "people" : "guests"}${transport ? ", with private transportation from my hotel, villa or residence" : ""}.`;
+  const when = stay ? (datesReady ? `from ${pretty(date)} to ${pretty(endDate)} (${nights} ${nights === 1 ? "night" : "nights"})` : "for [dates]") : `on ${date ? pretty(date) : "[date]"}`;
+  const waMessage = `Hi, I'd like a custom quote for ${it.name} ${when} for ${guestsText} ${party.label.toLowerCase().includes("participant") ? "participants" : party.label.toLowerCase().includes("people") ? "people" : "guests"}${transport ? ", with private transportation from my hotel, villa or residence" : ""}.`;
   const noun = guests === 1 ? "guest" : "guests";
 
   return createPortal(
@@ -156,17 +171,33 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
         <AnimatePresence mode="wait" initial={false}>
           {step === 1 && (
             <motion.div key="s1" {...slide} className="mt-6">
-              <Calendar value={date} min={min} onChange={setDate} />
-              <p className="mt-5 min-h-[1.5rem] text-center text-sm text-ink/70">{date ? pretty(date) : "Select the day of your event"}</p>
-              <button type="button" disabled={!date} onClick={() => setStep(2)} className="btn-primary mt-3 w-full disabled:opacity-40">Continue</button>
-              <p className="mt-3 text-center text-xs text-ink/50">We confirm availability for your date on WhatsApp.</p>
+              {stay && (
+                <div className="mb-4 grid grid-cols-2 divide-x divide-ink/15 border border-ink/15 text-center text-sm">
+                  <div className={`px-3 py-2.5 ${date && !endDate ? "bg-champagne/30" : ""}`}>
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-ink/50">Check-in</p>
+                    <p className="mt-0.5 font-medium">{date ? short(date) : "Select"}</p>
+                  </div>
+                  <div className={`px-3 py-2.5 ${date && !endDate ? "" : ""}`}>
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-ink/50">Check-out</p>
+                    <p className="mt-0.5 font-medium">{endDate ? short(endDate) : date ? "Select" : "—"}</p>
+                  </div>
+                </div>
+              )}
+              <Calendar value={date} end={endDate} range={stay} min={min} onChange={(s, e) => { setDate(s); setEndDate(e); }} />
+              <p className="mt-5 min-h-[1.5rem] text-center text-sm text-ink/70">
+                {stay
+                  ? datesReady ? `${nights} ${nights === 1 ? "night" : "nights"}` : date ? "Now select your check-out day" : "Select your check-in day"
+                  : date ? pretty(date) : "Select the day of your event"}
+              </p>
+              <button type="button" disabled={!datesReady} onClick={() => setStep(2)} className="btn-primary mt-3 w-full disabled:opacity-40">Continue</button>
+              <p className="mt-3 text-center text-xs text-ink/50">We confirm availability for your {stay ? "dates" : "date"} on WhatsApp.</p>
             </motion.div>
           )}
 
           {step === 2 && (
             <motion.div key="s2" {...slide} className="mt-6">
               <p className="rounded-sm bg-champagne/30 px-4 py-2.5 text-sm">
-                <span className="text-ink/60">Event date:</span> <strong className="font-medium">{pretty(date)}</strong>{" "}
+                <span className="text-ink/60">{stay ? "Your stay:" : "Event date:"}</span> <strong className="font-medium">{stay ? `${short(date)} → ${short(endDate)} · ${nights} ${nights === 1 ? "night" : "nights"}` : pretty(date)}</strong>{" "}
                 <button type="button" onClick={() => setStep(1)} className="ml-1 text-terracotta underline">Change</button>
               </p>
 
@@ -228,10 +259,21 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
             <motion.div key="s3q" {...slide} className="mt-6">
               <div className="rounded-sm bg-white p-5 text-sm shadow-sm">
                 <dl className="space-y-3">
-                  <div className="flex justify-between gap-4"><dt className="text-ink/60">Date</dt><dd className="text-right font-medium">{pretty(date)}</dd></div>
+                  {stay ? (
+                    <>
+                      <div className="flex justify-between gap-4"><dt className="text-ink/60">Check-in</dt><dd className="text-right font-medium">{pretty(date)}</dd></div>
+                      <div className="flex justify-between gap-4"><dt className="text-ink/60">Check-out</dt><dd className="text-right font-medium">{pretty(endDate)}</dd></div>
+                      <div className="flex justify-between gap-4"><dt className="text-ink/60">Nights</dt><dd className="text-right font-medium">{nights}</dd></div>
+                    </>
+                  ) : (
+                    <div className="flex justify-between gap-4"><dt className="text-ink/60">Date</dt><dd className="text-right font-medium">{pretty(date)}</dd></div>
+                  )}
                   <div className="flex justify-between gap-4"><dt className="text-ink/60">{party.label}</dt><dd className="text-right font-medium">{guests}</dd></div>
                   <div className="flex justify-between gap-4"><dt className="text-ink/60">Private transportation</dt><dd className="text-right font-medium">{transport ? "Requested" : "Not requested"}</dd></div>
-                  <div className="flex justify-between gap-4 border-t border-ink/10 pt-3"><dt className="text-ink/60">Starting price</dt><dd className="text-right font-serif text-lg">From ${it.from.toLocaleString("en-US")} USD</dd></div>
+                  <div className="flex justify-between gap-4 border-t border-ink/10 pt-3"><dt className="text-ink/60">Starting price</dt><dd className="text-right font-serif text-lg">From ${it.from.toLocaleString("en-US")} USD{stay ? " / night" : ""}</dd></div>
+                  {stay && nights >= 1 && (
+                    <div className="flex justify-between gap-4"><dt className="text-ink/60">Starting estimate, {nights} {nights === 1 ? "night" : "nights"}</dt><dd className="text-right font-serif text-lg">${(it.from * nights).toLocaleString("en-US")} USD</dd></div>
+                  )}
                 </dl>
               </div>
               <p className="mt-4 text-sm text-ink/65">
@@ -247,7 +289,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
             <motion.form key="s3" onSubmit={submit} {...slide} className="mt-6 space-y-4">
               <div className="rounded-sm bg-white p-4 text-sm shadow-sm">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-ink/70">
-                  <span>{pretty(date)}</span><span aria-hidden>·</span><span>{guests} {noun}</span>
+                  <span>{stay ? `${short(date)} → ${short(endDate)} · ${nights} ${nights === 1 ? "night" : "nights"}` : pretty(date)}</span><span aria-hidden>·</span><span>{guests} {noun}</span>
                   <button type="button" onClick={() => setStep(2)} className="ml-auto text-terracotta underline">Change</button>
                 </div>
                 {estError ? (

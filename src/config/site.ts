@@ -53,6 +53,8 @@ export type Pkg = {
   payOnline?: boolean;
   /** What the guest-count step asks. */
   party?: Party;
+  /** Multi-night stay: the visitor picks check-in and check-out, the price is per night. */
+  stay?: boolean;
   href: string;
   occasions: Occasion[];
 };
@@ -176,6 +178,7 @@ export const featuredPackages: Pkg[] = [
     from: 425,
     unit: "per night",
     depositPercent: 50,
+    stay: true,
     payOnline: false,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 6, start: 2, quick: [2, 4, 6] },
     photo: "venue-ranch.jpg",

@@ -140,7 +140,7 @@ export const products: Product[] = [
     goodToKnow: [
       "The starting price is per night, for both cabins.",
       "Total capacity: up to 6 guests.",
-      "Share your dates and the number of guests. We confirm availability and the details on WhatsApp.",
+      "Choose your check-in and check-out days and we calculate the nights. We confirm availability and your quote on WhatsApp.",
     ],
     faqExtra: [
       { q: "How many people fit in the cabins?", a: "The two cabins host up to 6 guests in total." },
