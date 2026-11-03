@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { occasions, packages, type Occasion } from "@/config/site";
+import { featuredPackages, occasions, type Occasion } from "@/config/site";
 import PackageCard from "./PackageCard";
 import Reveal from "./Reveal";
 
 export default function Packages() {
   const [active, setActive] = useState<Occasion | "All">("All");
-  const list = active === "All" ? packages : packages.filter((p) => p.occasions.includes(active));
+  const list = active === "All" ? featuredPackages : featuredPackages.filter((p) => p.occasions.includes(active));
 
   return (
     <section id="packages" className="section scroll-mt-16 !pt-10 md:!pt-16">

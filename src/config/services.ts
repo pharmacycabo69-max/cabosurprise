@@ -86,7 +86,7 @@ export const services: Record<Service["slug"], Service> = {
     path: "/packages/",
     metaTitle: "Surprise Packages in Los Cabos | Cabo Surprise",
     metaDescription:
-      "Surprise packages in Los Cabos: welcome setups, birthdays, bachelorettes, honeymoons, anniversary dinners and mariachi serenades. From $190 USD.",
+      "Anniversary dinners, beach horse photo sessions, wedding receptions, Rancho McCoy cabins, beach horse activities and bachelorette setups in Los Cabos.",
     keywords: ["cabo room decoration", "los cabos surprise packages", "cabo celebration setup"],
     h1: "Surprise packages in Los Cabos.",
     intro:
@@ -95,7 +95,7 @@ export const services: Record<Service["slug"], Service> = {
     heroPhotos: [{ src: "packages/hero.jpg", position: "60% 40%" }, { src: "hero/birthday-1.jpg", position: "50% 38%" }, { src: "hero/home-2.jpg", position: "55% 50%" }],
     heroSubtitle: "Setups for every celebration, ready before you walk in.",
     cta: "Plan my surprise",
-    packageIds: ["welcome", "birthday", "bachelorette", "honeymoon", "anniversary", "mariachi"],
+    packageIds: ["anniversary-dinner", "beach-horse-photo-session", "wedding-reception", "ranch-two-cabins", "beach-horse-activity", "bachelorette-party"],
     message: "Hi, I'd like to plan a surprise in Cabo on [date].",
     galleryTitle: "From our setups",
     gallery: ["packages/gallery-1.jpg", "packages/gallery-2.jpg", "packages/gallery-3.jpg", "packages/gallery-4.jpg"],

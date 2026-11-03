@@ -21,6 +21,7 @@ export const policy = {
 };
 
 export const occasions = [
+  "Wedding",
   "Birthday",
   "Anniversary",
   "Bachelorette",
@@ -104,6 +105,76 @@ export const packages: Pkg[] = [
     photo: "mariachi.jpg",
     href: "/packages/",
     occasions: ["Birthday", "Anniversary", "Quinceañera", "Just Because", "Proposal"],
+  },
+];
+
+// The six products shown first on the home page and on /packages/.
+// PLACEHOLDER PRICE: every "from" is $50 USD until Sergio confirms the real prices.
+const PLACEHOLDER_FROM = 50;
+
+export const featuredPackages: Pkg[] = [
+  {
+    id: "anniversary-dinner",
+    name: "Anniversary Dinner",
+    blurb: "A private chef-cooked dinner on your own terrace.",
+    includes: ["Private chef dinner", "Terrace table styling", "Candles & flowers"],
+    from: PLACEHOLDER_FROM,
+    photo: "anniversary.jpg",
+    href: "/honeymoon/",
+    occasions: ["Anniversary", "Honeymoon", "Proposal", "Just Because"],
+  },
+  {
+    id: "beach-horse-photo-session",
+    name: "Beach Horse Photo Session",
+    blurb: "Golden-hour portraits with horses on the beach, filmed by a videographer.",
+    includes: ["1.5-hour session", "Horses", "Videographer"],
+    from: PLACEHOLDER_FROM,
+    photo: "proposals-hero.jpg",
+    photoPosition: "50% 35%",
+    href: "/quote/",
+    occasions: ["Proposal", "Honeymoon", "Anniversary", "Just Because"],
+  },
+  {
+    id: "wedding-reception",
+    name: "Wedding Reception",
+    blurb: "Celebrate at Rancho McCoy with the ranch, furniture and six hours.",
+    includes: ["Ranch rental", "Furniture", "6 hours"],
+    from: PLACEHOLDER_FROM,
+    photo: "welcome-flowers.jpg",
+    photoPosition: "50% 30%",
+    href: "/quote/",
+    occasions: ["Wedding", "Anniversary"],
+  },
+  {
+    id: "ranch-two-cabins",
+    name: "Rancho McCoy: 2-Cabin Stay",
+    blurb: "Two cabins at the ranch in Cabo San Lucas, priced per night.",
+    includes: ["Two cabins", "Rancho McCoy, Cabo San Lucas", "Per night"],
+    from: PLACEHOLDER_FROM,
+    photo: "venue-ranch.jpg",
+    href: "/quote/",
+    occasions: ["Wedding", "Bachelorette", "Honeymoon", "Birthday", "Just Because"],
+  },
+  {
+    id: "beach-horse-activity",
+    name: "Beach Horse Activity",
+    blurb: "A horseback experience on the beach in Los Cabos.",
+    includes: ["Horseback experience", "On the beach", "Details confirmed on WhatsApp"],
+    from: PLACEHOLDER_FROM,
+    photo: "hero.jpg",
+    photoPosition: "60% 40%",
+    href: "/quote/",
+    occasions: ["Birthday", "Bachelorette", "Honeymoon", "Just Because"],
+  },
+  {
+    id: "bachelorette-party",
+    name: "Bachelorette Party",
+    blurb: "Pink, loud and unforgettable. A room your whole crew walks into together.",
+    includes: ["Room decor", "Bride-to-be setup", "Custom balloons and signage"],
+    from: PLACEHOLDER_FROM,
+    photo: "bachelorette.jpg",
+    href: "/bachelorette/",
+    occasions: ["Bachelorette", "Birthday"],
   },
 ];
 

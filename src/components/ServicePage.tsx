@@ -6,11 +6,11 @@ import FaqList from "./FaqList";
 import FinalCta from "./FinalCta";
 import Footer from "./Footer";
 import Reveal from "./Reveal";
-import { commonFaqs, packages, serviceSteps } from "@/config/site";
+import { commonFaqs, featuredPackages, packages, serviceSteps } from "@/config/site";
 import type { Service } from "@/config/services";
 
 export default function ServicePage({ s }: { s: Service }) {
-  const list = s.packageIds.map((id) => packages.find((p) => p.id === id)!).filter(Boolean);
+  const list = s.packageIds.map((id) => [...featuredPackages, ...packages].find((p) => p.id === id)!).filter(Boolean);
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
