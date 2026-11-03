@@ -1,5 +1,6 @@
 import Hero from "./Hero";
 import Experiences from "./Experiences";
+import VenueBanner from "./VenueBanner";
 import PackageCard from "./PackageCard";
 import Gallery from "./Gallery";
 import Steps from "./Steps";
@@ -30,6 +31,7 @@ export default function ServicePage({ s }: { s: Service }) {
             </Reveal>
           </section>
           <Experiences intro={false} />
+          <VenueBanner />
         </>
       ) : (
       <section id="packages" className="section scroll-mt-4">

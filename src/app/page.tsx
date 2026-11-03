@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Experiences from "@/components/Experiences";
 import Marquee from "@/components/Marquee";
+import VenueBanner from "@/components/VenueBanner";
 import Statement from "@/components/Statement";
 import Venues from "@/components/Venues";
 import AddOns from "@/components/AddOns";
@@ -34,10 +35,22 @@ const jsonLd = {
   sameAs: [site.instagram],
 };
 
+const venueLd = {
+  "@context": "https://schema.org",
+  "@type": "EventVenue",
+  name: "Rancho McCoy",
+  url: `${site.url}/ranch-wedding-reception/`,
+  description: "A private ranch event venue in Cabo San Lucas with exclusive use for weddings and private celebrations.",
+  maximumAttendeeCapacity: 220,
+  address: { "@type": "PostalAddress", addressLocality: "Cabo San Lucas", addressRegion: "BCS", addressCountry: "MX" },
+  sameAs: [site.instagram],
+};
+
 export default function Home() {
   return (
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(venueLd) }} />
       <Hero
         title="Private experiences in Los Cabos."
         subtitle="Ranch weddings, chef-led dinners and horseback experiences, designed around you."
@@ -51,6 +64,7 @@ export default function Home() {
       <Marquee className="bg-terracotta text-white" items={["Birthdays", "Proposals", "Honeymoons", "Bachelorettes", "Anniversaries", "Quinceañeras", "Just because"]} />
       <Statement />
       <Experiences />
+      <VenueBanner />
       <Venues />
       <AddOns />
       <Steps items={steps} />
