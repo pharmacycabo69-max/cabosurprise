@@ -7,11 +7,12 @@ import { policy } from "@/config/site";
 const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
 
 export default function DepositForm({ initialItem }: { initialItem?: string }) {
-  const valid = initialItem === CUSTOM_ID || payableItems.some((p) => p.id === initialItem);
-  const [item, setItem] = useState(valid && initialItem ? initialItem : payableItems[0].id);
+  const options = payableItems.filter((p) => !p.quoted); // quoted items (wedding reception) use the guest-count flow
+  const valid = initialItem === CUSTOM_ID || options.some((p) => p.id === initialItem);
+  const [item, setItem] = useState(valid && initialItem ? initialItem : options[0].id);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const selected = payableItems.find((p) => p.id === item);
+  const selected = options.find((p) => p.id === item);
   const today = new Date().toISOString().slice(0, 10);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -48,7 +49,7 @@ export default function DepositForm({ initialItem }: { initialItem?: string }) {
       <label className="block">
         <span className="mb-1 block text-sm font-medium">What are you booking?</span>
         <select value={item} onChange={(e) => setItem(e.target.value)} className={input}>
-          {payableItems.map((p) => (
+          {options.map((p) => (
             <option key={p.id} value={p.id}>
               {p.name} (from ${p.from.toLocaleString("en-US")})
             </option>

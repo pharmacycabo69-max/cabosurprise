@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { site } from "@/config/site";
-import { CUSTOM_ID, customLimits, payableItems } from "@/config/payments";
+import { CUSTOM_ID, customLimits } from "@/config/payments";
+import { depositFor } from "@/lib/pricing";
 
 export const runtime = "nodejs";
 
@@ -32,9 +33,11 @@ export async function POST(req: Request) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < new Date().toISOString().slice(0, 10)) return fail("Please choose a future event date.");
   if (b.terms !== true) return fail("Please accept the Terms to continue.");
 
-  // The amount never comes from a package id sent by the client: it is looked up here.
+  // The amount never comes from the client: it is looked up and computed here.
   let cents: number;
   let label: string;
+  let extraMeta: Record<string, string> = {};
+  let description: string;
   if (itemId === CUSTOM_ID) {
     const amount = Number(b.amount);
     if (!Number.isFinite(amount) || amount < customLimits.min || amount > customLimits.max) {
@@ -42,15 +45,19 @@ export async function POST(req: Request) {
     }
     cents = Math.round(amount * 100);
     label = "Custom quote";
+    description = label;
   } else {
-    const item = payableItems.find((p) => p.id === itemId);
-    if (!item) return fail("Please choose a package.");
-    cents = item.deposit * 100;
-    label = item.name;
+    const r = Number(process.env.MXN_PER_USD);
+    const res = depositFor(itemId, b.guests, b.tier, Number.isFinite(r) && r > 0 ? r : null);
+    if (!res.ok) return fail(res.error, res.status);
+    cents = res.plan.usdCents;
+    label = res.plan.name;
+    extraMeta = res.plan.metadata;
+    description = res.plan.description;
   }
 
   const base = process.env.NODE_ENV === "production" ? site.url : new URL(req.url).origin;
-  const metadata = { service: label, event_date: date, venue, customer_name: name };
+  const metadata = { ...extraMeta, service: label, event_date: date, venue, customer_name: name };
 
   try {
     const stripe = new Stripe(key);
@@ -66,7 +73,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: "usd",
             unit_amount: cents,
-            product_data: { name: `Deposit: ${label}`, description: `Cabo Surprise setup on ${date}` },
+            product_data: { name: `Deposit: ${label}`, description: `${description}. Event date ${date}.` },
           },
         },
       ],

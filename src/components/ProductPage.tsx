@@ -54,7 +54,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
               <p className="mt-1 text-sm text-ink/60">{pkg.name}</p>
               <div className="mt-6 space-y-3">
                 <DepositLink item={pkg.id} className="btn-primary w-full">
-                  Pay deposit{deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}
+                  {pkg.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`}
                 </DepositLink>
                 <WhatsAppLink message={p.message} label={`${p.slug}_offer`} packageName={pkg.name} className="btn-ghost w-full">Ask on WhatsApp</WhatsAppLink>
               </div>

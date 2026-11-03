@@ -29,7 +29,7 @@ export default function PackageCard({ p, linked = true }: { p: Pkg; linked?: boo
         <p className="mt-2 text-sm leading-relaxed text-white/80">{p.includes.join(" · ")}</p>
         <div className="pointer-events-auto mt-5 flex flex-wrap gap-2">
           <DepositLink item={p.id} className="btn-primary !px-5 !py-2.5 text-sm">
-            Pay deposit{deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}
+            {p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`}
           </DepositLink>
           <WhatsAppLink
             label={`package_${p.id}`}

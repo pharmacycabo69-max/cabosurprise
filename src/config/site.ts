@@ -40,6 +40,8 @@ export type Pkg = {
   from: number;
   photo: string;
   photoPosition?: string;
+  /** Price depends on guest count and comes from the ranch price sheet (src/lib/quote.ts). */
+  quoted?: boolean;
   href: string;
   occasions: Occasion[];
 };
@@ -142,6 +144,7 @@ export const featuredPackages: Pkg[] = [
     from: PLACEHOLDER_FROM,
     photo: "welcome-flowers.jpg",
     photoPosition: "50% 30%",
+    quoted: true,
     href: "/wedding-reception/",
     occasions: ["Wedding", "Anniversary"],
   },
