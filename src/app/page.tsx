@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import Packages from "@/components/Packages";
+import Experiences from "@/components/Experiences";
 import Marquee from "@/components/Marquee";
 import Statement from "@/components/Statement";
 import Venues from "@/components/Venues";
@@ -49,7 +49,7 @@ export default function Home() {
       />
       <Marquee className="bg-terracotta text-white" items={["Birthdays", "Proposals", "Honeymoons", "Bachelorettes", "Anniversaries", "Quinceañeras", "Just because"]} />
       <Statement />
-      <Packages />
+      <Experiences />
       <Venues />
       <AddOns />
       <Steps items={steps} />
