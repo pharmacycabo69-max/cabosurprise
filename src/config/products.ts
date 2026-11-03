@@ -76,7 +76,7 @@ export const products: Product[] = [
     intro:
       "A private 90-minute session on the beach with two horses, a professional photographer and full coordination, from planning to the final frame.",
     heroSubtitle: "Two horses, the Pacific and a professional photographer.",
-    heroPhotos: [{ src: "proposals-hero.jpg", position: "30% 38%" }, { src: "hero.jpg", position: "60% 40%" }, "proposal-ranch.jpg"],
+    heroPhotos: [{ src: "ranch/red-dusk.jpg", position: "50% 45%" }, { src: "ranch/red-dusk-2.jpg", position: "50% 50%" }, { src: "ranch/rider-sunset.jpg", position: "50% 45%" }],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a private beach horse photoshoot in Cabo on [date].",
     goodToKnow: [
@@ -166,7 +166,7 @@ export const products: Product[] = [
     intro:
       "A private experience on the beach for up to four participants, with four horses, a guide and full coordination.",
     heroSubtitle: "Four horses, a guide and the open beach.",
-    heroPhotos: [{ src: "hero/beach-horse-experience.jpg", position: "62% 50%" }, { src: "ranch/model-portrait.jpg", position: "50% 30%" }, { src: "hero.jpg", position: "60% 40%" }],
+    heroPhotos: [{ src: "ranch/rider-ranch.jpg", position: "50% 50%" }, { src: "ranch/rider-sunset.jpg", position: "50% 45%" }, { src: "ranch/model-portrait.jpg", position: "50% 30%" }],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a private beach horse experience in Cabo on [date] for [number] participants.",
     notice: "This activity is subject to availability, permits and confirmation by the operator.",
@@ -192,7 +192,7 @@ export const products: Product[] = [
     intro:
       "A private ranch space for your crew, with a DJ, a bartender, service staff and a simple setup. The starter package is designed for 5 guests, and we customize it from there.",
     heroSubtitle: "Your own ranch, your own party.",
-    heroPhotos: [{ src: "hero/bachelorette-1.jpg", position: "50% 35%" }, { src: "hero/bachelorette-2.jpg", position: "50% 40%" }, "hero/bachelorette-3.jpg"],
+    heroPhotos: [{ src: "ranch/white-set-horse.jpg", position: "50% 40%" }, { src: "ranch/cowgirl-fence.jpg", position: "50% 40%" }, { src: "ranch/silver-horse.jpg", position: "50% 40%" }],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a bachelorette ranch party in Cabo on [date] for [number] guests.",
     optionsTitle: "Add extras",
