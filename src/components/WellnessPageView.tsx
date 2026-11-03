@@ -25,7 +25,7 @@ export default function WellnessPageView({ s }: { s: WellnessPage }) {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {s.offerings.map((o, i) => (
             <Reveal key={o.title} delay={i * 0.08}>
-              <div className="h-full rounded-3xl bg-white p-7 shadow-sm">
+              <div className="h-full rounded-sm bg-white p-7 shadow-sm">
                 <h3 className="font-serif text-2xl">{o.title}</h3>
                 <p className="mt-2 text-ink/70">{o.text}</p>
               </div>

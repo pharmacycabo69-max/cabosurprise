@@ -21,7 +21,7 @@ export default function Packages() {
           <button
             key={o}
             onClick={() => setActive(o as Occasion | "All")}
-            className={`shrink-0 rounded-full border px-5 py-2.5 text-sm transition ${
+            className={`shrink-0 rounded-sm border px-5 py-2.5 text-[12px] uppercase tracking-[0.16em] transition ${
               active === o ? "border-ink bg-ink text-cream" : "border-ink/20 text-ink/75 hover:border-ink hover:text-ink"
             }`}
           >
@@ -30,7 +30,7 @@ export default function Packages() {
         ))}
       </div>
 
-      <motion.div layout className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <motion.div layout className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {list.map((p) => (
             <motion.div

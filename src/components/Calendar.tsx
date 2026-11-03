@@ -47,7 +47,7 @@ export default function Calendar({ value, min, onChange }: { value: string; min:
               onClick={() => onChange(s)}
               aria-pressed={sel}
               className={`aspect-square rounded-full text-sm transition ${
-                sel ? "bg-terracotta text-white shadow-md" : off ? "text-ink/25" : "hover:bg-blush/50"
+                sel ? "bg-terracotta text-white shadow-md" : off ? "text-ink/25" : "hover:bg-champagne/50"
               }`}
             >
               {d}

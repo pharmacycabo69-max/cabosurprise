@@ -5,10 +5,10 @@ import WhatsAppLink from "./WhatsAppLink";
 
 const links = [
   { href: "/proposals/", label: "Proposals" },
-  { href: "/birthday/", label: "Birthday" },
-  { href: "/bachelorette/", label: "Bachelorette" },
-  { href: "/honeymoon/", label: "Honeymoon" },
-  { href: "/packages/", label: "Packages" },
+  { href: "/ranch-wedding-reception/", label: "Weddings" },
+  { href: "/private-anniversary-dinner/", label: "Dinners" },
+  { href: "/private-beach-horse-experience/", label: "Horses" },
+  { href: "/packages/", label: "Experiences" },
 ];
 
 // Appears after the hero so the menu is always one scroll away.
@@ -26,14 +26,14 @@ export default function StickyNav() {
       aria-hidden={!show}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <Link href="/" className="font-serif text-xl" tabIndex={show ? 0 : -1}>Cabo Surprise</Link>
-        <nav className="hidden items-center gap-6 text-sm md:flex">
+        <Link href="/" className="font-serif text-xl font-light tracking-wide" tabIndex={show ? 0 : -1}>Cabo Surprise</Link>
+        <nav className="hidden items-center gap-8 text-[11px] font-medium uppercase tracking-[0.22em] md:flex">
           {links.map((l) => (
             <Link key={l.href} href={l.href} className="text-ink/75 transition hover:text-terracotta" tabIndex={show ? 0 : -1}>{l.label}</Link>
           ))}
         </nav>
-        <WhatsAppLink message="Hi, I'd like to plan a surprise in Cabo on [date]." label="sticky_nav" className="btn-primary !px-5 !py-2.5 text-sm">
-          Plan my surprise
+        <WhatsAppLink message="Hi, I'd like to plan a private experience in Cabo on [date]." label="sticky_nav" className="btn-primary !px-5 !py-3">
+          Request a quote
         </WhatsAppLink>
       </div>
     </header>

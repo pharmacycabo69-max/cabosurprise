@@ -8,9 +8,9 @@ export const site = {
   // PLACEHOLDER: replace with the real domain inbox.
   email: "EMAIL@cabosurprise.com",
   instagram: "https://instagram.com/cabosurprise",
-  tagline: "Surprise someone in Cabo.",
+  tagline: "Private experiences in Los Cabos.",
   description:
-    "Room decor, flowers, cakes and proposals in Los Cabos, set up at your villa, hotel, yacht or private ranch before you walk in.",
+    "Private experiences and exclusive celebrations in Los Cabos: ranch weddings, chef-led dinners and horseback experiences, designed around you.",
 };
 
 // Policy numbers shown on /terms/ and in the FAQs. Edit here to change them everywhere.

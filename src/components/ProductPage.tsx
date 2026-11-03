@@ -42,7 +42,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
       <section id="offer" className="section scroll-mt-4">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
           <Reveal>
-            <p className="max-w-2xl font-serif text-2xl leading-snug md:text-4xl md:leading-[1.2]">{p.intro}</p>
+            <p className="max-w-2xl font-serif text-2xl font-light leading-snug md:text-4xl md:leading-[1.2]">{p.intro}</p>
 
             <h2 className="eyebrow mt-12">What&apos;s included</h2>
             <ul className="space-y-2 text-lg">
@@ -50,14 +50,14 @@ export default function ProductPage({ product: p }: { product: Product }) {
                 <li key={i} className="flex gap-3"><span className="text-terracotta">✦</span>{i}</li>
               ))}
             </ul>
-            {p.notice && <p className="mt-6 rounded-2xl bg-blush/30 p-4 text-sm">{p.notice}</p>}
+            {p.notice && <p className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">{p.notice}</p>}
 
             {p.options && (
               <>
                 <h2 className="eyebrow mt-12">{p.optionsTitle ?? "Options"}</h2>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {p.options.map((o) => (
-                    <li key={o.title + (o.price ?? "")} className="rounded-2xl border border-ink/15 bg-white/60 p-5">
+                    <li key={o.title + (o.price ?? "")} className="rounded-sm border border-ink/15 bg-white/60 p-5">
                       <p className="font-serif text-xl">{o.title}</p>
                       {o.price && <p className="mt-1 text-sm font-medium text-terracotta">{o.price}</p>}
                       {o.text && <p className="mt-2 text-sm text-ink/70">{o.text}</p>}
@@ -76,9 +76,9 @@ export default function ProductPage({ product: p }: { product: Product }) {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <aside className="rounded-[2rem] bg-white p-7 shadow-[0_20px_50px_-25px_rgba(43,36,32,0.4)] lg:sticky lg:top-24">
+            <aside className="rounded-sm bg-white p-7 shadow-[0_20px_50px_-25px_rgba(43,36,32,0.4)] lg:sticky lg:top-24">
               <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-terracotta">From</p>
-              <p className="mt-1 font-serif text-5xl">{usd(pkg.from)} <span className="text-lg text-ink/55">USD</span></p>
+              <p className="mt-1 font-serif text-5xl font-light">{usd(pkg.from)} <span className="text-lg text-ink/55">USD</span></p>
               <p className="mt-1 text-sm text-ink/60">{pkg.unit}</p>
               <div className="mt-6 space-y-3">
                 <DepositLink item={pkg.id} className="btn-primary w-full">
@@ -135,7 +135,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
           <p className="eyebrow">More to explore</p>
           <h2 className="h2 mb-10">You might also like.</h2>
         </Reveal>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((r) => <PackageCard key={r.id} p={r} />)}
         </div>
       </section>

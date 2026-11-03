@@ -11,7 +11,7 @@ export default function Gallery({ title, files, alt }: { title: string; files: s
       <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
         {files.map((f, i) => (
           <Reveal key={f} delay={i * 0.05}>
-            <Photo src={f} alt={`${alt} ${i + 1}`} className="aspect-[4/5] rounded-2xl" sizes="(min-width: 768px) 25vw, 50vw" />
+            <Photo src={f} alt={`${alt} ${i + 1}`} className="aspect-[4/5] rounded-sm" sizes="(min-width: 768px) 25vw, 50vw" />
           </Reveal>
         ))}
       </div>

@@ -25,12 +25,12 @@ export default function ServicePage({ s }: { s: Service }) {
         <Reveal>
           <p className="max-w-2xl text-lg text-ink/75 md:text-xl">{s.intro}</p>
         </Reveal>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((p) => (
             <PackageCard key={p.id} p={p} linked={false} />
           ))}
         </div>
-        {s.note && <p className="mt-6 rounded-2xl bg-blush/30 p-4 text-sm">{s.note}</p>}
+        {s.note && <p className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">{s.note}</p>}
       </section>
 
       <Gallery title={s.galleryTitle} files={s.gallery} alt={`${s.slug} setup in Cabo`} />

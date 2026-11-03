@@ -27,7 +27,7 @@ export default function Proof() {
             <Photo
               src={g}
               alt={`Cabo Surprise setup ${i + 1}`}
-              className="h-full w-full rounded-2xl"
+              className="h-full w-full rounded-sm"
               sizes={i === 7 ? "100vw" : "(min-width: 768px) 25vw, 50vw"}
               position={i === 7 ? "50% 40%" : undefined}
             />

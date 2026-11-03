@@ -13,7 +13,7 @@ export default function AddOns() {
           {addOns.map((a, i) => (
             <span key={a}>
               <span className="whitespace-nowrap transition hover:text-terracotta">{a}</span>
-              {i < addOns.length - 1 && <>{" "}<span className="text-blush">✦</span>{" "}</>}
+              {i < addOns.length - 1 && <>{" "}<span className="text-champagne">✦</span>{" "}</>}
             </span>
           ))}
         </p>

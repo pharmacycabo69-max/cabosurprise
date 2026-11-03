@@ -4,21 +4,27 @@
 
 html { scroll-behavior: smooth; }
 body { background: #FBF6EF; color: #2B2420; }
-::selection { background: #E8B4A6; color: #2B2420; }
+::selection { background: #E9D5B0; color: #2B2420; }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-7 py-3.5 text-base font-medium text-white shadow-lg shadow-terracotta/25 transition hover:bg-terracotta-dark;
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-ink px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-cream transition hover:bg-terracotta;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-terracotta px-6 py-3 text-sm font-medium text-terracotta transition hover:bg-terracotta hover:text-white;
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-ink/70 px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-ink hover:text-cream;
+  }
+  .btn-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-cream px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-white;
   }
   .btn-glass {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/25;
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-white/50 px-6 py-3 text-[12px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-white/15;
   }
-  .section { @apply mx-auto max-w-6xl px-5 py-24 md:py-36; }
-  .eyebrow { @apply mb-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.3em] text-terracotta before:h-px before:w-10 before:bg-terracotta; }
-  .h2 { @apply font-serif text-4xl leading-[1.04] tracking-tight md:text-6xl; }
+  .btn-link {
+    @apply inline-flex items-center gap-2 border-b border-ink/35 pb-0.5 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition hover:border-terracotta hover:text-terracotta;
+  }
+  .section { @apply mx-auto max-w-6xl px-5 py-24 md:py-40; }
+  .eyebrow { @apply mb-6 flex items-center gap-4 text-[11px] font-medium uppercase tracking-[0.32em] text-terracotta before:h-px before:w-12 before:bg-terracotta/70; }
+  .h2 { @apply font-serif text-4xl font-light leading-[1.05] tracking-tight md:text-6xl; }
   .no-scrollbar { scrollbar-width: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
 }

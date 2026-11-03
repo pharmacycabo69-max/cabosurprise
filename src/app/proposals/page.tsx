@@ -58,7 +58,7 @@ export default function ProposalsPage() {
                 <Photo
                   src={p.photo}
                   alt={`${p.name} in Los Cabos`}
-                  className={`aspect-[4/5] rounded-3xl ${i % 2 ? "md:order-2" : ""}`}
+                  className={`aspect-[4/5] rounded-sm ${i % 2 ? "md:order-2" : ""}`}
                   sizes="(min-width: 768px) 50vw, 100vw"
                 />
                 <div>
@@ -71,7 +71,7 @@ export default function ProposalsPage() {
                       <li key={x} className="flex gap-2"><span className="text-terracotta">✦</span>{x}</li>
                     ))}
                   </ul>
-                  <div className="mt-6 rounded-2xl bg-blush/30 p-4 text-sm">
+                  <div className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">
                     <strong className="font-medium">Add-on:</strong> hidden photographer &amp; video, so you never miss her reaction.
                   </div>
                   <div className="mt-7 flex flex-wrap gap-3">
@@ -93,7 +93,7 @@ export default function ProposalsPage() {
         </div>
       </section>
 
-      <section className="bg-blush/25">
+      <section className="bg-champagne/25">
         <div className="section">
           <Reveal>
             <p className="eyebrow">Add-on</p>
@@ -105,7 +105,7 @@ export default function ProposalsPage() {
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             {proposalAddOns.map((a) => (
               <Reveal key={a.name}>
-                <div className="rounded-3xl bg-white p-7">
+                <div className="rounded-sm bg-white p-7">
                   <h3 className="font-serif text-2xl">{a.name}</h3>
                   <p className="mt-2 text-ink/70">{a.text}</p>
                 </div>

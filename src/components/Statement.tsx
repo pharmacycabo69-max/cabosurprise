@@ -6,15 +6,15 @@ export default function Statement() {
       <Reveal>
         <p className="eyebrow">Cabo Surprise</p>
         <p className="max-w-5xl font-serif text-3xl leading-[1.18] tracking-tight md:text-6xl md:leading-[1.1]">
-          We set the scene <em className="text-terracotta">before you walk in</em>: flowers, cakes, balloons, candlelight and live mariachi, at your villa, hotel, yacht or a private ranch at sunset.
+          We design private experiences in Los Cabos, from a chef's dinner for two to an <em className="text-terracotta">exclusive ranch wedding</em>. Every detail is arranged before you arrive.
         </p>
       </Reveal>
       <Reveal delay={0.1}>
         <dl className="mt-12 grid gap-6 border-t border-ink/15 pt-8 text-sm sm:grid-cols-3">
           {[
             ["Where", "Los Cabos, Mexico"],
-            ["When", "Ready before you arrive"],
-            ["How", "Plan it on WhatsApp"],
+            ["How", "Designed around you"],
+            ["Start", "Request a custom quote"],
           ].map(([k, v]) => (
             <div key={k}>
               <dt className="text-[11px] uppercase tracking-[0.25em] text-ink/50">{k}</dt>

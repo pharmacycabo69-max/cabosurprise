@@ -4,8 +4,8 @@ import Link from "next/link";
 import { computeQuote, DEPOSIT_PERCENT, FEE_PERCENT, MAX_GUESTS, mxn, PRICES, type Selection, type Tier } from "@/lib/quote";
 import WhatsAppLink from "./WhatsAppLink";
 
-const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
-const card = "rounded-3xl bg-white p-6 shadow-sm";
+const input = "w-full rounded-sm border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
+const card = "rounded-sm bg-white p-6 shadow-sm";
 
 const initial: Selection = {
   guests: 50, tier: "general", cabanas: 0, extraHours: 0, horses: false, photoRanch: false, photoBeach: false,
@@ -56,7 +56,7 @@ export default function QuoteBuilder({ rate }: { rate: number | null }) {
   }
 
   const check = (k: "horses" | "photoRanch" | "photoBeach" | "audio") => (
-    <label key={k} className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-ink/15 px-4 py-3 text-sm">
+    <label key={k} className="flex cursor-pointer items-center justify-between gap-3 rounded-sm border border-ink/15 px-4 py-3 text-sm">
       <span className="flex items-center gap-3">
         <input type="checkbox" checked={s[k]} onChange={(e) => set(k, e.target.checked)} className="h-4 w-4 accent-[#C4663D]" />
         {PRICES[k].label}
@@ -65,7 +65,7 @@ export default function QuoteBuilder({ rate }: { rate: number | null }) {
     </label>
   );
   const perGuest = (k: "dinner" | "bar" | "chairs") => (
-    <label key={k} className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-ink/15 px-4 py-3 text-sm">
+    <label key={k} className="flex cursor-pointer items-center justify-between gap-3 rounded-sm border border-ink/15 px-4 py-3 text-sm">
       <span className="flex items-center gap-3">
         <input type="checkbox" checked={s[k]} onChange={(e) => set(k, e.target.checked)} className="h-4 w-4 accent-[#C4663D]" />
         {PRICES[k].label}
@@ -82,7 +82,7 @@ export default function QuoteBuilder({ rate }: { rate: number | null }) {
           <p className="mt-1 text-sm text-ink/60">Choose the rate that applies to your event.</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {([["general", "General"], ["destination", "Destination"]] as const).map(([v, label]) => (
-              <label key={v} className={`cursor-pointer rounded-2xl border px-4 py-4 text-sm transition ${tier === v ? "border-terracotta bg-terracotta/10" : "border-ink/15"}`}>
+              <label key={v} className={`cursor-pointer rounded-sm border px-4 py-4 text-sm transition ${tier === v ? "border-terracotta bg-terracotta/10" : "border-ink/15"}`}>
                 <input type="radio" name="tier" value={v} checked={tier === v} onChange={() => setTier(v)} className="mr-2 accent-[#C4663D]" />
                 <strong className="font-medium">{label}</strong>
               </label>
@@ -94,7 +94,7 @@ export default function QuoteBuilder({ rate }: { rate: number | null }) {
           <h2 className="font-serif text-2xl">2. Guests</h2>
           <input type="number" min={1} max={999} value={guestsText} onChange={(e) => setGuestsText(e.target.value)} className={`${input} mt-4 max-w-[180px]`} aria-label="Number of guests" />
           {tooMany && (
-            <p className="mt-3 rounded-xl bg-blush/30 p-3 text-sm">
+            <p className="mt-3 rounded-sm bg-champagne/30 p-3 text-sm">
               For more than {MAX_GUESTS} guests our team prepares a custom quote.{" "}
               <WhatsAppLink message={waMessage} label="quote_over_199" className="font-medium text-terracotta underline">Message us</WhatsAppLink>
             </p>
@@ -133,7 +133,7 @@ export default function QuoteBuilder({ rate }: { rate: number | null }) {
         <section className={card}>
           <h2 className="font-serif text-2xl">5. Staff</h2>
           <div className="mt-4 space-y-3">
-            <label className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-ink/15 px-4 py-3 text-sm">
+            <label className="flex cursor-pointer items-center justify-between gap-3 rounded-sm border border-ink/15 px-4 py-3 text-sm">
               <span className="flex items-center gap-3">
                 <input type="checkbox" checked={s.staff6h} onChange={(e) => set("staff6h", e.target.checked)} className="h-4 w-4 accent-[#C4663D]" />
                 {PRICES.staff6h.label}
@@ -197,7 +197,7 @@ export default function QuoteBuilder({ rate }: { rate: number | null }) {
               <input name="terms" type="checkbox" required className="mt-1 h-4 w-4 accent-[#C4663D]" />
               <span>I agree to the <Link href="/terms/" target="_blank" className="underline">Terms &amp; Conditions</Link>, including the cancellation policy.</span>
             </label>
-            {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+            {error && <p role="alert" className="rounded-sm bg-red-50 p-3 text-sm text-red-700">{error}</p>}
             <button type="submit" disabled={busy} className="btn-primary w-full disabled:opacity-60">{busy ? "Redirecting…" : "Continue to secure payment"}</button>
             <p className="text-center text-xs text-ink/55">Paid in USD by card via Stripe. Converted at {rate} MXN per USD.</p>
           </form>

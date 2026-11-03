@@ -13,9 +13,9 @@ import { site, steps } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Surprise Planner in Los Cabos | Cabo Surprise",
+  title: "Private Experiences & Ranch Weddings in Los Cabos | Cabo Surprise",
   description:
-    "Room decor, flowers, cakes and proposals in Los Cabos, set up at your villa, hotel, beach, yacht or sunset ranch before you arrive. Plan it on WhatsApp.",
+    "Private experiences and exclusive celebrations in Los Cabos: ranch weddings, chef-led dinners, horseback experiences and more, designed around you.",
   path: "/",
   og: "og.jpg",
   keywords: ["proposal in cabo", "cabo birthday surprise", "bachelorette cabo decor", "cabo room decoration"],
@@ -39,13 +39,13 @@ export default function Home() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Hero
-        title="Surprise someone in Cabo."
-        subtitle="Room decor, flowers, cakes and proposals — set up before you walk in."
-        cta="Plan my surprise"
-        message="Hi, I'd like to plan a surprise in Cabo on [date]."
+        title="Private experiences in Los Cabos."
+        subtitle="Ranch weddings, chef-led dinners and horseback experiences, designed around you."
+        cta="Request a custom quote"
+        message="Hi, I'd like to plan a private experience in Cabo on [date]."
         label="hero"
         photos={[{ src: "hero.jpg", position: "60% 40%" }, { src: "hero/home-2.jpg", position: "55% 50%" }, "hero/home-3.jpg", { src: "hero/home-4.jpg", position: "50% 60%" }]}
-        secondary={{ label: "See packages", href: "#packages" }}
+        secondary={{ label: "See experiences", href: "#packages" }}
       />
       <Marquee className="bg-terracotta text-white" items={["Birthdays", "Proposals", "Honeymoons", "Bachelorettes", "Anniversaries", "Quinceañeras", "Just because"]} />
       <Statement />

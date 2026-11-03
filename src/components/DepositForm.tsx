@@ -4,7 +4,7 @@ import Link from "next/link";
 import { CUSTOM_ID, customLimits, payableItems } from "@/config/payments";
 import { policy } from "@/config/site";
 
-const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
+const input = "w-full rounded-sm border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
 
 export default function DepositForm({ initialItem }: { initialItem?: string }) {
   const options = payableItems.filter((p) => !p.quoted && p.payOnline); // quoted items (wedding reception) use the guest-count flow
@@ -64,7 +64,7 @@ export default function DepositForm({ initialItem }: { initialItem?: string }) {
           <input name="amount" type="number" required min={customLimits.min} max={customLimits.max} step="1" className={input} placeholder="e.g. 250" />
         </label>
       ) : (
-        <p className="rounded-2xl bg-blush/30 p-4 text-sm">
+        <p className="rounded-sm bg-champagne/30 p-4 text-sm">
           Deposit today: <strong className="font-medium">${selected?.deposit.toLocaleString("en-US")} USD</strong> ({policy.depositPercent}% of the starting price). The balance is due before the setup.
         </p>
       )}
@@ -98,7 +98,7 @@ export default function DepositForm({ initialItem }: { initialItem?: string }) {
         </span>
       </label>
 
-      {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+      {error && <p role="alert" className="rounded-sm bg-red-50 p-3 text-sm text-red-700">{error}</p>}
 
       <button type="submit" disabled={busy} className="btn-primary w-full disabled:opacity-60">
         {busy ? "Redirecting to secure payment…" : "Continue to secure payment"}

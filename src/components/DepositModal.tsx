@@ -8,7 +8,7 @@ import { MAX_GUESTS } from "@/lib/quote";
 import Calendar from "./Calendar";
 import WhatsAppLink from "./WhatsAppLink";
 
-const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
+const input = "w-full rounded-sm border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
 const pad = (n: number) => String(n).padStart(2, "0");
 const money = (n: number, d = 2) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
@@ -131,7 +131,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
         role="dialog"
         aria-modal="true"
         aria-label={`Deposit for ${it.name}`}
-        className="max-h-[94vh] w-full overflow-y-auto rounded-t-[2rem] bg-cream p-6 shadow-2xl sm:max-w-md sm:rounded-[2rem] sm:p-8"
+        className="max-h-[94vh] w-full overflow-y-auto rounded-t-lg bg-cream p-6 shadow-2xl sm:max-w-md sm:rounded-sm sm:p-8"
         initial={{ y: 40, opacity: 0, scale: 0.98 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
@@ -165,7 +165,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
           {step === 2 && (
             <motion.div key="s2" {...slide} className="mt-6">
-              <p className="rounded-xl bg-blush/30 px-4 py-2.5 text-sm">
+              <p className="rounded-sm bg-champagne/30 px-4 py-2.5 text-sm">
                 <span className="text-ink/60">Event date:</span> <strong className="font-medium">{pretty(date)}</strong>{" "}
                 <button type="button" onClick={() => setStep(1)} className="ml-1 text-terracotta underline">Change</button>
               </p>
@@ -178,7 +178,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
                   inputMode="numeric"
                   value={guestsText}
                   onChange={(e) => setGuestsText(e.target.value.replace(/\D/g, "").slice(0, 3))}
-                  className="w-28 rounded-2xl border border-ink/20 bg-white py-3 text-center font-serif text-4xl outline-none focus:border-terracotta"
+                  className="w-28 rounded-sm border border-ink/20 bg-white py-3 text-center font-serif text-4xl outline-none focus:border-terracotta"
                 />
                 <button type="button" aria-label="More" onClick={() => setGuests((guestsOk ? guests : party.min - 1) + 1)} disabled={guestsOk && guests >= party.max} className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-2xl transition hover:border-terracotta">+</button>
               </div>
@@ -188,7 +188,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
                 ))}
               </div>
 
-              <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-xl border border-ink/15 px-4 py-3 text-sm">
+              <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-sm border border-ink/15 px-4 py-3 text-sm">
                 <input type="checkbox" checked={transport} onChange={(e) => setTransport(e.target.checked)} className="mt-0.5 h-4 w-4 accent-[#C4663D]" />
                 <span>
                   <span className="font-medium">Add private transportation</span>
@@ -201,7 +201,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
                   <p className="text-sm font-medium">Rate</p>
                   <div className="mt-2 grid grid-cols-2 gap-2">
                     {([["general", "General"], ["destination", "Destination"]] as const).map(([v, label]) => (
-                      <label key={v} className={`cursor-pointer rounded-xl border px-4 py-3 text-center text-sm transition ${tier === v ? "border-terracotta bg-terracotta/10" : "border-ink/15"}`}>
+                      <label key={v} className={`cursor-pointer rounded-sm border px-4 py-3 text-center text-sm transition ${tier === v ? "border-terracotta bg-terracotta/10" : "border-ink/15"}`}>
                         <input type="radio" name="tier" value={v} checked={tier === v} onChange={() => setTier(v)} className="sr-only" />
                         {label}
                       </label>
@@ -211,7 +211,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
               )}
 
               {tooMany ? (
-                <div className="mt-6 rounded-xl bg-blush/30 p-4 text-sm">
+                <div className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">
                   Groups of more than {limit} are quoted by our team.
                   <WhatsAppLink message={waMessage} label="deposit_modal_large_group" className="btn-primary mt-3 w-full">Message our team</WhatsAppLink>
                 </div>
@@ -226,7 +226,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
           {step === 3 && quoteMode && (
             <motion.div key="s3q" {...slide} className="mt-6">
-              <div className="rounded-2xl bg-white p-5 text-sm shadow-sm">
+              <div className="rounded-sm bg-white p-5 text-sm shadow-sm">
                 <dl className="space-y-3">
                   <div className="flex justify-between gap-4"><dt className="text-ink/60">Date</dt><dd className="text-right font-medium">{pretty(date)}</dd></div>
                   <div className="flex justify-between gap-4"><dt className="text-ink/60">{party.label}</dt><dd className="text-right font-medium">{guests}</dd></div>
@@ -245,7 +245,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
           {step === 3 && !quoteMode && (
             <motion.form key="s3" onSubmit={submit} {...slide} className="mt-6 space-y-4">
-              <div className="rounded-2xl bg-white p-4 text-sm shadow-sm">
+              <div className="rounded-sm bg-white p-4 text-sm shadow-sm">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-ink/70">
                   <span>{pretty(date)}</span><span aria-hidden>·</span><span>{guests} {noun}</span>
                   <button type="button" onClick={() => setStep(2)} className="ml-auto text-terracotta underline">Change</button>
@@ -295,7 +295,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
                 <input name="terms" type="checkbox" required className="mt-1 h-4 w-4 accent-[#C4663D]" />
                 <span>I agree to the <Link href="/terms/" target="_blank" className="underline">Terms &amp; Conditions</Link>, including the cancellation policy.</span>
               </label>
-              {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+              {error && <p role="alert" className="rounded-sm bg-red-50 p-3 text-sm text-red-700">{error}</p>}
               <button type="submit" disabled={busy || !est} className="btn-primary w-full disabled:opacity-50">
                 {busy ? "Redirecting to secure payment…" : est ? `Pay deposit $${money(depositNow, depositNow % 1 ? 2 : 0)}` : "Preparing your quote…"}
               </button>

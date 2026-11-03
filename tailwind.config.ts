@@ -6,7 +6,9 @@ const config: Config = {
     extend: {
       colors: {
         cream: "#FBF6EF",
-        terracotta: { DEFAULT: "#C4663D", dark: "#A4512E" },
+        // "terracotta" now holds a refined bronze. Original brand value: #C4663D (dark #A4512E).
+        terracotta: { DEFAULT: "#9C6B43", dark: "#7E5330" },
+        champagne: "#E9D5B0",
         blush: "#E8B4A6",
         ink: "#2B2420",
       },

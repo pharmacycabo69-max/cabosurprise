@@ -78,7 +78,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
       })}
 
       {/* Light, depth and grain */}
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/35 to-ink/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-ink/15" />
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/50 to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(43,36,32,0.45)_100%)]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
@@ -91,17 +91,17 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
-          className="mb-6 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.3em] text-white/85"
+          className="mb-7 flex items-center gap-4 text-[11px] font-medium uppercase tracking-[0.34em] text-white/85"
         >
-          <span className="h-px w-10 bg-blush" />
+          <span className="h-px w-12 bg-champagne/80" />
           {eyebrow}
         </motion.div>
 
-        <h1 className="max-w-4xl font-serif text-[2.9rem] leading-[1.02] [text-shadow:0_2px_30px_rgb(0_0_0/0.4)] sm:text-6xl md:text-8xl">
+        <h1 className="max-w-4xl font-serif text-[2.8rem] font-light leading-[1.02] tracking-tight [text-shadow:0_2px_30px_rgb(0_0_0/0.35)] sm:text-6xl md:text-[5.5rem]">
           {words.map((w, i) => (
             <span key={i} className="mr-[0.25em] inline-block overflow-hidden pb-[0.12em] align-bottom">
               <motion.span
-                className={`inline-block ${i === words.length - 1 ? "italic text-blush" : ""}`}
+                className={`inline-block ${i === words.length - 1 ? "italic text-champagne" : ""}`}
                 initial={{ y: "110%", rotate: 3 }}
                 animate={{ y: 0, rotate: 0 }}
                 transition={{ duration: 1, delay: 0.25 + i * 0.09, ease: [0.22, 1, 0.36, 1] }}
@@ -116,7 +116,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.7 }}
-          className="mt-6 max-w-xl text-lg text-white/90 md:text-xl"
+          className="mt-7 max-w-xl text-lg font-light leading-relaxed text-white/90 md:text-xl"
         >
           {subtitle}
         </motion.p>
@@ -125,13 +125,13 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.9 }}
-          className="mt-9 flex flex-wrap items-center gap-3"
+          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5"
         >
-          <WhatsAppLink message={message} label={label} className="btn-primary !px-8 !py-4 text-lg">{cta}</WhatsAppLink>
+          <WhatsAppLink message={message} label={label} className="btn-light">{cta}</WhatsAppLink>
           {secondary && (
             <a
               href={secondary.href}
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/5 px-7 py-4 text-base text-white backdrop-blur-md transition hover:bg-white/15"
+              className="inline-flex items-center gap-2 border-b border-white/60 pb-1 text-[12px] font-medium uppercase tracking-[0.2em] text-white transition hover:border-champagne hover:text-champagne"
             >
               {secondary.label} <span aria-hidden>↓</span>
             </a>
