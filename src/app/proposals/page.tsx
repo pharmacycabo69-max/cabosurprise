@@ -40,10 +40,11 @@ export default function ProposalsPage() {
         cta="Plan my proposal"
         message="Hi, I'd like to plan a proposal in Cabo on [date]."
         label="proposals_hero"
-        photo="proposals-hero.jpg"
+        photos={[{ src: "proposals-hero.jpg", position: "50% 35%" }, { src: "proposal-ranch.jpg", position: "50% 40%" }, { src: "hero/proposals-3.jpg", position: "50% 55%" }]}
+        secondary={{ label: "See the three settings", href: "#settings" }}
       />
 
-      <section className="section">
+      <section id="settings" className="section scroll-mt-4">
         <Reveal>
           <p className="eyebrow">Three ways to ask</p>
           <h2 className="h2 max-w-2xl">Choose your setting.</h2>

@@ -42,7 +42,8 @@ export default function Home() {
         cta="Plan my surprise"
         message="Hi, I'd like to plan a surprise in Cabo on [date]."
         label="hero"
-        photo="hero.jpg"
+        photos={[{ src: "hero.jpg", position: "60% 40%" }, { src: "hero/home-2.jpg", position: "55% 50%" }, "hero/home-3.jpg", { src: "hero/home-4.jpg", position: "50% 60%" }]}
+        secondary={{ label: "See packages", href: "#packages" }}
       />
       <Packages />
       <Venues />

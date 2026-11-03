@@ -19,9 +19,9 @@ export default function ServicePage({ s }: { s: Service }) {
   return (
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
-      <Hero title={s.h1} subtitle={s.heroSubtitle} cta={s.cta} message={s.message} label={`${s.slug}_hero`} photo={s.heroPhoto} />
+      <Hero title={s.h1} subtitle={s.heroSubtitle} cta={s.cta} message={s.message} label={`${s.slug}_hero`} photos={s.heroPhotos ?? [s.heroPhoto]} secondary={{ label: "See packages", href: "#packages" }} />
 
-      <section className="section">
+      <section id="packages" className="section scroll-mt-4">
         <Reveal>
           <p className="max-w-2xl text-lg text-ink/75 md:text-xl">{s.intro}</p>
         </Reveal>

@@ -8,6 +8,7 @@ export type Service = {
   h1: string;
   intro: string;
   heroPhoto: string;
+  heroPhotos?: (string | { src: string; position?: string })[];
   heroSubtitle: string;
   cta: string;
   packageIds: string[];
@@ -30,6 +31,7 @@ export const services: Record<Service["slug"], Service> = {
     intro:
       "Their name in balloons, a cake and a room full of flowers, set up before they walk in. You enjoy the reveal while we handle every detail.",
     heroPhoto: "birthday/hero.jpg",
+    heroPhotos: [{ src: "hero/birthday-1.jpg", position: "50% 38%" }, "hero/birthday-2.jpg", "hero/birthday-3.jpg"],
     heroSubtitle: "Balloons, cake and flowers, ready before they walk in.",
     cta: "Plan the birthday",
     packageIds: ["birthday", "welcome", "mariachi"],
@@ -49,6 +51,7 @@ export const services: Record<Service["slug"], Service> = {
     intro:
       "Pink, loud and unforgettable. We style your villa or hotel room for the bride-to-be and her crew before the group arrives.",
     heroPhoto: "bachelorette/hero.jpg",
+    heroPhotos: [{ src: "hero/bachelorette-1.jpg", position: "50% 35%" }, { src: "hero/bachelorette-2.jpg", position: "50% 40%" }, "hero/bachelorette-3.jpg", "bachelorette/hero.jpg"],
     heroSubtitle: "Room decor and a bride-to-be setup, ready when your group arrives.",
     cta: "Plan the bachelorette",
     packageIds: ["bachelorette", "welcome", "mariachi"],
@@ -69,6 +72,7 @@ export const services: Record<Service["slug"], Service> = {
     intro:
       "Rose petals, candles and champagne, or a private chef dinner on your own terrace. We prepare the room or the table so you arrive to something special.",
     heroPhoto: "honeymoon/hero.jpg",
+    heroPhotos: ["honeymoon/hero.jpg", "venue-beach.jpg", "venue-yacht.jpg"],
     heroSubtitle: "Candlelight, petals and champagne, set up before you arrive.",
     cta: "Plan our night",
     packageIds: ["honeymoon", "anniversary", "welcome"],
@@ -88,6 +92,7 @@ export const services: Record<Service["slug"], Service> = {
     intro:
       "Pick a package, tell us your date and where you are staying. We set everything up at your villa, hotel, beach, yacht or sunset ranch.",
     heroPhoto: "packages/hero.jpg",
+    heroPhotos: [{ src: "packages/hero.jpg", position: "60% 40%" }, { src: "hero/birthday-1.jpg", position: "50% 38%" }, { src: "hero/home-2.jpg", position: "55% 50%" }],
     heroSubtitle: "Setups for every celebration, ready before you walk in.",
     cta: "Plan my surprise",
     packageIds: ["welcome", "birthday", "bachelorette", "honeymoon", "anniversary", "mariachi"],
