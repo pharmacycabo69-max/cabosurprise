@@ -12,8 +12,8 @@ export default function Packages() {
   return (
     <section id="packages" className="section scroll-mt-16 !pt-10 md:!pt-16">
       <Reveal>
-        <p className="eyebrow">Packages</p>
-        <h2 className="h2 max-w-3xl">Pick the moment. <em className="text-terracotta">We handle the magic.</em></h2>
+        <p className="eyebrow">Signature experiences</p>
+        <h2 className="h2 max-w-3xl">Six private experiences. <em className="text-terracotta">Fully customized.</em></h2>
       </Reveal>
 
       <div className="no-scrollbar -mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:flex-wrap md:px-0">

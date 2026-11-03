@@ -32,6 +32,9 @@ export const occasions = [
 ] as const;
 export type Occasion = (typeof occasions)[number];
 
+export type Party = { question: string; label: string; min: number; max: number; start: number; quick: number[] };
+export const defaultParty: Party = { question: "How many guests?", label: "Number of guests", min: 1, max: 999, start: 2, quick: [2, 10, 25, 50, 100] };
+
 export type Pkg = {
   id: string;
   name: string;
@@ -42,6 +45,14 @@ export type Pkg = {
   photoPosition?: string;
   /** Price depends on guest count and comes from the ranch price sheet (src/lib/quote.ts). */
   quoted?: boolean;
+  /** "per experience", "per night"... shown next to the price. */
+  unit?: string;
+  /** Deposit % to hold the date. Defaults to policy.depositPercent. */
+  depositPercent?: number;
+  /** false = "Request a Custom Quote" only; the online deposit stays off until prices are validated. Default true. */
+  payOnline?: boolean;
+  /** What the guest-count step asks. */
+  party?: Party;
   href: string;
   occasions: Occasion[];
 };
@@ -110,73 +121,94 @@ export const packages: Pkg[] = [
   },
 ];
 
-// The six products shown first on the home page and on /packages/.
-// PLACEHOLDER PRICE: every "from" is $50 USD until Sergio confirms the real prices.
-const PLACEHOLDER_FROM = 50;
-
+// The six signature products (home, /packages/ and one dedicated page each).
+// Prices are proposals: validate with suppliers before turning payOnline on.
 export const featuredPackages: Pkg[] = [
   {
-    id: "anniversary-dinner",
-    name: "Anniversary Dinner",
-    blurb: "A private chef-cooked dinner on your own terrace.",
-    includes: ["Private chef dinner", "Terrace table styling", "Candles & flowers"],
-    from: PLACEHOLDER_FROM,
+    id: "private-anniversary-dinner",
+    name: "Private Anniversary Dinner & Celebrations",
+    blurb: "A romantic private dinner for two, with chef, flowers and candlelight.",
+    includes: ["Private dinner for 2", "Chef", "Floral decoration and candles", "Setup and service"],
+    from: 2000,
+    unit: "per experience",
+    depositPercent: 50,
+    payOnline: false,
+    party: { question: "How many guests?", label: "Number of guests", min: 2, max: 30, start: 2, quick: [2, 6, 10, 20, 30] },
     photo: "anniversary.jpg",
-    href: "/anniversary-dinner/",
+    href: "/private-anniversary-dinner/",
     occasions: ["Anniversary", "Honeymoon", "Proposal", "Just Because"],
   },
   {
-    id: "beach-horse-photo-session",
-    name: "Beach Horse Photo Session",
-    blurb: "Golden-hour portraits with horses on the beach, filmed by a videographer.",
-    includes: ["1.5-hour session", "Horses", "Videographer"],
-    from: PLACEHOLDER_FROM,
+    id: "private-beach-horse-photoshoot",
+    name: "Private Beach Horse Photoshoot",
+    blurb: "A private 90-minute session on the beach with two horses and a professional photographer.",
+    includes: ["90-minute private session", "Two horses", "Professional photographer", "Coordination"],
+    from: 1450,
+    unit: "per session",
+    depositPercent: 50,
+    payOnline: false,
+    party: { question: "How many people will be in the session?", label: "People in the session", min: 1, max: 99, start: 2, quick: [1, 2, 3, 4, 6] },
     photo: "proposals-hero.jpg",
     photoPosition: "50% 35%",
-    href: "/beach-horse-photo-session/",
+    href: "/private-beach-horse-photoshoot/",
     occasions: ["Proposal", "Honeymoon", "Anniversary", "Just Because"],
   },
   {
-    id: "wedding-reception",
-    name: "Wedding Reception",
-    blurb: "Celebrate at Rancho McCoy with the ranch, furniture and six hours.",
-    includes: ["Ranch rental", "Furniture", "6 hours"],
-    from: PLACEHOLDER_FROM,
+    id: "ranch-wedding-reception",
+    name: "Exclusive Ranch Wedding Reception",
+    blurb: "Exclusive use of Rancho McCoy for six hours, with dinner, DJ, lighting and service.",
+    includes: ["Exclusive Rancho McCoy rental, 6 hours", "Furniture and decoration", "Dinner, DJ and lighting", "Service staff"],
+    from: 9500,
+    unit: "per event",
+    depositPercent: 40,
+    payOnline: false,
+    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 220, start: 50, quick: [40, 50, 80, 120, 220] },
     photo: "welcome-flowers.jpg",
     photoPosition: "50% 30%",
-    quoted: true,
-    href: "/wedding-reception/",
+    href: "/ranch-wedding-reception/",
     occasions: ["Wedding", "Anniversary"],
   },
   {
-    id: "ranch-two-cabins",
-    name: "Rancho McCoy: 2-Cabin Stay",
-    blurb: "Two cabins at the ranch in Cabo San Lucas, priced per night.",
-    includes: ["Two cabins", "Rancho McCoy, Cabo San Lucas", "Per night"],
-    from: PLACEHOLDER_FROM,
+    id: "ranch-cabin-stay",
+    name: "Private Ranch Cabin Stay",
+    blurb: "Two private cabins at Rancho McCoy for up to six guests.",
+    includes: ["Two private cabins", "Up to 6 guests in total", "Access to permitted ranch areas"],
+    from: 425,
+    unit: "per night",
+    depositPercent: 50,
+    payOnline: false,
+    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 6, start: 2, quick: [2, 4, 6] },
     photo: "venue-ranch.jpg",
     href: "/ranch-cabin-stay/",
     occasions: ["Wedding", "Bachelorette", "Honeymoon", "Birthday", "Just Because"],
   },
   {
-    id: "beach-horse-activity",
-    name: "Beach Horse Activity",
-    blurb: "A horseback experience on the beach in Los Cabos.",
-    includes: ["Horseback experience", "On the beach", "Details confirmed on WhatsApp"],
-    from: PLACEHOLDER_FROM,
+    id: "private-beach-horse-experience",
+    name: "Private Beach Horse Experience",
+    blurb: "A private experience for up to four participants, with four horses and a guide.",
+    includes: ["Up to 4 participants", "Four horses", "Guide and coordination"],
+    from: 1600,
+    unit: "per experience",
+    depositPercent: 50,
+    payOnline: false,
+    party: { question: "How many participants?", label: "Participants", min: 1, max: 4, start: 2, quick: [1, 2, 3, 4] },
     photo: "hero.jpg",
     photoPosition: "60% 40%",
-    href: "/beach-horse-activity/",
+    href: "/private-beach-horse-experience/",
     occasions: ["Birthday", "Bachelorette", "Honeymoon", "Just Because"],
   },
   {
-    id: "bachelorette-party",
-    name: "Bachelorette Party",
-    blurb: "Pink, loud and unforgettable. A room your whole crew walks into together.",
-    includes: ["Room decor", "Bride-to-be setup", "Custom balloons and signage"],
-    from: PLACEHOLDER_FROM,
+    id: "bachelorette-ranch-party",
+    name: "Cabo Bachelorette Ranch Party",
+    blurb: "A private ranch space with DJ and bartender, a starter package for five.",
+    includes: ["Private space at the ranch", "DJ and bartender", "Service staff", "Simple setup"],
+    from: 1200,
+    unit: "per group",
+    depositPercent: 50,
+    payOnline: false,
+    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 99, start: 5, quick: [5, 8, 10, 15, 20] },
     photo: "bachelorette.jpg",
-    href: "/bachelorette/",
+    href: "/bachelorette-ranch-party/",
     occasions: ["Bachelorette", "Birthday"],
   },
 ];
@@ -277,24 +309,26 @@ export const secretSteps = [
   { title: "A cue only you know", text: "You give a signal, we start the moment. Nothing happens early." },
 ];
 
-export const commonFaqs = [
+export const faqsFor = (depositPercent: number) => [
   {
     q: "How far in advance should I book?",
-    a: "We recommend two to three weeks, especially for weekends and sunset slots. Last-minute? Message us on WhatsApp and we will tell you what is possible.",
+    a: "We recommend booking as early as you can, especially for weekends and sunset slots. Last-minute? Message us on WhatsApp and we will tell you what is possible.",
   },
   {
-    q: "Can you set up inside my hotel room?",
-    a: "Yes. We coordinate with your hotel or villa so everything is ready before you arrive. Share the hotel name, the reservation name and your check-in time. Some hotels require approval, and we help arrange it.",
+    q: "Can you set up at my hotel or villa?",
+    a: "Where it applies, yes. We coordinate with your hotel, villa or residence so everything is ready. Share the name of the property and your dates. Some properties require approval, and we help arrange it.",
   },
   {
     q: "How do the deposit and payment work?",
-    a: `A ${policy.depositPercent}% deposit secures your date and the balance is due before the setup. We confirm exact amounts and payment options with you on WhatsApp. Full details are in our Terms.`,
+    a: `A ${depositPercent}% deposit secures your date. The balance and the cancellation conditions are set out in your contract. We confirm the exact amounts and payment options with you on WhatsApp.`,
   },
   {
-    q: "What if it rains at the beach?",
-    a: "Rain is rare in Los Cabos, but we watch the forecast. If conditions are not right, we move the setup to a covered spot, shift the time, or reschedule at no extra charge.",
+    q: "What if the weather changes?",
+    a: "Rain is rare in Los Cabos, but we watch the forecast. If conditions are not right, we adjust the plan with you: a covered spot, a different time or a new date.",
   },
 ];
+
+export const commonFaqs = faqsFor(policy.depositPercent);
 
 export const proposalFaqs = [
   ...commonFaqs,

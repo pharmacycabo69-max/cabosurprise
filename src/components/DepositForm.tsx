@@ -7,7 +7,7 @@ import { policy } from "@/config/site";
 const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
 
 export default function DepositForm({ initialItem }: { initialItem?: string }) {
-  const options = payableItems.filter((p) => !p.quoted); // quoted items (wedding reception) use the guest-count flow
+  const options = payableItems.filter((p) => !p.quoted && p.payOnline); // quoted items (wedding reception) use the guest-count flow
   const valid = initialItem === CUSTOM_ID || options.some((p) => p.id === initialItem);
   const [item, setItem] = useState(valid && initialItem ? initialItem : options[0].id);
   const [busy, setBusy] = useState(false);

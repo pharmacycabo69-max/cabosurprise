@@ -1,5 +1,7 @@
-// One landing page per featured product. Price, includes and the card come from featuredPackages (site.ts),
-// so updating a price there updates the card, this page and the deposit button.
+// One dedicated landing page per signature product. Price, unit, includes and deposit come from
+// featuredPackages (site.ts), so a price changes in one place: card, page, quote request and deposit.
+export type Option = { title: string; price?: string; text?: string };
+
 export type Product = {
   slug: string;
   path: string;
@@ -13,9 +15,12 @@ export type Product = {
   heroPhotos: (string | { src: string; position?: string })[];
   cta: string;
   message: string;
+  /** Shown above the price box, e.g. availability and permits. */
+  notice?: string;
+  optionsTitle?: string;
+  options?: Option[];
   goodToKnow: string[];
   faqExtra: { q: string; a: string }[];
-  quote?: { text: string; label: string };
   galleryTitle: string;
   gallery: string[];
   og: string;
@@ -25,132 +30,183 @@ const gal = (slug: string) => [1, 2, 3, 4].map((i) => `${slug}/gallery-${i}.jpg`
 
 export const products: Product[] = [
   {
-    slug: "anniversary-dinner",
-    path: "/anniversary-dinner/",
-    packageId: "anniversary-dinner",
-    metaTitle: "Anniversary Dinner in Cabo | Private Chef Dinner | Cabo Surprise",
+    slug: "private-anniversary-dinner",
+    path: "/private-anniversary-dinner/",
+    packageId: "private-anniversary-dinner",
+    metaTitle: "Private Anniversary Dinner in Cabo | Chef, Flowers & Candles | Cabo Surprise",
     metaDescription:
-      "A private chef-cooked anniversary dinner on your own terrace in Los Cabos, with the table styled with candles and flowers. Plan it on WhatsApp.",
-    keywords: ["anniversary dinner cabo", "private chef dinner cabo", "romantic dinner los cabos"],
-    h1: "Anniversary dinner in Cabo.",
+      "A private romantic dinner for two in Los Cabos with a chef, floral decoration, candles, setup and service. Custom celebrations for 6 to 30 guests.",
+    keywords: ["private anniversary dinner cabo", "private chef dinner los cabos", "romantic dinner cabo san lucas"],
+    h1: "Private anniversary dinner in Cabo.",
     intro:
-      "A private dinner cooked by a chef on your own terrace, with the table styled with candles and flowers. We set everything up before you sit down.",
-    heroSubtitle: "Private chef, styled table, candlelight.",
+      "A romantic private dinner for two, with a chef, floral decoration, candles, full setup and service. Celebrating with more people? We design a custom package for 6 to 30 guests.",
+    heroSubtitle: "A chef, flowers and candlelight, just for you.",
     heroPhotos: [{ src: "anniversary.jpg", position: "50% 40%" }, "venue-villa.jpg", "honeymoon/hero.jpg"],
-    cta: "Plan our dinner",
-    message: "Hi, I'd like to plan an anniversary dinner in Cabo on [date].",
+    cta: "Request a custom quote",
+    message: "Hi, I'd like a custom quote for a private anniversary dinner in Cabo on [date].",
+    optionsTitle: "Celebrations for larger groups",
+    options: [
+      {
+        title: "Groups of 6 to 30 guests",
+        price: "Custom packages from $3,500–$4,500 USD",
+        text: "Anniversaries, milestone birthdays and private celebrations, designed around your guest list.",
+      },
+    ],
     goodToKnow: [
-      "Held on your terrace at your villa or hotel.",
+      "The starting price is per experience, for a dinner for two.",
       "Tell us your date, your group size and any food preferences or allergies.",
-      "We confirm the menu, the price and the setup details with you on WhatsApp.",
+      "We confirm the menu, the details and your custom quote with you on WhatsApp.",
     ],
-    faqExtra: [{ q: "Can the dinner be on my hotel terrace?", a: "Yes, as long as your hotel or villa allows a private chef and a styled table. Send us the name and we coordinate with them." }],
+    faqExtra: [{ q: "Is the price per person?", a: "No. The starting price is per experience, for a private dinner for two. For groups of 6 to 30 guests we prepare a custom package." }],
     galleryTitle: "Dinner setups",
-    gallery: gal("anniversary-dinner"),
-    og: "og-anniversary-dinner.jpg",
+    gallery: gal("private-anniversary-dinner"),
+    og: "og-private-anniversary-dinner.jpg",
   },
   {
-    slug: "beach-horse-photo-session",
-    path: "/beach-horse-photo-session/",
-    packageId: "beach-horse-photo-session",
-    metaTitle: "Beach Horse Photo Session in Cabo | Cabo Surprise",
+    slug: "private-beach-horse-photoshoot",
+    path: "/private-beach-horse-photoshoot/",
+    packageId: "private-beach-horse-photoshoot",
+    metaTitle: "Private Beach Horse Photoshoot in Los Cabos | Cabo Surprise",
     metaDescription:
-      "A 1.5-hour photo session on the beach in Los Cabos with horses and a videographer. Message us your date to book.",
-    keywords: ["horse photo session cabo", "beach horse photoshoot los cabos", "cabo beach photo session"],
-    h1: "Beach horse photo session in Cabo.",
+      "A private 90-minute photoshoot on the beach in Los Cabos with two horses, a professional photographer and full coordination.",
+    keywords: ["beach horse photoshoot cabo", "horse photo session los cabos", "private photoshoot cabo san lucas"],
+    h1: "Private beach horse photoshoot.",
     intro:
-      "A 1.5-hour portrait session on the beach with horses and a videographer. Message us your date and we confirm the time, the spot and the details.",
-    heroSubtitle: "Horses, the Pacific and a videographer.",
+      "A private 90-minute session on the beach with two horses, a professional photographer and full coordination, from planning to the final frame.",
+    heroSubtitle: "Two horses, the Pacific and a professional photographer.",
     heroPhotos: [{ src: "proposals-hero.jpg", position: "50% 35%" }, { src: "hero.jpg", position: "60% 40%" }, "proposal-ranch.jpg"],
-    cta: "Book the session",
-    message: "Hi, I'd like to book a beach horse photo session in Cabo on [date].",
+    cta: "Request a custom quote",
+    message: "Hi, I'd like a custom quote for a private beach horse photoshoot in Cabo on [date].",
     goodToKnow: [
-      "1.5 hours on the beach, with horses and a videographer.",
-      "Prefer the ranch? A 1-hour ranch session with horses and a videographer can be added to your Rancho McCoy quote.",
-      "We confirm the time of day, the beach and what you receive on WhatsApp.",
+      "The starting price is per session: 90 minutes, two horses, a professional photographer and coordination.",
+      "Tell us your date, how many people will be photographed and the look you have in mind.",
+      "We confirm the time of day, the location and the details with you on WhatsApp.",
     ],
-    faqExtra: [{ q: "Can I book the session at the ranch instead?", a: "Yes. A 1-hour ranch session with horses and a videographer is available. Ask us, or add it in the ranch quote calculator." }],
-    quote: { text: "Planning an event at the ranch? Add photo sessions to your quote.", label: "Build my ranch quote" },
+    faqExtra: [{ q: "How long is the session?", a: "The private session lasts 90 minutes, with two horses and a professional photographer." }],
     galleryTitle: "Sessions with horses",
-    gallery: gal("beach-horse-photo-session"),
-    og: "og-beach-horse-photo-session.jpg",
+    gallery: gal("private-beach-horse-photoshoot"),
+    og: "og-private-beach-horse-photoshoot.jpg",
   },
   {
-    slug: "wedding-reception",
-    path: "/wedding-reception/",
-    packageId: "wedding-reception",
-    metaTitle: "Wedding Reception at Rancho McCoy | Los Cabos | Cabo Surprise",
+    slug: "ranch-wedding-reception",
+    path: "/ranch-wedding-reception/",
+    packageId: "ranch-wedding-reception",
+    metaTitle: "Exclusive Ranch Wedding Reception in Los Cabos | Rancho McCoy | Cabo Surprise",
     metaDescription:
-      "Host your wedding reception at Rancho McCoy in Cabo San Lucas: ranch, furniture and 6 hours, for up to 199 guests. Build an estimate online.",
-    keywords: ["wedding reception cabo", "ranch wedding venue los cabos", "rustic wedding venue cabo san lucas"],
-    h1: "Wedding reception at Rancho McCoy.",
+      "Host your wedding reception with exclusive use of Rancho McCoy in Cabo San Lucas for 6 hours: furniture, decoration, dinner, DJ, lighting and service. Up to 220 guests.",
+    keywords: ["ranch wedding reception cabo", "rustic wedding venue cabo san lucas", "los cabos ranch wedding venue"],
+    h1: "Exclusive ranch wedding reception.",
     intro:
-      "Celebrate at the ranch: the venue, the furniture and six hours are included, with options for dinner, open bar, staff, music and more.",
-    heroSubtitle: "The ranch, the furniture and six hours.",
+      "Exclusive use of Rancho McCoy for six hours, with furniture, decoration, dinner, DJ, lighting and service staff. The starter package is designed for approximately 40 to 50 guests, and the ranch welcomes up to 220.",
+    heroSubtitle: "The whole ranch, for your celebration.",
     heroPhotos: [{ src: "welcome-flowers.jpg", position: "50% 35%" }, { src: "hero/proposals-3.jpg", position: "50% 55%" }, "venue-ranch.jpg"],
-    cta: "Plan my reception",
-    message: "Hi, I'd like to ask about a wedding reception at Rancho McCoy on [date] for [number] guests.",
-    goodToKnow: [
-      "Ranch rental, furniture and 6 hours, priced by guest count: 1–30, 31–60, 61–90, 91–120, 121–150 and 151–199.",
-      "For more than 199 guests our team prepares a custom quote.",
-      "Options: one or two cabins, extra hours, a two-horse experience, ranch or beach photo sessions, audio equipment, dinner, open bar, crossback chairs and staff.",
-      "Decoration and lighting are quoted separately with our team.",
+    cta: "Request a custom quote",
+    message: "Hi, I'd like a custom quote for a wedding reception at Rancho McCoy on [date] for [number] guests.",
+    optionsTitle: "Packages",
+    options: [
+      { title: "Starter package", price: "From $9,500 USD", text: "Approximately 40 to 50 guests, 6 hours of exclusive use of the ranch." },
+      { title: "Premium packages", price: "From $25,000 USD", text: "A fuller production for larger celebrations." },
+      { title: "Premium packages", price: "From $50,000 USD", text: "Extended design, entertainment and service." },
+      { title: "Custom productions", price: "Above $75,000 USD", text: "A fully bespoke event, designed with our team." },
     ],
-    faqExtra: [{ q: "How do I get a price for my guest count?", a: "Use the ranch quote calculator for an instant estimate, then send it to us on WhatsApp or hold your date with a deposit." }],
-    quote: { text: "Choose your guest count and extras to see an instant estimate.", label: "Build my ranch quote" },
+    goodToKnow: [
+      "Maximum capacity: 220 guests.",
+      "The starting price is per event.",
+      "Every wedding is customized. We confirm your guest count, date and details, and prepare your quote on WhatsApp.",
+    ],
+    faqExtra: [
+      { q: "How many guests can the ranch host?", a: "Up to 220 guests. The starter package is designed for approximately 40 to 50 guests." },
+      { q: "What is included in the starter package?", a: "Exclusive use of Rancho McCoy for 6 hours, furniture, decoration, dinner, DJ, lighting and service staff." },
+    ],
     galleryTitle: "At the ranch",
-    gallery: gal("wedding-reception"),
-    og: "og-wedding-reception.jpg",
+    gallery: gal("ranch-wedding-reception"),
+    og: "og-ranch-wedding-reception.jpg",
   },
   {
     slug: "ranch-cabin-stay",
     path: "/ranch-cabin-stay/",
-    packageId: "ranch-two-cabins",
-    metaTitle: "Rancho McCoy 2-Cabin Stay | Cabo San Lucas | Cabo Surprise",
+    packageId: "ranch-cabin-stay",
+    metaTitle: "Private Ranch Cabin Stay in Cabo San Lucas | Rancho McCoy | Cabo Surprise",
     metaDescription:
-      "Stay in two cabins at Rancho McCoy in Cabo San Lucas, priced per night. Message us your dates to check availability.",
-    keywords: ["rancho mccoy cabins", "ranch stay cabo san lucas", "cabo ranch cabin"],
-    h1: "Stay in two cabins at Rancho McCoy.",
+      "Two private cabins at Rancho McCoy in Cabo San Lucas for up to 6 guests, with access to permitted areas of the ranch. Priced per night.",
+    keywords: ["rancho mccoy cabins", "ranch stay cabo san lucas", "private cabin cabo"],
+    h1: "Private ranch cabin stay.",
     intro:
-      "Two cabins at the ranch in Cabo San Lucas, priced per night. Message us your dates and we confirm availability and details.",
-    heroSubtitle: "Two cabins, one ranch, per night.",
+      "Two private cabins at Rancho McCoy in Cabo San Lucas for up to six guests, with access to the permitted areas of the ranch.",
+    heroSubtitle: "Two private cabins, one ranch.",
     heroPhotos: [{ src: "venue-ranch.jpg", position: "50% 40%" }, "hero/proposals-3.jpg", "hero/proposals-4.jpg"],
-    cta: "Check availability",
-    message: "Hi, I'd like to ask about the 2-cabin stay at Rancho McCoy for [dates], [number] guests.",
+    cta: "Request a custom quote",
+    message: "Hi, I'd like a custom quote for a stay in the two cabins at Rancho McCoy for [dates], [number] guests.",
     goodToKnow: [
-      "Two cabins at Rancho McCoy, Cabo San Lucas. Priced per night.",
-      "Share your dates and the number of guests.",
-      "We confirm availability, check-in details and what is included on WhatsApp.",
+      "The starting price is per night, for both cabins.",
+      "Total capacity: up to 6 guests.",
+      "Share your dates and the number of guests. We confirm availability and the details on WhatsApp.",
     ],
-    faqExtra: [{ q: "Can I add the cabins to an event at the ranch?", a: "Yes. One or two cabins can be added to a ranch event quote." }],
-    quote: { text: "Planning an event? Add the cabins to your ranch quote.", label: "Build my ranch quote" },
+    faqExtra: [
+      { q: "How many people fit in the cabins?", a: "The two cabins host up to 6 guests in total." },
+      { q: "Is the price per person?", a: "No. The starting price is per night for the two private cabins." },
+    ],
     galleryTitle: "The ranch",
     gallery: gal("ranch-cabin-stay"),
     og: "og-ranch-cabin-stay.jpg",
   },
   {
-    slug: "beach-horse-activity",
-    path: "/beach-horse-activity/",
-    packageId: "beach-horse-activity",
-    metaTitle: "Beach Horseback Activity in Los Cabos | Cabo Surprise",
+    slug: "private-beach-horse-experience",
+    path: "/private-beach-horse-experience/",
+    packageId: "private-beach-horse-experience",
+    metaTitle: "Private Beach Horse Experience in Los Cabos | Cabo Surprise",
     metaDescription:
-      "A horseback experience on the beach in Los Cabos. Message us your date and group size to book.",
-    keywords: ["horseback riding cabo", "beach horse ride los cabos", "cabo horse activity"],
-    h1: "Horses on the beach in Cabo.",
+      "A private beach horse experience in Los Cabos for up to 4 participants, with four horses, a guide and full coordination. Subject to availability and operator confirmation.",
+    keywords: ["beach horseback riding cabo", "private horse experience los cabos", "cabo beach horse ride"],
+    h1: "Private beach horse experience.",
     intro:
-      "A horseback experience on the beach in Los Cabos. Message us your date and group size and we confirm the details.",
-    heroSubtitle: "A horseback experience by the sea.",
+      "A private experience on the beach for up to four participants, with four horses, a guide and full coordination.",
+    heroSubtitle: "Four horses, a guide and the open beach.",
     heroPhotos: [{ src: "hero.jpg", position: "60% 40%" }, { src: "proposals-hero.jpg", position: "50% 35%" }, "proposal-ranch.jpg"],
-    cta: "Book the activity",
-    message: "Hi, I'd like to book the beach horse activity in Cabo on [date] for [number] people.",
+    cta: "Request a custom quote",
+    message: "Hi, I'd like a custom quote for a private beach horse experience in Cabo on [date] for [number] participants.",
+    notice: "This activity is subject to availability, permits and confirmation by the operator.",
     goodToKnow: [
-      "Horseback experience on the beach in Los Cabos.",
-      "Tell us your date, how many people ride and their experience level.",
-      "We confirm the time, duration and price on WhatsApp.",
+      "The starting price is per experience, for a group of up to 4 participants.",
+      "Tell us your date and how many people will ride.",
+      "We confirm the time, the location and the details with you on WhatsApp.",
     ],
-    faqExtra: [{ q: "Do I need riding experience?", a: "Tell us your group's experience level when you message us and we advise you on the best option." }],
+    faqExtra: [{ q: "How many people can join?", a: "The private experience is for a group of up to 4 participants, with four horses and a guide." }],
     galleryTitle: "Horses in Cabo",
-    gallery: gal("beach-horse-activity"),
-    og: "og-beach-horse-activity.jpg",
+    gallery: gal("private-beach-horse-experience"),
+    og: "og-private-beach-horse-experience.jpg",
+  },
+  {
+    slug: "bachelorette-ranch-party",
+    path: "/bachelorette-ranch-party/",
+    packageId: "bachelorette-ranch-party",
+    metaTitle: "Cabo Bachelorette Ranch Party | Private Ranch Space | Cabo Surprise",
+    metaDescription:
+      "A private bachelorette party at the ranch in Los Cabos: private space, DJ, bartender, service staff and a simple setup. Add themed decoration, drinks, horses, photography and catering.",
+    keywords: ["cabo bachelorette ranch party", "bachelorette party cabo san lucas", "private bachelorette cabo"],
+    h1: "Cabo bachelorette ranch party.",
+    intro:
+      "A private ranch space for your crew, with a DJ, a bartender, service staff and a simple setup. The starter package is designed for 5 guests, and we customize it from there.",
+    heroSubtitle: "Your own ranch, your own party.",
+    heroPhotos: [{ src: "hero/bachelorette-1.jpg", position: "50% 35%" }, { src: "hero/bachelorette-2.jpg", position: "50% 40%" }, "hero/bachelorette-3.jpg"],
+    cta: "Request a custom quote",
+    message: "Hi, I'd like a custom quote for a bachelorette ranch party in Cabo on [date] for [number] guests.",
+    optionsTitle: "Add extras",
+    options: [
+      { title: "Themed decoration" },
+      { title: "Drinks" },
+      { title: "Horses" },
+      { title: "Photography" },
+      { title: "Catering" },
+    ],
+    goodToKnow: [
+      "The starting price is per group, for a starter package for 5 guests.",
+      "Tell us your date, your group size and the vibe you want.",
+      "We customize the package and confirm your quote on WhatsApp.",
+    ],
+    faqExtra: [{ q: "Is the price per person?", a: "No. The starting price is per group, for a starter package for 5 guests. We customize it for larger groups." }],
+    galleryTitle: "Celebrations at the ranch",
+    gallery: gal("bachelorette-ranch-party"),
+    og: "og-bachelorette-ranch-party.jpg",
   },
 ];

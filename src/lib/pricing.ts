@@ -27,6 +27,7 @@ const bad = (error: string, status = 400): Result => ({ ok: false, error, status
 export function depositFor(itemId: string, guestsRaw: unknown, tierRaw: unknown, rate: number | null): Result {
   const item = payableItems.find((p) => p.id === itemId);
   if (!item) return bad("Please choose a package.");
+  if (!item.payOnline) return bad("Online deposits are not available for this experience yet. Please request a custom quote.", 403);
 
   const g = Number(guestsRaw);
   const guests = guestsRaw === undefined || guestsRaw === null || guestsRaw === "" ? null : g;

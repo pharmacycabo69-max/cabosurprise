@@ -30,7 +30,7 @@ const jsonLd = {
   image: `${site.url}/photos/og.jpg`,
   telephone: "+526242261023",
   areaServed: { "@type": "AdministrativeArea", name: "Los Cabos, Baja California Sur, Mexico" },
-  priceRange: "$190–$590",
+  priceRange: "$425–$9,500",
   sameAs: [site.instagram],
 };
 

@@ -24,12 +24,12 @@ export default function PackageCard({ p, linked = true }: { p: Pkg; linked?: boo
         <Link href={p.href} onClick={() => trackPackage(p.name)} aria-label={`${p.name}: view details`} className="absolute inset-0 z-10" />
       )}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-6 text-white md:p-7">
-        <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-blush">From ${p.from.toLocaleString("en-US")} USD</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-blush">From ${p.from.toLocaleString("en-US")} USD{p.unit ? ` · ${p.unit}` : ""}</p>
         <h3 className="mt-2 font-serif text-3xl leading-[1.05]">{p.name}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-white/80">{p.includes.join(" · ")}</p>
+        <p className="mt-2 text-sm leading-relaxed text-white/80">{p.includes.slice(0, 3).join(" · ")}</p>
         <div className="pointer-events-auto mt-5 flex flex-wrap gap-2">
           <DepositLink item={p.id} className="btn-primary !px-5 !py-2.5 text-sm">
-            {p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`}
+            {p.payOnline === false ? "Request a Custom Quote" : p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`}
           </DepositLink>
           <WhatsAppLink
             label={`package_${p.id}`}

@@ -4,15 +4,12 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { payableItems } from "@/config/payments";
-import { policy } from "@/config/site";
 import { MAX_GUESTS } from "@/lib/quote";
 import Calendar from "./Calendar";
 import WhatsAppLink from "./WhatsAppLink";
 
 const input = "w-full rounded-xl border border-ink/20 bg-white px-4 py-3 outline-none focus:border-terracotta";
 const pad = (n: number) => String(n).padStart(2, "0");
-const MAX_PARTY = 999;
-const QUICK = [2, 10, 25, 50, 100];
 const money = (n: number, d = 2) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
 // Earliest selectable day: tomorrow in the visitor's local time (always valid for the server's UTC check).
@@ -36,13 +33,13 @@ type Estimate = {
 };
 type Tier = "general" | "destination" | "";
 
-const TITLES = ["Choose your date", "How many guests?", "Your details"];
 
 export default function DepositModal({ item, onClose }: { item: string; onClose: () => void }) {
   const it = payableItems.find((p) => p.id === item);
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [date, setDate] = useState("");
-  const [guestsText, setGuestsText] = useState("2");
+  const [guestsText, setGuestsText] = useState(String(it?.party.start ?? 2));
+  const [transport, setTransport] = useState(false);
   const [tier, setTier] = useState<Tier>("");
   const [est, setEst] = useState<Estimate | null>(null);
   const [estError, setEstError] = useState("");
@@ -50,11 +47,14 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
   const [error, setError] = useState("");
   const min = tomorrow();
 
+  const party = it?.party ?? { question: "How many guests?", label: "Number of guests", min: 1, max: 999, start: 2, quick: [2, 10, 25, 50, 100] };
+  const quoteMode = !!it && !it.payOnline; // "Request a Custom Quote": no payment, ends on WhatsApp
   const guests = Number(guestsText);
   const quoted = !!it?.quoted;
-  const limit = quoted ? MAX_GUESTS : MAX_PARTY;
+  const limit = quoted ? Math.min(MAX_GUESTS, party.max) : party.max;
   const tooMany = Number.isInteger(guests) && guests > limit;
-  const guestsOk = Number.isInteger(guests) && guests >= 1 && guests <= limit;
+  const guestsOk = Number.isInteger(guests) && guests >= party.min && guests <= limit;
+  const TITLES = ["Choose your date", party.question, quoteMode ? "Review your request" : "Your details"];
   const canContinue = guestsOk && (!quoted || tier !== "");
 
   useEffect(() => {
@@ -70,12 +70,13 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
   if (!it) return null;
 
-  const setGuests = (n: number) => setGuestsText(String(Math.max(1, Math.min(MAX_PARTY, n))));
+  const setGuests = (n: number) => setGuestsText(String(Math.max(party.min, Math.min(party.max, n))));
 
   async function goToDetails() {
     setEst(null);
     setEstError("");
     setStep(3);
+    if (quoteMode) return;
     try {
       const res = await fetch("/api/estimate/", {
         method: "POST",
@@ -100,7 +101,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          item, date, guests, tier: tier || undefined,
+          item, date, guests, tier: tier || undefined, transport,
           name: f.get("name"), email: f.get("email"), venue: f.get("venue"), company: f.get("company"),
           terms: f.get("terms") === "on",
         }),
@@ -116,7 +117,8 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
   const slide = { initial: { opacity: 0, x: 24 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -24 }, transition: { duration: 0.2 } };
   const depositNow = est ? est.depositUsd : it.deposit;
-  const waMessage = `Hi, I'd like a custom quote for ${it.name} on ${date ? pretty(date) : "[date]"} for ${guestsText} guests.`;
+  const waMessage = `Hi, I'd like a custom quote for ${it.name} on ${date ? pretty(date) : "[date]"} for ${guestsText} ${party.label.toLowerCase().includes("participant") ? "participants" : party.label.toLowerCase().includes("people") ? "people" : "guests"}${transport ? ", with private transportation from my hotel, villa or residence" : ""}.`;
+  const noun = guests === 1 ? "guest" : "guests";
 
   return createPortal(
     <motion.div
@@ -138,7 +140,11 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-terracotta">Step {step} of 3 · {TITLES[step - 1]}</p>
             <h2 className="mt-2 font-serif text-2xl leading-tight">{it.name}</h2>
-            {!quoted && step < 3 && <p className="mt-1 text-sm text-ink/65">Deposit today ${it.deposit.toLocaleString("en-US")} USD ({policy.depositPercent}%)</p>}
+            {quoteMode ? (
+              <p className="mt-1 text-sm text-ink/65">From ${it.from.toLocaleString("en-US")} USD{it.unit ? ` · ${it.unit}` : ""}</p>
+            ) : (
+              !quoted && step < 3 && <p className="mt-1 text-sm text-ink/65">Deposit today ${it.deposit.toLocaleString("en-US")} USD ({it.depositPercent}%)</p>
+            )}
           </div>
           <button onClick={onClose} aria-label="Close" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink/15 text-lg transition hover:border-terracotta">×</button>
         </div>
@@ -164,23 +170,31 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
                 <button type="button" onClick={() => setStep(1)} className="ml-1 text-terracotta underline">Change</button>
               </p>
 
-              <p className="mt-6 text-center text-sm font-medium">Number of guests</p>
+              <p className="mt-6 text-center text-sm font-medium">{party.label}</p>
               <div className="mt-3 flex items-center justify-center gap-4">
-                <button type="button" aria-label="Fewer guests" onClick={() => setGuests((guestsOk ? guests : 1) - 1)} disabled={guestsOk && guests <= 1} className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-2xl transition hover:border-terracotta disabled:opacity-30">−</button>
+                <button type="button" aria-label="Fewer" onClick={() => setGuests((guestsOk ? guests : party.min) - 1)} disabled={guestsOk && guests <= party.min} className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-2xl transition hover:border-terracotta disabled:opacity-30">−</button>
                 <input
-                  aria-label="Number of guests"
+                  aria-label={party.label}
                   inputMode="numeric"
                   value={guestsText}
                   onChange={(e) => setGuestsText(e.target.value.replace(/\D/g, "").slice(0, 3))}
                   className="w-28 rounded-2xl border border-ink/20 bg-white py-3 text-center font-serif text-4xl outline-none focus:border-terracotta"
                 />
-                <button type="button" aria-label="More guests" onClick={() => setGuests((guestsOk ? guests : 0) + 1)} className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-2xl transition hover:border-terracotta">+</button>
+                <button type="button" aria-label="More" onClick={() => setGuests((guestsOk ? guests : party.min - 1) + 1)} disabled={guestsOk && guests >= party.max} className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-2xl transition hover:border-terracotta">+</button>
               </div>
               <div className="mt-4 flex flex-wrap justify-center gap-2">
-                {QUICK.map((n) => (
+                {party.quick.map((n) => (
                   <button key={n} type="button" onClick={() => setGuests(n)} className={`rounded-full border px-4 py-1.5 text-sm transition ${guests === n ? "border-ink bg-ink text-cream" : "border-ink/20 text-ink/70 hover:border-ink"}`}>{n}</button>
                 ))}
               </div>
+
+              <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-xl border border-ink/15 px-4 py-3 text-sm">
+                <input type="checkbox" checked={transport} onChange={(e) => setTransport(e.target.checked)} className="mt-0.5 h-4 w-4 accent-[#C4663D]" />
+                <span>
+                  <span className="font-medium">Add private transportation</span>
+                  <span className="block text-ink/60">From your hotel, villa or residence. Priced by location, passengers and vehicle type.</span>
+                </span>
+              </label>
 
               {quoted && (
                 <div className="mt-6">
@@ -198,23 +212,42 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
 
               {tooMany ? (
                 <div className="mt-6 rounded-xl bg-blush/30 p-4 text-sm">
-                  For more than {limit} guests our team prepares a custom quote.
+                  Groups of more than {limit} are quoted by our team.
                   <WhatsAppLink message={waMessage} label="deposit_modal_large_group" className="btn-primary mt-3 w-full">Message our team</WhatsAppLink>
                 </div>
               ) : (
                 <button type="button" disabled={!canContinue} onClick={goToDetails} className="btn-primary mt-6 w-full disabled:opacity-40">
-                  {quoted ? "See my quote" : "Continue"}
+                  {quoted ? "See my quote" : quoteMode ? "Review my request" : "Continue"}
                 </button>
               )}
               <button type="button" onClick={() => setStep(1)} className="mt-3 w-full text-center text-sm text-ink/60 hover:text-ink">← Back</button>
             </motion.div>
           )}
 
-          {step === 3 && (
+          {step === 3 && quoteMode && (
+            <motion.div key="s3q" {...slide} className="mt-6">
+              <div className="rounded-2xl bg-white p-5 text-sm shadow-sm">
+                <dl className="space-y-3">
+                  <div className="flex justify-between gap-4"><dt className="text-ink/60">Date</dt><dd className="text-right font-medium">{pretty(date)}</dd></div>
+                  <div className="flex justify-between gap-4"><dt className="text-ink/60">{party.label}</dt><dd className="text-right font-medium">{guests}</dd></div>
+                  <div className="flex justify-between gap-4"><dt className="text-ink/60">Private transportation</dt><dd className="text-right font-medium">{transport ? "Requested" : "Not requested"}</dd></div>
+                  <div className="flex justify-between gap-4 border-t border-ink/10 pt-3"><dt className="text-ink/60">Starting price</dt><dd className="text-right font-serif text-lg">From ${it.from.toLocaleString("en-US")} USD</dd></div>
+                </dl>
+              </div>
+              <p className="mt-4 text-sm text-ink/65">
+                We will confirm availability, your final price and the details with you on WhatsApp. Packages are customized to your needs.
+              </p>
+              <WhatsAppLink message={waMessage} label={`quote_request_${it.id}`} packageName={it.name} className="btn-primary mt-5 w-full">Request my custom quote on WhatsApp</WhatsAppLink>
+              <button type="button" onClick={() => setStep(2)} className="mt-3 w-full text-center text-sm text-ink/60 hover:text-ink">← Back</button>
+              <p className="mt-3 text-center text-xs text-ink/50">No payment now. This opens WhatsApp with your details ready to send.</p>
+            </motion.div>
+          )}
+
+          {step === 3 && !quoteMode && (
             <motion.form key="s3" onSubmit={submit} {...slide} className="mt-6 space-y-4">
               <div className="rounded-2xl bg-white p-4 text-sm shadow-sm">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-ink/70">
-                  <span>{pretty(date)}</span><span aria-hidden>·</span><span>{guests} {guests === 1 ? "guest" : "guests"}</span>
+                  <span>{pretty(date)}</span><span aria-hidden>·</span><span>{guests} {noun}</span>
                   <button type="button" onClick={() => setStep(2)} className="ml-auto text-terracotta underline">Change</button>
                 </div>
                 {estError ? (
@@ -235,7 +268,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
                     <div className="mt-3 flex justify-between border-t border-ink/10 pt-3 font-serif text-lg"><span>Estimated total</span><span>${money(est.totalMxn ?? 0)} MXN</span></div>
                   </>
                 ) : (
-                  <p className="mt-3 text-ink/70">Starting price from ${it.from.toLocaleString("en-US")} USD. We confirm the final quote for {guests} {guests === 1 ? "guest" : "guests"} with you on WhatsApp.</p>
+                  <p className="mt-3 text-ink/70">Starting price from ${it.from.toLocaleString("en-US")} USD. We confirm the final quote for {guests} {noun} with you on WhatsApp.</p>
                 )}
                 {est && (
                   <div className="mt-3 flex items-baseline justify-between border-t border-ink/10 pt-3 text-terracotta">

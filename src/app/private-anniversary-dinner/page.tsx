@@ -2,7 +2,7 @@ import ProductPage from "@/components/ProductPage";
 import { products } from "@/config/products";
 import { pageMeta } from "@/lib/seo";
 
-const product = products.find((p) => p.slug === "beach-horse-activity")!;
+const product = products.find((p) => p.slug === "private-anniversary-dinner")!;
 
 export const metadata = pageMeta({
   title: product.metaTitle,

@@ -24,21 +24,16 @@ export default function Page() {
         {
           h: "Deposit and payment",
           p: [
-            `A ${policy.depositPercent}% deposit secures your date. The balance is due before the setup. We confirm the amounts and accepted payment methods with you on WhatsApp.`,
-            "For events at Rancho McCoy, the deposit to hold the date is 40% of the quoted total, which includes a 4% service fee. Venue prices are quoted in Mexican pesos and the deposit is charged in US dollars at the exchange rate shown when you pay.",
-            "You can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
+            "Prices are published in US dollars. A deposit secures your date: 40% of the total for the Exclusive Ranch Wedding Reception, and 50% for private experiences and accommodation. We confirm the amounts and the accepted payment methods with you on WhatsApp.",
+            "The balance and the cancellation and refund conditions are set out in the contract for your booking. All services are subject to availability, and packages are customized to your needs. Destination rates may apply and are confirmed in your custom quote.",
+            "Where online payment is available, you can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
+            "For ranch estimates built with our quote calculator, prices are shown in Mexican pesos and the deposit is charged in US dollars at the exchange rate shown when you pay.",
           ],
         },
         {
-          h: "Changing your date",
+          h: "Changes and cancellations",
           p: [
-            `You can move your date free of charge with at least ${policy.freeChangeDays} days' notice, subject to our availability and that of the suppliers involved. Later changes may carry extra costs.`,
-          ],
-        },
-        {
-          h: "Cancellations and refunds",
-          p: [
-            `If you cancel more than ${policy.fullRefundDays} days before the event, we refund your deposit. Between ${policy.freeChangeDays} and ${policy.fullRefundDays} days before, the deposit is credited to a new date within 12 months. Within ${policy.freeChangeDays} days, or once flowers, cakes and other custom items have been ordered, the deposit is not refundable. Refunds are returned by the original payment method.`,
+            "Date changes, cancellations and refunds follow the conditions of your contract. Contact us as soon as you know about a change and we will do our best to accommodate it, subject to the availability of the ranch and our suppliers.",
           ],
         },
         {

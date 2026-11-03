@@ -54,6 +54,10 @@ export async function POST(req: Request) {
     label = res.plan.name;
     extraMeta = res.plan.metadata;
     description = res.plan.description;
+    if (b.transport === true) {
+      extraMeta = { ...extraMeta, transport: "private transportation requested" };
+      description += ". Private transportation requested";
+    }
   }
 
   const base = process.env.NODE_ENV === "production" ? site.url : new URL(req.url).origin;

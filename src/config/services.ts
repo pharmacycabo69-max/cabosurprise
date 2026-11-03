@@ -95,7 +95,7 @@ export const services: Record<Service["slug"], Service> = {
     heroPhotos: [{ src: "packages/hero.jpg", position: "60% 40%" }, { src: "hero/birthday-1.jpg", position: "50% 38%" }, { src: "hero/home-2.jpg", position: "55% 50%" }],
     heroSubtitle: "Setups for every celebration, ready before you walk in.",
     cta: "Plan my surprise",
-    packageIds: ["anniversary-dinner", "beach-horse-photo-session", "wedding-reception", "ranch-two-cabins", "beach-horse-activity", "bachelorette-party"],
+    packageIds: ["private-anniversary-dinner", "private-beach-horse-photoshoot", "ranch-wedding-reception", "ranch-cabin-stay", "private-beach-horse-experience", "bachelorette-ranch-party"],
     message: "Hi, I'd like to plan a surprise in Cabo on [date].",
     galleryTitle: "From our setups",
     gallery: ["packages/gallery-1.jpg", "packages/gallery-2.jpg", "packages/gallery-3.jpg", "packages/gallery-4.jpg"],
