@@ -134,7 +134,7 @@ export const products: Product[] = [
     intro:
       "Two private cabins at Rancho McCoy in Cabo San Lucas for up to six guests, with access to the permitted areas of the ranch.",
     heroSubtitle: "Two private cabins, one ranch.",
-    heroPhotos: [{ src: "venue-ranch.jpg", position: "50% 40%" }, "hero/proposals-3.jpg", "hero/proposals-4.jpg"],
+    heroPhotos: [{ src: "hero/cabin-stairs.jpg", position: "50% 50%" }, { src: "venue-ranch.jpg", position: "50% 40%" }, "hero/proposals-3.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a stay in the two cabins at Rancho McCoy for [dates], [number] guests.",
     goodToKnow: [
