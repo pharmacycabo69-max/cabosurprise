@@ -167,7 +167,7 @@ export const featuredPackages: Pkg[] = [
       { id: "ranch-session", name: "Ranch photo session", note: "1 hour, with horses and a videographer" },
     ],
     photo: "proposals-hero.jpg",
-    photoPosition: "50% 35%",
+    photoPosition: "30% 38%",
     href: "/private-beach-horse-photoshoot/",
     occasions: ["Proposal", "Honeymoon", "Anniversary", "Just Because"],
   },

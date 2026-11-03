@@ -81,7 +81,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
       })}
 
       {/* Light, depth and grain */}
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-ink/15" />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/50 via-45% to-ink/5 md:from-ink/85 md:via-ink/25 md:via-50% md:to-ink/15" />
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/50 to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(43,36,32,0.45)_100%)]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
@@ -89,18 +89,18 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
       <Header dark />
 
       {/* Copy */}
-      <div className="relative mx-auto w-full max-w-6xl px-5 pb-28 pt-32 text-white md:pb-32">
+      <div className="relative mx-auto w-full max-w-6xl px-5 pb-24 pt-28 text-white md:pb-32 md:pt-32">
         <motion.div
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
-          className="mb-7 flex items-center gap-4 text-[11px] font-medium uppercase tracking-[0.34em] text-white/85"
+          className="mb-4 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.3em] text-white/85 md:mb-7 md:gap-4 md:text-[11px] md:tracking-[0.34em]"
         >
           <span className="h-px w-12 bg-champagne/80" />
           {eyebrow}
         </motion.div>
 
-        <h1 className="max-w-4xl font-serif text-[2.8rem] font-light leading-[1.02] tracking-tight [text-shadow:0_2px_30px_rgb(0_0_0/0.35)] sm:text-6xl md:text-[5.5rem]">
+        <h1 className="max-w-4xl font-serif text-[2.15rem] font-light leading-[1.06] tracking-tight [text-shadow:0_2px_30px_rgb(0_0_0/0.35)] sm:text-6xl md:text-[5.5rem]">
           {words.map((w, i) => (
             <span key={i} className="mr-[0.25em] inline-block overflow-hidden pb-[0.12em] align-bottom">
               <motion.span
@@ -119,7 +119,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.7 }}
-          className="mt-7 max-w-xl text-lg font-light leading-relaxed text-white/90 md:text-xl"
+          className="mt-4 line-clamp-2 max-w-xl text-[15px] font-light leading-relaxed text-white/90 sm:mt-7 sm:line-clamp-none sm:text-lg md:text-xl"
         >
           {subtitle}
         </motion.p>
@@ -128,7 +128,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.9 }}
-          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5"
+          className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-5 md:mt-10"
         >
           {quote ? (
             <QuoteLauncher source="hero" className="btn-light">{cta}</QuoteLauncher>
@@ -138,7 +138,7 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           {secondary && (
             <a
               href={secondary.href}
-              className="inline-flex items-center gap-2 border-b border-white/60 pb-1 text-[12px] font-medium uppercase tracking-[0.2em] text-white transition hover:border-champagne hover:text-champagne"
+              className="hidden items-center gap-2 border-b border-white/60 pb-1 sm:inline-flex text-[12px] font-medium uppercase tracking-[0.2em] text-white transition hover:border-champagne hover:text-champagne"
             >
               {secondary.label} <span aria-hidden>↓</span>
             </a>

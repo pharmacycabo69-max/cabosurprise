@@ -74,7 +74,7 @@ export const products: Product[] = [
     intro:
       "A private 90-minute session on the beach with two horses, a professional photographer and full coordination, from planning to the final frame.",
     heroSubtitle: "Two horses, the Pacific and a professional photographer.",
-    heroPhotos: [{ src: "proposals-hero.jpg", position: "50% 35%" }, { src: "hero.jpg", position: "60% 40%" }, "proposal-ranch.jpg"],
+    heroPhotos: [{ src: "proposals-hero.jpg", position: "30% 38%" }, { src: "hero.jpg", position: "60% 40%" }, "proposal-ranch.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a private beach horse photoshoot in Cabo on [date].",
     goodToKnow: [
