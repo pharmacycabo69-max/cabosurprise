@@ -43,7 +43,7 @@ export const products: Product[] = [
     intro:
       "A romantic private dinner for two, with a chef, floral decoration, candles, full setup and service. Celebrating with more people? We design a custom package for 6 to 30 guests.",
     heroSubtitle: "A chef, flowers and candlelight, just for you.",
-    heroPhotos: [{ src: "anniversary.jpg", position: "50% 40%" }, "venue-villa.jpg", "honeymoon/hero.jpg"],
+    heroPhotos: [{ src: "anniversary.jpg", position: "50% 40%" }, { src: "ranch/terrace-sunset.jpg", position: "50% 50%" }, "ranch/table-setting.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a private anniversary dinner in Cabo on [date].",
     optionsTitle: "Celebrations for larger groups",
@@ -101,7 +101,7 @@ export const products: Product[] = [
     intro:
       "Exclusive use of Rancho McCoy for six hours, with furniture, decoration, dinner, DJ, lighting and service staff. The starter package is designed for approximately 40 to 50 guests, and the ranch welcomes up to 220.",
     heroSubtitle: "The whole ranch, for your celebration.",
-    heroPhotos: [{ src: "welcome-flowers.jpg", position: "50% 35%" }, { src: "hero/proposals-3.jpg", position: "50% 55%" }, "venue-ranch.jpg"],
+    heroPhotos: [{ src: "ranch/long-table.jpg", position: "50% 50%" }, { src: "ranch/palapa-dusk.jpg", position: "50% 55%" }, "ranch/palapa-table.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a wedding reception at Rancho McCoy on [date] for [number] guests.",
     optionsTitle: "Packages",
@@ -137,7 +137,7 @@ export const products: Product[] = [
     intro:
       "Two private cabins at Rancho McCoy in Cabo San Lucas for up to six guests, with access to the permitted areas of the ranch.",
     heroSubtitle: "Two private cabins, one ranch.",
-    heroPhotos: [{ src: "hero/cabin-stairs.jpg", position: "50% 50%" }, { src: "venue-ranch.jpg", position: "50% 40%" }, "hero/proposals-3.jpg"],
+    heroPhotos: [{ src: "ranch/lounge-deck.jpg", position: "50% 50%" }, { src: "hero/cabin-stairs.jpg", position: "50% 50%" }, "ranch/palapa-dusk.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a stay in the two cabins at Rancho McCoy for [dates], [number] guests.",
     goodToKnow: [

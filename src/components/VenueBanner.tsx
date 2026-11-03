@@ -20,7 +20,7 @@ export default function VenueBanner() {
   ];
   return (
     <section aria-label="Rancho McCoy event venue" className="relative isolate overflow-hidden bg-ink text-white">
-      <Photo src="hero/proposals-3.jpg" alt="Rancho McCoy event venue in Cabo San Lucas" className="absolute inset-0" sizes="100vw" position="50% 55%" />
+      <Photo src="ranch/palapa-table.jpg" alt="Rancho McCoy event venue in Cabo San Lucas" className="absolute inset-0" sizes="100vw" position="50% 50%" />
       <div className="absolute inset-0 bg-ink/55 md:hidden" />
       <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/65 to-ink/25" />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
