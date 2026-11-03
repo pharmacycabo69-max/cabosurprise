@@ -162,7 +162,7 @@ export const products: Product[] = [
     intro:
       "A private experience on the beach for up to four participants, with four horses, a guide and full coordination.",
     heroSubtitle: "Four horses, a guide and the open beach.",
-    heroPhotos: [{ src: "hero.jpg", position: "60% 40%" }, { src: "proposals-hero.jpg", position: "50% 35%" }, "proposal-ranch.jpg"],
+    heroPhotos: [{ src: "hero/beach-horse-experience.jpg", position: "62% 50%" }, { src: "hero.jpg", position: "60% 40%" }, "proposal-ranch.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a private beach horse experience in Cabo on [date] for [number] participants.",
     notice: "This activity is subject to availability, permits and confirmation by the operator.",

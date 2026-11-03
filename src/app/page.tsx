@@ -58,7 +58,7 @@ export default function Home() {
         message="Hi, I'd like to plan a private experience in Cabo on [date]."
         label="hero"
         quote
-        photos={[{ src: "hero.jpg", position: "60% 40%" }, { src: "hero/home-2.jpg", position: "55% 50%" }, "hero/home-3.jpg", { src: "hero/home-4.jpg", position: "50% 60%" }]}
+        photos={[{ src: "hero.jpg", position: "60% 40%" }, { src: "hero/home-2.jpg", position: "55% 50%" }, "hero/home-3.jpg", { src: "hero/home-4.jpg", position: "45% 55%" }]}
         secondary={{ label: "See experiences", href: "#packages" }}
       />
       <VenueBanner />
