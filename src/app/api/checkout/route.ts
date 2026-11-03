@@ -59,6 +59,7 @@ export async function POST(req: Request) {
       submit_type: "pay",
       customer_email: email,
       locale: "en",
+      custom_text: { submit: { message: "Your deposit is paid to Rancho McCoy · Cabo Surprise. We will confirm your booking on WhatsApp right after." } },
       line_items: [
         {
           quantity: 1,
