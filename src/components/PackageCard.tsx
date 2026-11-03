@@ -15,6 +15,7 @@ export default function PackageCard({ p, linked = true }: { p: Pkg; linked?: boo
       <Photo
         src={p.photo}
         alt={`${p.name} setup in Cabo`}
+        position={p.photoPosition}
         className="absolute inset-0 transition duration-[900ms] ease-out group-hover:scale-[1.06]"
         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
       />

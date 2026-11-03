@@ -38,6 +38,7 @@ export type Pkg = {
   includes: string[];
   from: number;
   photo: string;
+  photoPosition?: string;
   href: string;
   occasions: Occasion[];
 };
@@ -49,7 +50,8 @@ export const packages: Pkg[] = [
     blurb: "Arrive to a room that already feels like a celebration.",
     includes: ["Fresh flowers", "Cake", "Balloon decor"],
     from: 190,
-    photo: "welcome.jpg",
+    photo: "welcome-flowers.jpg",
+    photoPosition: "50% 30%",
     href: "/packages/",
     occasions: ["Birthday", "Anniversary", "Just Because", "Honeymoon"],
   },
