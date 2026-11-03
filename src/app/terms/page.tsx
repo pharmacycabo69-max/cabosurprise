@@ -25,6 +25,7 @@ export default function Page() {
           h: "Deposit and payment",
           p: [
             `A ${policy.depositPercent}% deposit secures your date. The balance is due before the setup. We confirm the amounts and accepted payment methods with you on WhatsApp.`,
+            "You can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
           ],
         },
         {

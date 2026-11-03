@@ -23,6 +23,7 @@ export default function Footer() {
         <div className="space-y-1 md:text-right">
           <p><Link href="/privacy/" className="hover:underline">Privacy Policy</Link></p>
           <p><Link href="/terms/" className="hover:underline">Terms &amp; Conditions</Link></p>
+          <p><Link href="/deposit/" className="hover:underline">Pay a deposit</Link></p>
         </div>
       </div>
     </footer>

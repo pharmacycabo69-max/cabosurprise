@@ -24,6 +24,7 @@ export default function Page() {
           p: [
             "This website has no accounts, forms or checkout. We do not collect information from you directly on the site.",
             "When you message us on WhatsApp we receive your phone number, the name on your profile, and what you tell us: the occasion, date, hotel or villa name, reservation name, guest preferences and any photos or notes you send.",
+            "If you pay a deposit on our site, you enter your name, email, event date and card details on a page hosted by Stripe. Stripe processes the payment and sends us the payment confirmation, your name, email and the event details you entered. We never see or store your card number.",
             "The site also uses the Google tag and the Meta Pixel to measure advertising. They collect standard technical data such as pages viewed, clicks on our WhatsApp, Instagram and package buttons, device and browser type, approximate location and the ad campaign that brought you here (UTM parameters).",
           ],
         },
@@ -38,7 +39,7 @@ export default function Page() {
         {
           h: "Cookies and third parties",
           p: [
-            "Google and Meta may set cookies or similar identifiers through their tags. You can block them in your browser settings or with the ad controls in your Google and Meta accounts. WhatsApp is operated by Meta and has its own privacy policy. The site is hosted on Vercel.",
+            "Google and Meta may set cookies or similar identifiers through their tags. You can block them in your browser settings or with the ad controls in your Google and Meta accounts. WhatsApp is operated by Meta and has its own privacy policy. Card payments are processed by Stripe, which has its own privacy policy. The site is hosted on Vercel.",
           ],
         },
         {
