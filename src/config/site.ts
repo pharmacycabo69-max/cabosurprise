@@ -7,7 +7,7 @@ export const site = {
   phoneDisplay: "+52 624 226 1023",
   // PLACEHOLDER: replace with the real domain inbox.
   email: "EMAIL@cabosurprise.com",
-  instagram: "https://instagram.com/cabosurprise",
+  instagram: "https://www.instagram.com/rancho_mccoy/",
   tagline: "Private experiences in Los Cabos.",
   description:
     "Private experiences and exclusive celebrations in Los Cabos: ranch weddings, chef-led dinners and horseback experiences, designed around you.",
