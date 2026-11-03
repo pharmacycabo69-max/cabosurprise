@@ -32,6 +32,7 @@ export const occasions = [
 ] as const;
 export type Occasion = (typeof occasions)[number];
 
+export type AddOn = { id: string; name: string; note?: string };
 export type Party = { question: string; label: string; min: number; max: number; start: number; quick: number[] };
 export const defaultParty: Party = { question: "How many guests?", label: "Number of guests", min: 1, max: 999, start: 2, quick: [2, 10, 25, 50, 100] };
 
@@ -57,6 +58,8 @@ export type Pkg = {
   party?: Party;
   /** Multi-night stay: the visitor picks check-in and check-out, the price is per night. */
   stay?: boolean;
+  /** Optional extras the visitor can tick in the booking modal. Quoted separately, they do not change the deposit. */
+  addons?: AddOn[];
   href: string;
   occasions: Occasion[];
 };
@@ -139,6 +142,12 @@ export const featuredPackages: Pkg[] = [
     payOnline: true,
     payUpTo: 2,
     party: { question: "How many guests?", label: "Number of guests", min: 2, max: 30, start: 2, quick: [2, 6, 10, 20, 30] },
+    addons: [
+      { id: "photographer", name: "Photographer" },
+      { id: "mariachi", name: "Live mariachi" },
+      { id: "cake", name: "Custom cake" },
+      { id: "flowers", name: "Premium flowers" },
+    ],
     photo: "anniversary.jpg",
     href: "/private-anniversary-dinner/",
     occasions: ["Anniversary", "Honeymoon", "Proposal", "Just Because"],
@@ -153,6 +162,10 @@ export const featuredPackages: Pkg[] = [
     depositPercent: 50,
     payOnline: true,
     party: { question: "How many people will be in the session?", label: "People in the session", min: 1, max: 99, start: 2, quick: [1, 2, 3, 4, 6] },
+    addons: [
+      { id: "videographer", name: "Videographer" },
+      { id: "ranch-session", name: "Ranch photo session", note: "1 hour, with horses and a videographer" },
+    ],
     photo: "proposals-hero.jpg",
     photoPosition: "50% 35%",
     href: "/private-beach-horse-photoshoot/",
@@ -169,6 +182,14 @@ export const featuredPackages: Pkg[] = [
     payOnline: true,
     payUpTo: 50,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 220, start: 50, quick: [40, 50, 80, 120, 220] },
+    addons: [
+      { id: "cabins", name: "Private cabins", note: "One or two cabins" },
+      { id: "extra-hours", name: "Extra ranch hours" },
+      { id: "horse-experience", name: "Two-horse experience" },
+      { id: "ranch-session", name: "Ranch photo session", note: "1 hour, with horses and a videographer" },
+      { id: "beach-session", name: "Beach photo session", note: "1.5 hours, with horses and a videographer" },
+      { id: "open-bar", name: "Open bar" },
+    ],
     photo: "hero/flowers-wide.jpg",
     photoPosition: "50% 28%",
     href: "/ranch-wedding-reception/",
@@ -185,6 +206,11 @@ export const featuredPackages: Pkg[] = [
     stay: true,
     payOnline: true,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 6, start: 2, quick: [2, 4, 6] },
+    addons: [
+      { id: "chef", name: "Private chef" },
+      { id: "photographer", name: "Photographer" },
+      { id: "horses", name: "Horse experience" },
+    ],
     photo: "hero/cabin-stairs.jpg",
     photoPosition: "50% 50%",
     href: "/ranch-cabin-stay/",
@@ -200,6 +226,9 @@ export const featuredPackages: Pkg[] = [
     depositPercent: 50,
     payOnline: true,
     party: { question: "How many participants?", label: "Participants", min: 1, max: 4, start: 2, quick: [1, 2, 3, 4] },
+    addons: [
+      { id: "photographer", name: "Photographer" },
+    ],
     photo: "hero/beach-horse-experience.jpg",
     photoPosition: "62% 50%",
     href: "/private-beach-horse-experience/",
@@ -216,6 +245,13 @@ export const featuredPackages: Pkg[] = [
     payOnline: true,
     payUpTo: 5,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 99, start: 5, quick: [5, 8, 10, 15, 20] },
+    addons: [
+      { id: "decoration", name: "Themed decoration" },
+      { id: "drinks", name: "Drinks" },
+      { id: "horses", name: "Horses" },
+      { id: "photography", name: "Photography" },
+      { id: "catering", name: "Catering" },
+    ],
     photo: "bachelorette.jpg",
     href: "/bachelorette-ranch-party/",
     occasions: ["Bachelorette", "Birthday"],

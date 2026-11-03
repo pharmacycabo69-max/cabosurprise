@@ -51,6 +51,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const [endDate, setEndDate] = useState("");
   const [guestsText, setGuestsText] = useState(String(it?.party.start ?? 2));
   const [transport, setTransport] = useState(false);
+  const [picked, setPicked] = useState<string[]>([]); // add-on ids
   const [tier, setTier] = useState<Tier>("");
   const [est, setEst] = useState<Estimate | null>(null);
   const [estError, setEstError] = useState("");
@@ -69,6 +70,8 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const overStarter = !!it?.payUpTo && Number.isInteger(guests) && guests > it.payUpTo;
   const quoteMode = !!it && (!it.payOnline || overStarter);
   const quoted = !!it?.quoted;
+  const addons = it?.addons ?? [];
+  const pickedNames = addons.filter((a) => picked.includes(a.id)).map((a) => a.name);
   const limit = quoted ? Math.min(MAX_GUESTS, party.max) : party.max;
   const tooMany = Number.isInteger(guests) && guests > limit;
   const guestsOk = Number.isInteger(guests) && guests >= party.min && guests <= limit;
@@ -119,7 +122,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          item, date, endDate: stay ? endDate : undefined, guests, tier: tier || undefined, transport,
+          item, date, endDate: stay ? endDate : undefined, guests, tier: tier || undefined, transport, addons: picked,
           name: f.get("name"), email: f.get("email"), venue: f.get("venue"), company: f.get("company"),
           terms: f.get("terms") === "on",
         }),
@@ -136,7 +139,11 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const slide = { initial: { opacity: 0, x: 24 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -24 }, transition: { duration: 0.2 } };
   const depositNow = est ? est.depositUsd : it.deposit;
   const when = stay ? (datesReady ? `from ${pretty(date)} to ${pretty(endDate)} (${nights} ${nights === 1 ? "night" : "nights"})` : "for [dates]") : `on ${date ? pretty(date) : "[date]"}`;
-  const waMessage = `Hi, I'd like a custom quote for ${it.name} ${when} for ${guestsText} ${party.label.toLowerCase().includes("participant") ? "participants" : party.label.toLowerCase().includes("people") ? "people" : "guests"}${transport ? ", with private transportation from my hotel, villa or residence" : ""}.`;
+  const extras = [
+    transport ? "private transportation from my hotel, villa or residence" : "",
+    pickedNames.length ? `add-ons: ${pickedNames.join(", ")}` : "",
+  ].filter(Boolean);
+  const waMessage = `Hi, I'd like a custom quote for ${it.name} ${when} for ${guestsText} ${party.label.toLowerCase().includes("participant") ? "participants" : party.label.toLowerCase().includes("people") ? "people" : "guests"}${extras.length ? `, with ${extras.join(" and ")}` : ""}.`;
   const noun = guests === 1 ? "guest" : "guests";
 
   return createPortal(
@@ -238,6 +245,34 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                 </span>
               </label>
 
+              {addons.length > 0 && (
+                <fieldset className="mt-4">
+                  <legend className="text-sm font-medium">Add-ons</legend>
+                  <p className="mt-0.5 text-xs text-ink/55">
+                    Quoted separately and confirmed on WhatsApp.{!quoteMode ? " They do not change today's deposit." : ""}
+                  </p>
+                  <div className="mt-2 space-y-2">
+                    {addons.map((a) => {
+                      const on = picked.includes(a.id);
+                      return (
+                        <label key={a.id} className={`flex cursor-pointer items-start gap-3 rounded-sm border px-4 py-2.5 text-sm transition ${on ? "border-terracotta bg-terracotta/5" : "border-ink/15 hover:border-ink/40"}`}>
+                          <input
+                            type="checkbox"
+                            checked={on}
+                            onChange={(e) => setPicked((p) => (e.target.checked ? [...p, a.id] : p.filter((x) => x !== a.id)))}
+                            className="mt-0.5 h-4 w-4 accent-[#9C6B43]"
+                          />
+                          <span>
+                            <span className="font-medium">{a.name}</span>
+                            {a.note && <span className="block text-ink/60">{a.note}</span>}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+              )}
+
               {quoted && (
                 <div className="mt-6">
                   <p className="text-sm font-medium">Rate</p>
@@ -281,6 +316,9 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                   )}
                   <div className="flex justify-between gap-4"><dt className="text-ink/60">{party.label}</dt><dd className="text-right font-medium">{guests}</dd></div>
                   <div className="flex justify-between gap-4"><dt className="text-ink/60">Private transportation</dt><dd className="text-right font-medium">{transport ? "Requested" : "Not requested"}</dd></div>
+                  {addons.length > 0 && (
+                    <div className="flex justify-between gap-4"><dt className="text-ink/60">Add-ons</dt><dd className="text-right font-medium">{pickedNames.length ? pickedNames.join(", ") : "None"}</dd></div>
+                  )}
                   <div className="flex justify-between gap-4 border-t border-ink/10 pt-3"><dt className="text-ink/60">Starting price</dt><dd className="text-right font-serif text-lg">From ${it.from.toLocaleString("en-US")} USD{stay ? " / night" : ""}</dd></div>
                   {stay && nights >= 1 && (
                     <div className="flex justify-between gap-4"><dt className="text-ink/60">Starting estimate, {nights} {nights === 1 ? "night" : "nights"}</dt><dd className="text-right font-serif text-lg">${(it.from * nights).toLocaleString("en-US")} USD</dd></div>
@@ -322,6 +360,9 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                   </>
                 ) : (
                   <p className="mt-3 text-ink/70">Starting price from ${it.from.toLocaleString("en-US")} USD. We confirm the final quote for {guests} {noun} with you on WhatsApp.</p>
+                )}
+                {pickedNames.length > 0 && (
+                  <p className="mt-3 text-xs text-ink/60">Add-ons requested: {pickedNames.join(", ")}. Quoted separately, not part of today&apos;s deposit.</p>
                 )}
                 {est && (
                   <div className="mt-3 flex items-baseline justify-between border-t border-ink/10 pt-3 text-terracotta">

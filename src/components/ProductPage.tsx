@@ -52,6 +52,18 @@ export default function ProductPage({ product: p }: { product: Product }) {
             </ul>
             {p.notice && <p className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">{p.notice}</p>}
 
+            {pay.addons.length > 0 && (
+              <>
+                <h2 className="eyebrow mt-12">Available add-ons</h2>
+                <ul className="flex flex-wrap gap-2">
+                  {pay.addons.map((a) => (
+                    <li key={a.id} className="rounded-sm border border-ink/20 px-4 py-2 text-sm" title={a.note}>{a.name}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-sm text-ink/60">Add them when you book. Quoted separately and confirmed on WhatsApp.</p>
+              </>
+            )}
+
             {p.options && (
               <>
                 <h2 className="eyebrow mt-12">{p.optionsTitle ?? "Options"}</h2>

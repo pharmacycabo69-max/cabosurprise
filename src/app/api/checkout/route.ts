@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { site } from "@/config/site";
-import { CUSTOM_ID, customLimits } from "@/config/payments";
+import { CUSTOM_ID, customLimits, payableItems } from "@/config/payments";
 import { depositFor, nightsBetween } from "@/lib/pricing";
 
 export const runtime = "nodejs";
@@ -54,6 +54,13 @@ export async function POST(req: Request) {
     label = res.plan.name;
     extraMeta = res.plan.metadata;
     description = res.plan.description;
+    const chosen = Array.isArray(b.addons)
+      ? (payableItems.find((p) => p.id === itemId)?.addons ?? []).filter((a) => (b.addons as unknown[]).includes(a.id)).map((a) => a.name)
+      : [];
+    if (chosen.length) {
+      extraMeta = { ...extraMeta, addons: chosen.join(", ").slice(0, 480) };
+      description += `. Add-ons requested: ${chosen.join(", ")}`;
+    }
     if (b.transport === true) {
       extraMeta = { ...extraMeta, transport: "private transportation requested" };
       description += ". Private transportation requested";
