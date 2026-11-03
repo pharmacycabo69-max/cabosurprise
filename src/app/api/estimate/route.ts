@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     guests: p.guests,
     nights: p.nights,
     depositUsd: p.usdCents / 100,
+    packageUsd: p.packageUsd,
     lines: p.lines?.map((l) => ({ label: l.label, mxn: l.cents / 100 })),
     totalMxn: p.totalMxn ? p.totalMxn / 100 : undefined,
     depositMxn: p.depositMxn ? p.depositMxn / 100 : undefined,

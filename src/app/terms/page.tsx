@@ -24,7 +24,7 @@ export default function Page() {
         {
           h: "Deposit and payment",
           p: [
-            "Prices are published in US dollars. A deposit starts your booking: 40% for the Exclusive Ranch Wedding Reception, and 50% for private experiences and accommodation, calculated on the starting price of the experience you choose. We confirm the final amounts and the balance with you after the deposit.",
+            "Prices are published in US dollars. A 50% deposit starts your booking, calculated on the package price for your number of guests (or on your total stay for cabins). We confirm availability and the final amounts after the deposit, and set the balance with you: 7 days before the date for experiences and stays, and 30 days before for weddings.",
             "The balance and the cancellation and refund conditions are set out in the contract for your booking. All services are subject to availability, and packages are customized to your needs. Destination rates may apply and are confirmed in your custom quote.",
             "Where online payment is available, you can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
             "For ranch estimates built with our quote calculator, prices are shown in Mexican pesos and the deposit is charged in US dollars at the exchange rate shown when you pay.",

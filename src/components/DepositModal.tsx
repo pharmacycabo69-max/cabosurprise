@@ -36,6 +36,7 @@ const pretty = (s: string) => {
 type Estimate = {
   quoted: boolean;
   depositUsd: number;
+  packageUsd?: number;
   lines?: { label: string; mxn: number }[];
   totalMxn?: number;
   depositMxn?: number;
@@ -168,7 +169,11 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
             {quoteMode || stay ? (
               <p className="mt-1 text-sm text-ink/65">From ${it.from.toLocaleString("en-US")} USD{it.unit ? ` · ${it.unit}` : ""}</p>
             ) : (
-              !quoted && step < 3 && <p className="mt-1 text-sm text-ink/65">Deposit today ${it.deposit.toLocaleString("en-US")} USD ({it.depositPercent}%)</p>
+              !quoted && step < 3 && (
+                <p className="mt-1 text-sm text-ink/65">
+                  {it.tiers ? `From $${it.from.toLocaleString("en-US")} USD${it.unit ? ` · ${it.unit}` : ""} · ${it.depositPercent}% deposit` : `Deposit today $${it.deposit.toLocaleString("en-US")} USD (${it.depositPercent}%)`}
+                </p>
+              )
             )}
           </div>
           <button onClick={onClose} aria-label="Close" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink/15 text-lg transition hover:border-terracotta">×</button>
@@ -357,9 +362,14 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                         <li key={l.label} className="flex justify-between gap-3"><span className="text-ink/75">{l.label}</span><span className="shrink-0">${money(l.mxn)}</span></li>
                       ))}
                     </ul>
-                    <p className="mt-2 text-xs text-ink/55">Prices in MXN. Includes a 4% service fee. Extras and decoration are quoted with our team.</p>
+                    <p className="mt-2 text-xs text-ink/55">Prices in MXN. Extras and decoration are quoted with our team.</p>
                     <div className="mt-3 flex justify-between border-t border-ink/10 pt-3 font-serif text-lg"><span>Estimated total</span><span>${money(est.totalMxn ?? 0)} MXN</span></div>
                   </>
+                ) : est.packageUsd ? (
+                  <div className="mt-3 flex justify-between gap-4 text-ink/75">
+                    <span>Package price for {guests} {noun}</span>
+                    <span className="shrink-0 font-serif text-lg text-ink">${money(est.packageUsd, 0)} USD</span>
+                  </div>
                 ) : (
                   <p className="mt-3 text-ink/70">Starting price from ${it.from.toLocaleString("en-US")} USD{stay ? " per night" : ""}. Your final price for {guests} {noun} is confirmed after your deposit.</p>
                 )}
@@ -368,7 +378,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                 )}
                 {est && (
                   <div className="mt-3 flex items-baseline justify-between border-t border-ink/10 pt-3 text-terracotta">
-                    <span>Deposit today</span>
+                    <span>Deposit today ({it.depositPercent}%)</span>
                     <span className="text-right font-serif text-2xl">${money(depositNow, depositNow % 1 ? 2 : 0)} USD</span>
                   </div>
                 )}

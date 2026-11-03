@@ -1,4 +1,4 @@
-import { payableItems } from "@/config/payments";
+import { payableItems, tierPrice } from "@/config/payments";
 import { computeQuote, DEPOSIT_PERCENT, MAX_GUESTS, mxn, type Line, type Tier } from "./quote";
 
 export const MAX_PARTY = 999;
@@ -20,6 +20,8 @@ export type DepositPlan = {
   quoted: boolean;
   guests: number | null;
   nights?: number;
+  /** Package price for this group size (tiered items). */
+  packageUsd?: number;
   /** Peso quote (quoted items only). Amounts in centavos. */
   lines?: Line[];
   totalMxn?: number;
@@ -59,6 +61,25 @@ export function depositFor(itemId: string, guestsRaw: unknown, tierRaw: unknown,
         nights,
         metadata: { service: item.name, nights: String(nights), ...(guests ? { guests: String(guests) } : {}) },
         description: `${item.name}, ${nights} ${nights === 1 ? "night" : "nights"}${guests ? `, ${guests} guests` : ""}`,
+      },
+    };
+  }
+
+  if (item.tiers) {
+    if (guests === null) return bad("Please tell us how many guests.");
+    const price = tierPrice(item.tiers, guests);
+    if (price === null) return bad(`For more than ${item.tiers[item.tiers.length - 1].upTo} guests, message our team for a custom quote.`);
+    // deposit = percent of the package price for this group size, in cents
+    return {
+      ok: true,
+      plan: {
+        usdCents: Math.round(price * item.depositPercent),
+        name: item.name,
+        quoted: false,
+        guests,
+        packageUsd: price,
+        metadata: { service: item.name, guests: String(guests), package_price_usd: String(price), deposit_percent: String(item.depositPercent) },
+        description: `${item.name}, ${guests} guests. Package price $${price} USD, ${item.depositPercent}% deposit.`,
       },
     };
   }

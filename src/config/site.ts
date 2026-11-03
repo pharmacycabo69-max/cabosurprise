@@ -44,6 +44,9 @@ export type AddOn = { id: string; name: string; note?: string };
 export type Party = { question: string; label: string; min: number; max: number; start: number; quick: number[] };
 export const defaultParty: Party = { question: "How many guests?", label: "Number of guests", min: 1, max: 999, start: 2, quick: [2, 10, 25, 50, 100] };
 
+/** Price by group size: the first tier whose upTo covers the guest count. Above the last tier the team quotes. */
+export type PriceTier = { upTo: number; price: number };
+
 export type Pkg = {
   id: string;
   name: string;
@@ -54,6 +57,8 @@ export type Pkg = {
   photoPosition?: string;
   /** Price depends on guest count and comes from the ranch price sheet (src/lib/quote.ts). */
   quoted?: boolean;
+  /** Price by number of guests (USD per event). `from` is the lowest tier. */
+  tiers?: PriceTier[];
   /** "per experience", "per night"... shown next to the price. */
   unit?: string;
   /** Deposit % to hold the date. Defaults to policy.depositPercent. */
@@ -141,13 +146,15 @@ export const featuredPackages: Pkg[] = [
     id: "private-anniversary-dinner",
     name: "Private Anniversary Dinner & Celebrations",
     blurb: "A romantic private dinner for two, with chef, flowers and candlelight.",
-    includes: ["Private dinner for 2", "Chef", "Floral decoration and candles", "Setup and service"],
-    from: 2000,
+    includes: ["Three-course private dinner", "Private area, furniture and service", "Floral decoration and candles", "Coordination"],
+    from: 790,
+    tiers: [{ upTo: 2, price: 790 }, { upTo: 5, price: 1790 }, { upTo: 8, price: 2790 }, { upTo: 12, price: 3790 }, { upTo: 15, price: 4490 }],
     unit: "per experience",
     depositPercent: 50,
     payOnline: true,
-    party: { question: "How many guests?", label: "Number of guests", min: 2, max: 30, start: 2, quick: [2, 6, 10, 20, 30] },
+    party: { question: "How many guests?", label: "Number of guests", min: 2, max: 15, start: 2, quick: [2, 4, 6, 10, 15] },
     addons: [
+      { id: "signature", name: "Signature Dinner upgrade", note: "Richer decoration and service for two, $1,300 in total" },
       { id: "photographer", name: "Photographer" },
       { id: "mariachi", name: "Live mariachi" },
       { id: "cake", name: "Custom cake" },
@@ -162,11 +169,11 @@ export const featuredPackages: Pkg[] = [
     name: "Private Beach Horse Photoshoot",
     blurb: "A private 90-minute session on the beach with two horses and a professional photographer.",
     includes: ["90-minute private session", "Two horses", "Professional photographer", "Coordination"],
-    from: 1450,
+    from: 1250,
     unit: "per session",
     depositPercent: 50,
     payOnline: true,
-    party: { question: "How many people will be in the session?", label: "People in the session", min: 1, max: 99, start: 2, quick: [1, 2, 3, 4, 6] },
+    party: { question: "How many people will be in the session?", label: "People in the session", min: 1, max: 2, start: 2, quick: [1, 2] },
     addons: [
       { id: "videographer", name: "Videographer" },
       { id: "ranch-session", name: "Ranch photo session", note: "1 hour, with horses and a videographer" },
@@ -181,11 +188,12 @@ export const featuredPackages: Pkg[] = [
     name: "Exclusive Ranch Wedding Reception",
     blurb: "Exclusive use of Rancho McCoy for six hours, with dinner, DJ, lighting and service.",
     includes: ["Exclusive Rancho McCoy rental, 6 hours", "Furniture and decoration", "Dinner, DJ and lighting", "Service staff"],
-    from: 9500,
+    from: 6500,
+    tiers: [{ upTo: 30, price: 6500 }, { upTo: 50, price: 9500 }, { upTo: 80, price: 13500 }, { upTo: 120, price: 18500 }, { upTo: 150, price: 23500 }, { upTo: 180, price: 27500 }],
     unit: "per event",
-    depositPercent: 40,
+    depositPercent: 50,
     payOnline: true,
-    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 220, start: 50, quick: [40, 50, 80, 120, 220] },
+    party: { question: "How many guests?", label: "Number of guests", min: 10, max: 180, start: 50, quick: [30, 50, 80, 120, 180] },
     addons: [
       { id: "cabins", name: "Private cabins", note: "One or two cabins" },
       { id: "extra-hours", name: "Extra ranch hours" },
@@ -202,14 +210,14 @@ export const featuredPackages: Pkg[] = [
   {
     id: "ranch-cabin-stay",
     name: "Private Ranch Cabin Stay",
-    blurb: "Two private cabins at Rancho McCoy for up to six guests.",
-    includes: ["Two private cabins", "Up to 6 guests in total", "Access to permitted ranch areas"],
+    blurb: "Two private cabins at Rancho McCoy for up to four guests.",
+    includes: ["Two private cabins", "Up to 4 guests in total, 2 per cabin", "Access to permitted ranch areas"],
     from: 425,
     unit: "per night",
     depositPercent: 50,
     stay: true,
     payOnline: true,
-    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 6, start: 2, quick: [2, 4, 6] },
+    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 4, start: 2, quick: [1, 2, 3, 4] },
     addons: [
       { id: "chef", name: "Private chef" },
       { id: "photographer", name: "Photographer" },
@@ -241,13 +249,14 @@ export const featuredPackages: Pkg[] = [
   {
     id: "bachelorette-ranch-party",
     name: "Cabo Bachelorette Ranch Party",
-    blurb: "A private ranch space with DJ and bartender, a starter package for five.",
+    blurb: "A private ranch space with DJ and bartender, priced by group size from five to thirty.",
     includes: ["Private space at the ranch", "DJ and bartender", "Service staff", "Simple setup"],
-    from: 1200,
+    from: 1490,
+    tiers: [{ upTo: 5, price: 1490 }, { upTo: 10, price: 1990 }, { upTo: 20, price: 2790 }, { upTo: 30, price: 3800 }],
     unit: "per group",
     depositPercent: 50,
     payOnline: true,
-    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 99, start: 5, quick: [5, 8, 10, 15, 20] },
+    party: { question: "How many guests?", label: "Number of guests", min: 1, max: 30, start: 5, quick: [5, 10, 15, 20, 30] },
     addons: [
       { id: "decoration", name: "Themed decoration" },
       { id: "drinks", name: "Drinks" },

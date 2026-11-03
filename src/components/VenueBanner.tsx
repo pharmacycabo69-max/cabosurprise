@@ -11,7 +11,7 @@ const wedding = "ranch-wedding-reception";
 
 // Rancho McCoy presented as an event venue. Facts come from the venue brief and price list.
 export default function VenueBanner() {
-  const from = payableItems.find((p) => p.id === wedding)?.from ?? 9500;
+  const from = payableItems.find((p) => p.id === wedding)?.from ?? 6500;
   const facts = [
     { k: "Up to 220", v: "guests" },
     { k: "6 hours", v: "of exclusive use" },
