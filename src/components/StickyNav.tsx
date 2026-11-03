@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import WhatsAppLink from "./WhatsAppLink";
+import QuoteLauncher from "./QuoteLauncher";
 
 const links = [
   { href: "/proposals/", label: "Proposals" },
@@ -32,9 +32,9 @@ export default function StickyNav() {
             <Link key={l.href} href={l.href} className="text-ink/75 transition hover:text-terracotta" tabIndex={show ? 0 : -1}>{l.label}</Link>
           ))}
         </nav>
-        <WhatsAppLink message="Hi, I'd like to plan a private experience in Cabo on [date]." label="sticky_nav" className="btn-primary !px-5 !py-3">
+        <QuoteLauncher source="sticky_nav" className="btn-primary !px-5 !py-3">
           Request a quote
-        </WhatsAppLink>
+        </QuoteLauncher>
       </div>
     </header>
   );

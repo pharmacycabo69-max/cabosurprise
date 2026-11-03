@@ -1,6 +1,7 @@
 import Photo from "./Photo";
 import Reveal from "./Reveal";
 import WhatsAppLink from "./WhatsAppLink";
+import QuoteLauncher from "./QuoteLauncher";
 
 export default function FinalCta({
   title = "Let’s design your celebration.",
@@ -8,7 +9,8 @@ export default function FinalCta({
   message = "Hi, I'd like to plan a private experience in Cabo on [date].",
   label = "final_cta",
   photo = "proposals-hero.jpg",
-}: { title?: string; text?: string; message?: string; label?: string; photo?: string }) {
+  quote = false,
+}: { title?: string; text?: string; message?: string; label?: string; photo?: string; quote?: boolean }) {
   return (
     <section className="relative isolate overflow-hidden text-white">
       <Photo src={photo} alt="" className="absolute inset-0" sizes="100vw" position="50% 45%" />
@@ -18,9 +20,13 @@ export default function FinalCta({
           <p className="mx-auto mb-6 text-[11px] font-medium uppercase tracking-[0.34em] text-champagne">Cabo Surprise · Los Cabos</p>
           <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-tight md:text-7xl">{title}</h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/85">{text}</p>
-          <WhatsAppLink message={message} label={label} className="btn-light mt-10">
-            Request a custom quote
-          </WhatsAppLink>
+          {quote ? (
+            <QuoteLauncher source="final_cta" className="btn-light mt-10">Request a custom quote</QuoteLauncher>
+          ) : (
+            <WhatsAppLink message={message} label={label} className="btn-light mt-10">
+              Request a custom quote
+            </WhatsAppLink>
+          )}
         </Reveal>
       </div>
     </section>

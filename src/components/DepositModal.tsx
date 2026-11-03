@@ -44,7 +44,7 @@ type Estimate = {
 type Tier = "general" | "destination" | "";
 
 
-export default function DepositModal({ item, onClose }: { item: string; onClose: () => void }) {
+export default function DepositModal({ item, onClose, onBack, extraStep = false }: { item: string; onClose: () => void; onBack?: () => void; extraStep?: boolean }) {
   const it = payableItems.find((p) => p.id === item);
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [date, setDate] = useState("");
@@ -57,6 +57,8 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const min = tomorrow();
+  const offset = extraStep ? 1 : 0; // the experience picker already took step 1
+  const total = 3 + offset;
 
   const party = it?.party ?? { question: "How many guests?", label: "Number of guests", min: 1, max: 999, start: 2, quick: [2, 10, 25, 50, 100] };
   const stay = !!it?.stay; // multi-night: check-in and check-out
@@ -153,7 +155,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-terracotta">Step {step} of 3 · {TITLES[step - 1]}</p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-terracotta">Step {step + offset} of {total} · {TITLES[step - 1]}</p>
             <h2 className="mt-2 font-serif text-2xl leading-tight">{it.name}</h2>
             {quoteMode ? (
               <p className="mt-1 text-sm text-ink/65">From ${it.from.toLocaleString("en-US")} USD{it.unit ? ` · ${it.unit}` : ""}</p>
@@ -165,7 +167,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
         </div>
 
         <div className="mt-4 flex gap-1.5">
-          {[1, 2, 3].map((n) => <span key={n} className={`h-1 flex-1 rounded-full ${n <= step ? "bg-terracotta" : "bg-ink/15"}`} />)}
+          {Array.from({ length: total }, (_, k) => k + 1).map((n) => <span key={n} className={`h-1 flex-1 rounded-full ${n <= step + offset ? "bg-terracotta" : "bg-ink/15"}`} />)}
         </div>
 
         <AnimatePresence mode="wait" initial={false}>
@@ -191,6 +193,7 @@ export default function DepositModal({ item, onClose }: { item: string; onClose:
               </p>
               <button type="button" disabled={!datesReady} onClick={() => setStep(2)} className="btn-primary mt-3 w-full disabled:opacity-40">Continue</button>
               <p className="mt-3 text-center text-xs text-ink/50">We confirm availability for your {stay ? "dates" : "date"} on WhatsApp.</p>
+              {onBack && <button type="button" onClick={onBack} className="mt-3 w-full text-center text-sm text-ink/60 hover:text-ink">← Choose another experience</button>}
             </motion.div>
           )}
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import Header from "./Header";
 import WhatsAppLink from "./WhatsAppLink";
+import QuoteLauncher from "./QuoteLauncher";
 
 export type HeroPhoto = string | { src: string; position?: string };
 
@@ -18,13 +19,15 @@ type Props = {
   photos?: HeroPhoto[];
   eyebrow?: string;
   secondary?: { label: string; href: string };
+  /** Open the "choose your experience" quote flow instead of WhatsApp. */
+  quote?: boolean;
 };
 
 const INTERVAL = 6500;
 const GRAIN =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
 
-export default function Hero({ title, subtitle, cta, message, label, photo, photos, eyebrow = "Los Cabos · Mexico", secondary }: Props) {
+export default function Hero({ title, subtitle, cta, message, label, photo, photos, eyebrow = "Los Cabos · Mexico", secondary, quote }: Props) {
   const slides = (photos ?? (photo ? [photo] : [])).map((p) => (typeof p === "string" ? { src: p, position: "center" } : { position: "center", ...p }));
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -127,7 +130,11 @@ export default function Hero({ title, subtitle, cta, message, label, photo, phot
           transition={{ duration: 0.9, delay: 0.9 }}
           className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5"
         >
-          <WhatsAppLink message={message} label={label} className="btn-light">{cta}</WhatsAppLink>
+          {quote ? (
+            <QuoteLauncher source="hero" className="btn-light">{cta}</QuoteLauncher>
+          ) : (
+            <WhatsAppLink message={message} label={label} className="btn-light">{cta}</WhatsAppLink>
+          )}
           {secondary && (
             <a
               href={secondary.href}
