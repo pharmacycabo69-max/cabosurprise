@@ -8,6 +8,7 @@ const pages: [string, number][] = [
   ["/bachelorette/", 0.9],
   ["/honeymoon/", 0.9],
   ["/packages/", 0.9],
+  ["/quote/", 0.8],
   ["/iv-therapy/", 0.8],
   ["/pharmacy-delivery/", 0.8],
   ["/consultations/", 0.8],

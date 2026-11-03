@@ -25,6 +25,7 @@ export default function Page() {
           h: "Deposit and payment",
           p: [
             `A ${policy.depositPercent}% deposit secures your date. The balance is due before the setup. We confirm the amounts and accepted payment methods with you on WhatsApp.`,
+            "For events at Rancho McCoy, the deposit to hold the date is 40% of the quoted total, which includes a 4% service fee. Venue prices are quoted in Mexican pesos and the deposit is charged in US dollars at the exchange rate shown when you pay.",
             "You can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
           ],
         },

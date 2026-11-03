@@ -33,3 +33,6 @@ Canonical host is `https://www.cabosurprise.com`. The app 301-redirects `cabosur
 1. Put `STRIPE_SECRET_KEY` in `.env.local` and in Vercel (use `sk_test_…` first; test card 4242 4242 4242 4242).
 2. Deposit % and amounts: `policy.depositPercent` in `src/config/site.ts`; custom amount limits in `src/config/payments.ts`.
 3. Payments appear in the Stripe dashboard with the service, event date and venue in the metadata.
+
+## Ranch quote calculator (`/quote/`)
+Pricing, fee (4%) and deposit (40%) live in `src/lib/quote.ts`. The deposit is charged in USD at `MXN_PER_USD` (set it in Vercel; without it the page still quotes in pesos and hides the Pay button). `/api/venue-checkout/` recomputes the quote server-side.
