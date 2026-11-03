@@ -64,8 +64,10 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const stay = !!it?.stay; // multi-night: check-in and check-out
   const nights = stay ? nightsOf(date, endDate) : 0;
   const datesReady = stay ? nights >= 1 : !!date;
-  const quoteMode = !!it && !it.payOnline; // "Request a Custom Quote": no payment, ends on WhatsApp
   const guests = Number(guestsText);
+  // "Request a Custom Quote" (no payment, ends on WhatsApp): products without online deposit, or groups above the starter size.
+  const overStarter = !!it?.payUpTo && Number.isInteger(guests) && guests > it.payUpTo;
+  const quoteMode = !!it && (!it.payOnline || overStarter);
   const quoted = !!it?.quoted;
   const limit = quoted ? Math.min(MAX_GUESTS, party.max) : party.max;
   const tooMany = Number.isInteger(guests) && guests > limit;
@@ -222,6 +224,12 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                 ))}
               </div>
 
+              {overStarter && (
+                <p className="mt-5 rounded-sm bg-champagne/30 px-4 py-3 text-sm">
+                  For {guests} {guests === 1 ? "guest" : "guests"} we prepare a custom package, so there is no payment now. We reply on WhatsApp with your quote.
+                </p>
+              )}
+
               <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-sm border border-ink/15 px-4 py-3 text-sm">
                 <input type="checkbox" checked={transport} onChange={(e) => setTransport(e.target.checked)} className="mt-0.5 h-4 w-4 accent-[#C4663D]" />
                 <span>
@@ -344,6 +352,10 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
               <button type="submit" disabled={busy || !est} className="btn-primary w-full disabled:opacity-50">
                 {busy ? "Redirecting to secure payment…" : est ? `Pay deposit $${money(depositNow, depositNow % 1 ? 2 : 0)}` : "Preparing your quote…"}
               </button>
+              <p className="text-center text-sm text-ink/60">
+                Prefer a custom quote first?{" "}
+                <WhatsAppLink message={waMessage} label={`quote_request_${it.id}`} packageName={it.name} className="text-terracotta underline">Send this on WhatsApp</WhatsAppLink>
+              </p>
               <button type="button" onClick={() => setStep(2)} className="w-full text-center text-sm text-ink/60 hover:text-ink">← Back</button>
               <p className="text-center text-xs text-ink/50">Secure card payment by Stripe. We never see your card details.</p>
             </motion.form>

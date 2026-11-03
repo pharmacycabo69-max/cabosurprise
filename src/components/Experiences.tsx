@@ -18,7 +18,8 @@ function Chapter({ p, i, total }: { p: Pkg; i: number; total: number }) {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-7%", "7%"]); // slow parallax
-  const deposit = payableItems.find((x) => x.id === p.id)?.deposit;
+  const pay = payableItems.find((x) => x.id === p.id);
+  const deposit = pay?.stay ? undefined : pay?.deposit; // per-night stays: the deposit depends on the nights chosen
   const right = i % 2 === 1;
   const cta = p.payOnline === false ? "Request a custom quote" : p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`;
 

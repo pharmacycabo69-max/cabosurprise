@@ -49,8 +49,10 @@ export type Pkg = {
   unit?: string;
   /** Deposit % to hold the date. Defaults to policy.depositPercent. */
   depositPercent?: number;
-  /** false = "Request a Custom Quote" only; the online deposit stays off until prices are validated. Default true. */
+  /** false = "Request a Custom Quote" only (no online deposit). Default true. */
   payOnline?: boolean;
+  /** Online deposit only up to this group size; above it the visitor requests a custom package. */
+  payUpTo?: number;
   /** What the guest-count step asks. */
   party?: Party;
   /** Multi-night stay: the visitor picks check-in and check-out, the price is per night. */
@@ -124,7 +126,7 @@ export const packages: Pkg[] = [
 ];
 
 // The six signature products (home, /packages/ and one dedicated page each).
-// Prices are proposals: validate with suppliers before turning payOnline on.
+// Online deposit is ON. payUpTo = the largest group the starting price covers; above it the visitor requests a custom package.
 export const featuredPackages: Pkg[] = [
   {
     id: "private-anniversary-dinner",
@@ -134,7 +136,8 @@ export const featuredPackages: Pkg[] = [
     from: 2000,
     unit: "per experience",
     depositPercent: 50,
-    payOnline: false,
+    payOnline: true,
+    payUpTo: 2,
     party: { question: "How many guests?", label: "Number of guests", min: 2, max: 30, start: 2, quick: [2, 6, 10, 20, 30] },
     photo: "anniversary.jpg",
     href: "/private-anniversary-dinner/",
@@ -148,7 +151,7 @@ export const featuredPackages: Pkg[] = [
     from: 1450,
     unit: "per session",
     depositPercent: 50,
-    payOnline: false,
+    payOnline: true,
     party: { question: "How many people will be in the session?", label: "People in the session", min: 1, max: 99, start: 2, quick: [1, 2, 3, 4, 6] },
     photo: "proposals-hero.jpg",
     photoPosition: "50% 35%",
@@ -163,7 +166,8 @@ export const featuredPackages: Pkg[] = [
     from: 9500,
     unit: "per event",
     depositPercent: 40,
-    payOnline: false,
+    payOnline: true,
+    payUpTo: 50,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 220, start: 50, quick: [40, 50, 80, 120, 220] },
     photo: "hero/flowers-wide.jpg",
     photoPosition: "50% 28%",
@@ -179,7 +183,7 @@ export const featuredPackages: Pkg[] = [
     unit: "per night",
     depositPercent: 50,
     stay: true,
-    payOnline: false,
+    payOnline: true,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 6, start: 2, quick: [2, 4, 6] },
     photo: "hero/cabin-stairs.jpg",
     photoPosition: "50% 50%",
@@ -194,7 +198,7 @@ export const featuredPackages: Pkg[] = [
     from: 1600,
     unit: "per experience",
     depositPercent: 50,
-    payOnline: false,
+    payOnline: true,
     party: { question: "How many participants?", label: "Participants", min: 1, max: 4, start: 2, quick: [1, 2, 3, 4] },
     photo: "hero/beach-horse-experience.jpg",
     photoPosition: "62% 50%",
@@ -209,7 +213,8 @@ export const featuredPackages: Pkg[] = [
     from: 1200,
     unit: "per group",
     depositPercent: 50,
-    payOnline: false,
+    payOnline: true,
+    payUpTo: 5,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 99, start: 5, quick: [5, 8, 10, 15, 20] },
     photo: "bachelorette.jpg",
     href: "/bachelorette-ranch-party/",

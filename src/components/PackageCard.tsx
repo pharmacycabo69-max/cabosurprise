@@ -9,7 +9,8 @@ import DepositLink from "./DepositLink";
 
 // Editorial card: a clean photograph, then quiet typography and a single clear action.
 export default function PackageCard({ p, linked = true }: { p: Pkg; linked?: boolean }) {
-  const deposit = payableItems.find((x) => x.id === p.id)?.deposit;
+  const pay = payableItems.find((x) => x.id === p.id);
+  const deposit = pay?.stay ? undefined : pay?.deposit; // per-night stays: the deposit depends on the nights chosen
   const name = <>{p.name}</>;
   const cta = p.payOnline === false ? "Request a custom quote" : p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`;
   return (
