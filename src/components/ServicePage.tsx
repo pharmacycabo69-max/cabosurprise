@@ -25,13 +25,13 @@ export default function ServicePage({ s }: { s: Service }) {
 
       {s.slug === "packages" ? (
         <>
+          <VenueBanner />
           <section className="section !pb-14 md:!pb-20">
             <Reveal>
               <p className="max-w-2xl font-serif text-2xl font-light leading-snug md:text-4xl md:leading-[1.2]">{s.intro}</p>
             </Reveal>
           </section>
           <Experiences intro={false} />
-          <VenueBanner />
         </>
       ) : (
       <section id="packages" className="section scroll-mt-4">
