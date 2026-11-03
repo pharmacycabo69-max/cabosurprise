@@ -51,14 +51,14 @@ export default function ProposalsPage() {
           <p className="eyebrow">Three ways to ask</p>
           <h2 className="h2 max-w-2xl">Choose your setting.</h2>
         </Reveal>
-        <div className="mt-12 space-y-16 md:space-y-24">
+        <div className="mt-10 space-y-14 md:mt-12 md:space-y-24">
           {proposals.map((p, i) => (
             <Reveal key={p.id}>
               <article className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
                 <Photo
                   src={p.photo}
                   alt={`${p.name} in Los Cabos`}
-                  className={`aspect-[4/5] rounded-sm ${i % 2 ? "md:order-2" : ""}`}
+                  className={`aspect-[4/3] rounded-sm md:aspect-[4/5] ${i % 2 ? "md:order-2" : ""}`}
                   sizes="(min-width: 768px) 50vw, 100vw"
                 />
                 <div>

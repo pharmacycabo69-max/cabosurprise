@@ -166,7 +166,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-terracotta">Step {step + offset} of {total} · {TITLES[step - 1]}</p>
             <h2 className="mt-2 font-serif text-2xl leading-tight">{it.name}</h2>
-            {quoteMode ? (
+            {quoteMode || stay ? (
               <p className="mt-1 text-sm text-ink/65">From ${it.from.toLocaleString("en-US")} USD{it.unit ? ` · ${it.unit}` : ""}</p>
             ) : (
               !quoted && step < 3 && <p className="mt-1 text-sm text-ink/65">Deposit today ${it.deposit.toLocaleString("en-US")} USD ({it.depositPercent}%)</p>
@@ -246,31 +246,40 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
               </label>
 
               {addons.length > 0 && (
-                <fieldset className="mt-4">
-                  <legend className="text-sm font-medium">Add-ons</legend>
-                  <p className="mt-0.5 text-xs text-ink/55">
-                    Quoted separately and confirmed on WhatsApp.{!quoteMode ? " They do not change today's deposit." : ""}
-                  </p>
-                  <div className="mt-2 space-y-2">
-                    {addons.map((a) => {
-                      const on = picked.includes(a.id);
-                      return (
-                        <label key={a.id} className={`flex cursor-pointer items-start gap-3 rounded-sm border px-4 py-2.5 text-sm transition ${on ? "border-terracotta bg-terracotta/5" : "border-ink/15 hover:border-ink/40"}`}>
-                          <input
-                            type="checkbox"
-                            checked={on}
-                            onChange={(e) => setPicked((p) => (e.target.checked ? [...p, a.id] : p.filter((x) => x !== a.id)))}
-                            className="mt-0.5 h-4 w-4 accent-[#9C6B43]"
-                          />
-                          <span>
-                            <span className="font-medium">{a.name}</span>
-                            {a.note && <span className="block text-ink/60">{a.note}</span>}
-                          </span>
-                        </label>
-                      );
-                    })}
+                <details className="group mt-4 rounded-sm border border-ink/15">
+                  <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm [&::-webkit-details-marker]:hidden">
+                    <span>
+                      <span className="font-medium">Add-ons</span>{" "}
+                      <span className="text-ink/55">(optional){pickedNames.length ? ` · ${pickedNames.length} selected` : ""}</span>
+                    </span>
+                    <span aria-hidden className="text-lg leading-none text-ink/50 group-open:hidden">+</span>
+                    <span aria-hidden className="hidden text-lg leading-none text-ink/50 group-open:inline">−</span>
+                  </summary>
+                  <div className="px-4 pb-4">
+                    <p className="text-xs text-ink/55">
+                      Quoted separately and confirmed on WhatsApp.{!quoteMode ? " They do not change today's deposit." : ""}
+                    </p>
+                    <div className="mt-3 space-y-2">
+                      {addons.map((a) => {
+                        const on = picked.includes(a.id);
+                        return (
+                          <label key={a.id} className={`flex cursor-pointer items-start gap-3 rounded-sm border px-4 py-2.5 text-sm transition ${on ? "border-terracotta bg-terracotta/5" : "border-ink/15 hover:border-ink/40"}`}>
+                            <input
+                              type="checkbox"
+                              checked={on}
+                              onChange={(e) => setPicked((p) => (e.target.checked ? [...p, a.id] : p.filter((x) => x !== a.id)))}
+                              className="mt-0.5 h-4 w-4 accent-[#9C6B43]"
+                            />
+                            <span>
+                              <span className="font-medium">{a.name}</span>
+                              {a.note && <span className="block text-ink/60">{a.note}</span>}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
                   </div>
-                </fieldset>
+                </details>
               )}
 
               {quoted && (

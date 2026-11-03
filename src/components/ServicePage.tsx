@@ -36,11 +36,11 @@ export default function ServicePage({ s }: { s: Service }) {
       ) : (
       <section id="packages" className="section scroll-mt-4">
           <Reveal>
-            <p className="max-w-2xl text-lg text-ink/75 md:text-xl">{s.intro}</p>
+            <p className="max-w-2xl text-base font-light text-ink/75 md:text-xl">{s.intro}</p>
           </Reveal>
-          <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="no-scrollbar -mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:mt-14 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 sm:overflow-visible sm:px-0 lg:grid-cols-3">
             {list.map((p) => (
-              <PackageCard key={p.id} p={p} linked={false} />
+              <div key={p.id} className="w-[74%] shrink-0 snap-start sm:w-auto"><PackageCard p={p} linked={false} /></div>
             ))}
           </div>
           {s.note && <p className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">{s.note}</p>}

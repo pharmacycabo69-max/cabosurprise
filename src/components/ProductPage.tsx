@@ -8,6 +8,7 @@ import Reveal from "./Reveal";
 import PackageCard from "./PackageCard";
 import DepositLink from "./DepositLink";
 import WhatsAppLink from "./WhatsAppLink";
+import MobileFold from "./MobileFold";
 import { faqsFor, featuredPackages, serviceSteps } from "@/config/site";
 import { payableItems } from "@/config/payments";
 import type { Product } from "@/config/products";
@@ -40,55 +41,13 @@ export default function ProductPage({ product: p }: { product: Product }) {
       <Hero title={p.h1} subtitle={p.heroSubtitle} cta={p.cta} message={p.message} label={`${p.slug}_hero`} photos={p.heroPhotos} secondary={{ label: "See what's included", href: "#offer" }} />
 
       <section id="offer" className="section scroll-mt-4">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-          <Reveal>
-            <p className="max-w-2xl font-serif text-2xl font-light leading-snug md:text-4xl md:leading-[1.2]">{p.intro}</p>
-
-            <h2 className="eyebrow mt-12">What&apos;s included</h2>
-            <ul className="space-y-2 text-lg">
-              {pkg.includes.map((i) => (
-                <li key={i} className="flex gap-3"><span className="text-terracotta">✦</span>{i}</li>
-              ))}
-            </ul>
-            {p.notice && <p className="mt-6 rounded-sm bg-champagne/30 p-4 text-sm">{p.notice}</p>}
-
-            {pay.addons.length > 0 && (
-              <>
-                <h2 className="eyebrow mt-12">Available add-ons</h2>
-                <ul className="flex flex-wrap gap-2">
-                  {pay.addons.map((a) => (
-                    <li key={a.id} className="rounded-sm border border-ink/20 px-4 py-2 text-sm" title={a.note}>{a.name}</li>
-                  ))}
-                </ul>
-                <p className="mt-3 text-sm text-ink/60">Add them when you book. Quoted separately and confirmed on WhatsApp.</p>
-              </>
-            )}
-
-            {p.options && (
-              <>
-                <h2 className="eyebrow mt-12">{p.optionsTitle ?? "Options"}</h2>
-                <ul className="grid gap-3 sm:grid-cols-2">
-                  {p.options.map((o) => (
-                    <li key={o.title + (o.price ?? "")} className="rounded-sm border border-ink/15 bg-white/60 p-5">
-                      <p className="font-serif text-xl">{o.title}</p>
-                      {o.price && <p className="mt-1 text-sm font-medium text-terracotta">{o.price}</p>}
-                      {o.text && <p className="mt-2 text-sm text-ink/70">{o.text}</p>}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-
-            <h2 className="eyebrow mt-12">Good to know</h2>
-            <ul className="space-y-3 text-ink/75">
-              {p.goodToKnow.map((g) => (
-                <li key={g} className="flex gap-3"><span className="text-terracotta">—</span>{g}</li>
-              ))}
-            </ul>
+        <div className="grid gap-y-10 lg:grid-cols-[1.3fr_1fr] lg:gap-x-16">
+          <Reveal className="lg:col-start-1 lg:row-start-1">
+            <p className="max-w-2xl font-serif text-[1.3rem] font-light leading-snug md:text-4xl md:leading-[1.2]">{p.intro}</p>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <aside className="rounded-sm bg-white p-7 shadow-[0_20px_50px_-25px_rgba(43,36,32,0.4)] lg:sticky lg:top-24">
+          <Reveal delay={0.05} className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            <aside className="rounded-sm bg-white p-6 shadow-[0_20px_50px_-25px_rgba(43,36,32,0.4)] md:p-7 lg:sticky lg:top-24">
               <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-terracotta">From</p>
               <p className="mt-1 font-serif text-5xl font-light">{usd(pkg.from)} <span className="text-lg text-ink/55">USD</span></p>
               <p className="mt-1 text-sm text-ink/60">{pkg.unit}</p>
@@ -103,6 +62,50 @@ export default function ProductPage({ product: p }: { product: Product }) {
               </p>
             </aside>
           </Reveal>
+
+          <div className="lg:col-start-1 lg:row-start-2">
+            <MobileFold title="What's included" defaultOpen>
+              <ul className="space-y-2 text-base md:text-lg">
+                {pkg.includes.map((i) => (
+                  <li key={i} className="flex gap-3"><span className="text-terracotta">✦</span>{i}</li>
+                ))}
+              </ul>
+              {p.notice && <p className="mt-5 rounded-sm bg-champagne/30 p-4 text-sm">{p.notice}</p>}
+            </MobileFold>
+
+            {pay.addons.length > 0 && (
+              <MobileFold title="Available add-ons">
+                <ul className="flex flex-wrap gap-2">
+                  {pay.addons.map((a) => (
+                    <li key={a.id} className="rounded-sm border border-ink/20 px-4 py-2 text-sm" title={a.note}>{a.name}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-sm text-ink/60">Add them when you book. Quoted separately and confirmed on WhatsApp.</p>
+              </MobileFold>
+            )}
+
+            {p.options && (
+              <MobileFold title={p.optionsTitle ?? "Options"}>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {p.options.map((o) => (
+                    <li key={o.title + (o.price ?? "")} className="rounded-sm border border-ink/15 bg-white/60 p-4 md:p-5">
+                      <p className="font-serif text-lg font-light md:text-xl">{o.title}</p>
+                      {o.price && <p className="mt-1 text-sm font-medium text-terracotta">{o.price}</p>}
+                      {o.text && <p className="mt-2 text-sm text-ink/70">{o.text}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </MobileFold>
+            )}
+
+            <MobileFold title="Good to know">
+              <ul className="space-y-3 text-ink/75">
+                {p.goodToKnow.map((g) => (
+                  <li key={g} className="flex gap-3"><span className="text-terracotta">—</span>{g}</li>
+                ))}
+              </ul>
+            </MobileFold>
+          </div>
         </div>
       </section>
 
@@ -120,15 +123,14 @@ export default function ProductPage({ product: p }: { product: Product }) {
         </div>
       </section>
 
-      <section className="section !pb-6">
-        <Reveal>
-          <p className="eyebrow">Booking &amp; payment</p>
+      <section className="section !pb-6 !pt-10 md:!pt-24">
+        <MobileFold title="Booking & payment">
           <ul className="grid gap-3 text-ink/75 md:grid-cols-2">
             {policies.map((x) => (
               <li key={x} className="flex gap-3"><span className="text-terracotta">—</span>{x}</li>
             ))}
           </ul>
-        </Reveal>
+        </MobileFold>
       </section>
 
       <Gallery title={p.galleryTitle} files={p.gallery} alt={`${pkg.name} in Cabo`} />
@@ -147,8 +149,8 @@ export default function ProductPage({ product: p }: { product: Product }) {
           <p className="eyebrow">More to explore</p>
           <h2 className="h2 mb-10">You might also like.</h2>
         </Reveal>
-        <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {related.map((r) => <PackageCard key={r.id} p={r} />)}
+        <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+          {related.map((r) => <div key={r.id} className="w-[74%] shrink-0 snap-start sm:w-auto"><PackageCard p={r} /></div>)}
         </div>
       </section>
 
