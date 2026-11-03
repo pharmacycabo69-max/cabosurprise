@@ -66,9 +66,8 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const nights = stay ? nightsOf(date, endDate) : 0;
   const datesReady = stay ? nights >= 1 : !!date;
   const guests = Number(guestsText);
-  // "Request a Custom Quote" (no payment, ends on WhatsApp): products without online deposit, or groups above the starter size.
-  const overStarter = !!it?.payUpTo && Number.isInteger(guests) && guests > it.payUpTo;
-  const quoteMode = !!it && (!it.payOnline || overStarter);
+  // "Request a Custom Quote" (no payment, ends on WhatsApp) only for products without online deposit.
+  const quoteMode = !!it && !it.payOnline;
   const quoted = !!it?.quoted;
   const addons = it?.addons ?? [];
   const pickedNames = addons.filter((a) => picked.includes(a.id)).map((a) => a.name);
@@ -201,7 +200,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                   : date ? pretty(date) : "Select the day of your event"}
               </p>
               <button type="button" disabled={!datesReady} onClick={() => setStep(2)} className="btn-primary mt-3 w-full disabled:opacity-40">Continue</button>
-              <p className="mt-3 text-center text-xs text-ink/50">We confirm availability for your {stay ? "dates" : "date"} on WhatsApp.</p>
+              <p className="mt-3 text-center text-xs text-ink/50">{quoteMode ? `We confirm availability for your ${stay ? "dates" : "date"} on WhatsApp.` : "We confirm availability after your deposit."}</p>
               {onBack && <button type="button" onClick={onBack} className="mt-3 w-full text-center text-sm text-ink/60 hover:text-ink">← Choose another experience</button>}
             </motion.div>
           )}
@@ -230,12 +229,6 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                   <button key={n} type="button" onClick={() => setGuests(n)} className={`rounded-full border px-4 py-1.5 text-sm transition ${guests === n ? "border-ink bg-ink text-cream" : "border-ink/20 text-ink/70 hover:border-ink"}`}>{n}</button>
                 ))}
               </div>
-
-              {overStarter && (
-                <p className="mt-5 rounded-sm bg-champagne/30 px-4 py-3 text-sm">
-                  For {guests} {guests === 1 ? "guest" : "guests"} we prepare a custom package, so there is no payment now. We reply on WhatsApp with your quote.
-                </p>
-              )}
 
               <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-sm border border-ink/15 px-4 py-3 text-sm">
                 <input type="checkbox" checked={transport} onChange={(e) => setTransport(e.target.checked)} className="mt-0.5 h-4 w-4 accent-[#C4663D]" />
@@ -368,7 +361,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                     <div className="mt-3 flex justify-between border-t border-ink/10 pt-3 font-serif text-lg"><span>Estimated total</span><span>${money(est.totalMxn ?? 0)} MXN</span></div>
                   </>
                 ) : (
-                  <p className="mt-3 text-ink/70">Starting price from ${it.from.toLocaleString("en-US")} USD. We confirm the final quote for {guests} {noun} with you on WhatsApp.</p>
+                  <p className="mt-3 text-ink/70">Starting price from ${it.from.toLocaleString("en-US")} USD{stay ? " per night" : ""}. Your final price for {guests} {noun} is confirmed after your deposit.</p>
                 )}
                 {pickedNames.length > 0 && (
                   <p className="mt-3 text-xs text-ink/60">Add-ons requested: {pickedNames.join(", ")}. Quoted separately, not part of today&apos;s deposit.</p>
@@ -380,6 +373,12 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                   </div>
                 )}
               </div>
+
+              <ol className="space-y-1.5 rounded-sm border border-ink/12 px-4 py-3 text-sm text-ink/70">
+                <li><span className="font-medium text-ink">1. Pay your deposit</span> to start your booking.</li>
+                <li><span className="font-medium text-ink">2. We confirm</span> availability and your final price.</li>
+                <li><span className="font-medium text-ink">3. You receive</span> your booking confirmation with the total.</li>
+              </ol>
 
               <label className="block">
                 <span className="mb-1 block text-sm font-medium">Your name</span>

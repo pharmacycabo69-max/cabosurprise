@@ -37,9 +37,10 @@ export async function onDepositPaid(s: Stripe.Checkout.Session) {
            <p style="font-size:20px;margin:0 0 16px"><strong>${esc(d.currency)} ${esc(d.amount)}</strong> from ${esc(d.name || d.email)}</p>
            <p style="margin:0 0 12px">${esc(d.email)}</p>
            <table style="border-collapse:collapse;font-size:14px">${rows}</table>
-           <p style="margin-top:16px;font-size:12px;color:#7a6f68">Stripe session ${esc(s.id)}</p>`,
+           <p style="margin-top:16px;padding:12px 14px;background:#F4E9DD;font-size:14px"><strong>Next:</strong> confirm availability and the final price, then send the customer the booking confirmation with the total.</p>
+           <p style="margin-top:12px;font-size:12px;color:#7a6f68">Stripe session ${esc(s.id)}</p>`,
         ),
-        text: `New deposit: ${d.currency} ${d.amount} from ${d.name || d.email} (${d.email})\n${Object.entries(s.metadata ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}\nStripe session ${s.id}`,
+        text: `New deposit: ${d.currency} ${d.amount} from ${d.name || d.email} (${d.email})\nNEXT: confirm availability and the final price, then send the booking confirmation with the total.\n${Object.entries(s.metadata ?? {}).map(([k, v]) => `${k}: ${v}`).join("\n")}\nStripe session ${s.id}`,
       }),
     );
   }
@@ -50,16 +51,16 @@ export async function onDepositPaid(s: Stripe.Checkout.Session) {
       sendEmail({
         to: d.email,
         replyTo: owner || undefined,
-        subject: "Your deposit is confirmed | Cabo Surprise",
+        subject: "Deposit received | Cabo Surprise",
         idempotencyKey: `deposit-paid-customer-${s.id}`,
         html: wrap(
-          `<h2 style="margin:0 0 8px">Your date is secured${d.name ? `, ${esc(d.name.split(" ")[0])}` : ""}.</h2>
+          `<h2 style="margin:0 0 8px">Thank you${d.name ? `, ${esc(d.name.split(" ")[0])}` : ""}. We received your deposit.</h2>
            <p>We received your deposit of <strong>${esc(d.currency)} ${esc(d.amount)}</strong> for <strong>${esc(d.service)}</strong>${d.date ? ` on <strong>${esc(d.date)}</strong>` : ""}. Stripe also emails you a receipt.</p>
-           <p>Next step: send us the hotel or villa, the guest of honor and any preferences on WhatsApp so we can start planning.</p>
+           <p><strong>What happens next:</strong> we confirm availability and your final price, and then send you your booking confirmation with the total. To speed things up, send us the hotel or villa, the guest of honor and any preferences on WhatsApp.</p>
            <p style="margin:24px 0"><a href="${wa}" style="background:#C4663D;color:#fff;text-decoration:none;padding:12px 24px;border-radius:999px;display:inline-block">Send details on WhatsApp</a></p>
            <p style="font-size:12px;color:#7a6f68">Cabo Surprise · Los Cabos, Mexico · ${esc(site.phoneDisplay)}</p>`,
         ),
-        text: `Your date is secured. We received your deposit of ${d.currency} ${d.amount} for ${d.service}${d.date ? ` on ${d.date}` : ""}.\nNext step: send us the details on WhatsApp: ${wa}\nCabo Surprise · ${site.phoneDisplay}`,
+        text: `Thank you. We received your deposit of ${d.currency} ${d.amount} for ${d.service}${d.date ? ` on ${d.date}` : ""}.\nWhat happens next: we confirm availability and your final price, then send you your booking confirmation with the total. To speed things up, send us your details on WhatsApp: ${wa}\nCabo Surprise · ${site.phoneDisplay}`,
       }),
     );
   }

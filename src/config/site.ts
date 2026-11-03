@@ -60,8 +60,6 @@ export type Pkg = {
   depositPercent?: number;
   /** false = "Request a Custom Quote" only (no online deposit). Default true. */
   payOnline?: boolean;
-  /** Online deposit only up to this group size; above it the visitor requests a custom package. */
-  payUpTo?: number;
   /** What the guest-count step asks. */
   party?: Party;
   /** Multi-night stay: the visitor picks check-in and check-out, the price is per night. */
@@ -137,7 +135,7 @@ export const packages: Pkg[] = [
 ];
 
 // The six signature products (home, /packages/ and one dedicated page each).
-// Online deposit is ON. payUpTo = the largest group the starting price covers; above it the visitor requests a custom package.
+// Online deposit is ON for every group size: the client pays the deposit, then we confirm availability and the final price.
 export const featuredPackages: Pkg[] = [
   {
     id: "private-anniversary-dinner",
@@ -148,7 +146,6 @@ export const featuredPackages: Pkg[] = [
     unit: "per experience",
     depositPercent: 50,
     payOnline: true,
-    payUpTo: 2,
     party: { question: "How many guests?", label: "Number of guests", min: 2, max: 30, start: 2, quick: [2, 6, 10, 20, 30] },
     addons: [
       { id: "photographer", name: "Photographer" },
@@ -188,7 +185,6 @@ export const featuredPackages: Pkg[] = [
     unit: "per event",
     depositPercent: 40,
     payOnline: true,
-    payUpTo: 50,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 220, start: 50, quick: [40, 50, 80, 120, 220] },
     addons: [
       { id: "cabins", name: "Private cabins", note: "One or two cabins" },
@@ -251,7 +247,6 @@ export const featuredPackages: Pkg[] = [
     unit: "per group",
     depositPercent: 50,
     payOnline: true,
-    payUpTo: 5,
     party: { question: "How many guests?", label: "Number of guests", min: 1, max: 99, start: 5, quick: [5, 8, 10, 15, 20] },
     addons: [
       { id: "decoration", name: "Themed decoration" },
@@ -373,7 +368,7 @@ export const faqsFor = (depositPercent: number) => [
   },
   {
     q: "How do the deposit and payment work?",
-    a: `A ${depositPercent}% deposit secures your date. The balance and the cancellation conditions are set out in your contract. We confirm the exact amounts and payment options with you on WhatsApp.`,
+    a: `A ${depositPercent}% deposit starts your booking. We then confirm availability and your final price, and send your booking confirmation with the total. The balance and the cancellation conditions are set out in your contract.`,
   },
   {
     q: "What if the weather changes?",

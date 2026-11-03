@@ -18,13 +18,13 @@ export default function Page() {
         {
           h: "Bookings",
           p: [
-            "All bookings are made by WhatsApp. We send you options and a price in US dollars, and your date is held once you confirm and pay the deposit. Prices on this site are starting prices; the final quote depends on date, location, number of guests and the add-ons you choose.",
+            "You can start a booking on this site by choosing your date, number of guests and add-ons and paying the deposit, or by messaging us on WhatsApp. The deposit starts your booking: we then confirm availability and your final price, and send you your booking confirmation with the total. Until you receive that confirmation, your booking is a request. Prices on this site are starting prices; the final price depends on date, location, number of guests and the add-ons you choose.",
           ],
         },
         {
           h: "Deposit and payment",
           p: [
-            "Prices are published in US dollars. A deposit secures your date: 40% of the total for the Exclusive Ranch Wedding Reception, and 50% for private experiences and accommodation. We confirm the amounts and the accepted payment methods with you on WhatsApp.",
+            "Prices are published in US dollars. A deposit starts your booking: 40% for the Exclusive Ranch Wedding Reception, and 50% for private experiences and accommodation, calculated on the starting price of the experience you choose. We confirm the final amounts and the balance with you after the deposit.",
             "The balance and the cancellation and refund conditions are set out in the contract for your booking. All services are subject to availability, and packages are customized to your needs. Destination rates may apply and are confirmed in your custom quote.",
             "Where online payment is available, you can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
             "For ranch estimates built with our quote calculator, prices are shown in Mexican pesos and the deposit is charged in US dollars at the exchange rate shown when you pay.",

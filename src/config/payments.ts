@@ -10,7 +10,6 @@ export type Payable = {
   deposit: number;
   quoted: boolean;
   payOnline: boolean;
-  payUpTo?: number;
   depositPercent: number;
   unit?: string;
   party: Party;
@@ -21,12 +20,12 @@ export type Payable = {
 const pct = (from: number, percent: number) => Math.round((from * percent) / 100);
 
 // Deposit = depositPercent of the starting price. Amounts are always computed on the server.
-type Source = { id: string; name: string; from: number; unit?: string; quoted?: boolean; depositPercent?: number; payOnline?: boolean; payUpTo?: number; party?: Party; stay?: boolean; addons?: AddOn[] };
+type Source = { id: string; name: string; from: number; unit?: string; quoted?: boolean; depositPercent?: number; payOnline?: boolean; party?: Party; stay?: boolean; addons?: AddOn[] };
 const make = (p: Source): Payable => {
   const depositPercent = p.depositPercent ?? policy.depositPercent;
   return {
     id: p.id, name: p.name, from: p.from, unit: p.unit, quoted: !!p.quoted, depositPercent,
-    payOnline: p.payOnline !== false, payUpTo: p.payUpTo, deposit: pct(p.from, depositPercent), party: p.party ?? defaultParty, stay: !!p.stay, addons: p.addons ?? [],
+    payOnline: p.payOnline !== false, deposit: pct(p.from, depositPercent), party: p.party ?? defaultParty, stay: !!p.stay, addons: p.addons ?? [],
   };
 };
 

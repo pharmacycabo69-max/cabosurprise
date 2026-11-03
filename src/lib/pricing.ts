@@ -44,7 +44,6 @@ export function depositFor(itemId: string, guestsRaw: unknown, tierRaw: unknown,
   const g = Number(guestsRaw);
   const guests = guestsRaw === undefined || guestsRaw === null || guestsRaw === "" ? null : g;
   if (guests !== null && (!Number.isInteger(guests) || guests < 1 || guests > MAX_PARTY)) return bad("Please enter a valid number of guests.");
-  if (item.payUpTo && guests !== null && guests > item.payUpTo) return bad("For this group size we prepare a custom package. Please request a custom quote.");
 
   if (item.stay) {
     if (!nights) return bad("Please choose your check-in and check-out dates.");

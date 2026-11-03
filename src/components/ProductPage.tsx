@@ -30,7 +30,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
   const transportMessage = `Hi, I'd like to add private transportation to ${pkg.name} in Cabo. Pickup: [hotel, villa or residence], passengers: [number].`;
   const policies = [
     "Prices are published in USD.",
-    `A ${percent}% deposit secures your date.`,
+    `A ${percent}% deposit starts your booking. We then confirm availability and your final price, and send your confirmation with the total.`,
     "The balance and the cancellation conditions are set out in your contract.",
     "All services are subject to availability.",
     "Packages are customized to your needs. Destination rates may apply, and are confirmed in your custom quote.",
@@ -59,7 +59,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
                 <WhatsAppLink message={p.message} label={`${p.slug}_offer`} packageName={pkg.name} className="btn-ghost w-full">Ask on WhatsApp</WhatsAppLink>
               </div>
               <p className="mt-4 text-xs text-ink/55">
-                {pay.payOnline ? "Hold your date with a deposit. " : ""}We confirm availability and your custom quote on WhatsApp.
+                {pay.payOnline ? "Pay your deposit to start your booking. We then confirm availability and your final price." : "We confirm availability and your custom quote on WhatsApp."}
               </p>
             </aside>
           </Reveal>
