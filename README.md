@@ -36,3 +36,6 @@ Canonical host is `https://www.cabosurprise.com`. The app 301-redirects `cabosur
 
 ## Ranch quote calculator (`/quote/`)
 Pricing, fee (4%) and deposit (40%) live in `src/lib/quote.ts`. The deposit is charged in USD at `MXN_PER_USD` (set it in Vercel; without it the page still quotes in pesos and hides the Pay button). `/api/venue-checkout/` recomputes the quote server-side.
+
+### Stripe webhook
+In Stripe > Developers > Webhooks add the endpoint `https://www.cabosurprise.com/api/stripe/webhook/` (use `www` and keep the trailing slash: Stripe does not follow redirects) with events `checkout.session.completed`, `checkout.session.async_payment_succeeded` and `checkout.session.async_payment_failed`. Put its signing secret in `STRIPE_WEBHOOK_SECRET`. Paid deposits are logged by `onDepositPaid` in `src/lib/deposits.ts`; add email/WhatsApp/CRM notifications there.
