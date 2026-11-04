@@ -25,7 +25,7 @@ export default function Page() {
           h: "Deposit and payment",
           p: [
             "Prices are published in US dollars. A 50% deposit starts your booking, calculated on the package price for your number of guests (or on your total stay for cabins). We confirm availability and the final amounts after the deposit, and set the balance with you: 7 days before the date for experiences and stays, and 30 days before for weddings.",
-            "The balance and the cancellation and refund conditions are set out in the contract for your booking. All services are subject to availability, and packages are customized to your needs. Destination rates may apply and are confirmed in your custom quote.",
+            "The balance and the final conditions are set out in the contract for your booking. All services are subject to availability, and packages are customized to your needs. Destination rates may apply and are confirmed in your custom quote.",
             "Where online payment is available, you can pay the deposit by card on our deposit page. Card payments are processed by Stripe in US dollars, and your bank may apply its own currency conversion or foreign transaction fees.",
             "For ranch estimates built with our quote calculator, prices are shown in Mexican pesos and the deposit is charged in US dollars at the exchange rate shown when you pay.",
           ],
@@ -33,7 +33,8 @@ export default function Page() {
         {
           h: "Changes and cancellations",
           p: [
-            "Date changes, cancellations and refunds follow the conditions of your contract. Contact us as soon as you know about a change and we will do our best to accommodate it, subject to the availability of the ranch and our suppliers.",
+            "If you cancel more than 2 days before your event date, we refund the amount you have paid. Cancellations made 2 days or less before the date are not refundable, because the date is blocked and suppliers are already committed. Nothing in this policy limits any refund rights you have under the law.",
+            "To change the date, contact us as soon as you know and we will do our best to accommodate it, subject to the availability of the ranch and our suppliers. To cancel, message us on WhatsApp or email us with your booking details.",
           ],
         },
         {

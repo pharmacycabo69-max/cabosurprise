@@ -16,8 +16,8 @@ export const site = {
 // Policy numbers shown on /terms/ and in the FAQs. Edit here to change them everywhere.
 export const policy = {
   depositPercent: 50,
-  freeChangeDays: 7,
-  fullRefundDays: 14,
+  /** Cancel more than this many days before the date and the amount paid is refunded. */
+  refundDays: 2,
 };
 
 // Rancho McCoy, from the Google Maps listing "Rancho Mc Coy | Cabo Wedding & Event Venue".
@@ -378,7 +378,7 @@ export const faqsFor = (depositPercent: number) => [
   },
   {
     q: "How do the deposit and payment work?",
-    a: `A ${depositPercent}% deposit starts your booking. We then confirm availability and your final price, and send your booking confirmation with the total. The balance and the cancellation conditions are set out in your contract.`,
+    a: `A ${depositPercent}% deposit starts your booking. We then confirm availability and your final price, and send your booking confirmation with the total. If you cancel more than ${policy.refundDays} days before your date, your payment is refunded.`,
   },
   {
     q: "What if the weather changes?",

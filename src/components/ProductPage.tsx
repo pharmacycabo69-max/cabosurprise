@@ -10,7 +10,7 @@ import DepositLink from "./DepositLink";
 import WhatsAppLink from "./WhatsAppLink";
 import MobileFold from "./MobileFold";
 import LocationMap from "./LocationMap";
-import { faqsFor, featuredPackages, serviceSteps } from "@/config/site";
+import { faqsFor, featuredPackages, policy, serviceSteps } from "@/config/site";
 import { payableItems } from "@/config/payments";
 import type { Product } from "@/config/products";
 
@@ -31,7 +31,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
   const policies = [
     "Prices are published in USD.",
     `A ${percent}% deposit starts your booking. We then confirm availability and your final price, and send your confirmation with the total.`,
-    "The balance and the cancellation conditions are set out in your contract.",
+    `Cancel more than ${policy.refundDays} days before your date and your payment is refunded.`,
     "All services are subject to availability.",
     "Packages are customized to your needs. Destination rates may apply, and are confirmed in your custom quote.",
   ];
