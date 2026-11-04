@@ -5,8 +5,7 @@ export const site = {
   // International format, digits only (52 = Mexico, 1 = mobile prefix for WhatsApp).
   whatsappNumber: "5216242261023",
   phoneDisplay: "+52 624 226 1023",
-  // PLACEHOLDER: replace with the real domain inbox.
-  email: "EMAIL@cabosurprise.com",
+  email: "mccoyrancho@gmail.com",
   instagram: "https://www.instagram.com/rancho_mccoy/",
   tagline: "Private experiences in Los Cabos.",
   description:
