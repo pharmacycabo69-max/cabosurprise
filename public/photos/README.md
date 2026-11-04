@@ -39,8 +39,5 @@ Each service page has a hero and a 4-photo gallery. They currently hold copies o
 - `proposals/gallery-1..4.jpg` (hero is `proposals-hero.jpg`)
 - Share images (1200x630): `og-birthday.jpg`, `og-bachelorette.jpg`, `og-honeymoon.jpg`, `og-packages.jpg`
 
-## Wellness pages (currently reuse existing photos as hero; replace with your own)
-`iv-therapy/hero.jpg`, `pharmacy-delivery/hero.jpg`, `consultations/hero.jpg`, plus share images `og-iv-therapy.jpg`, `og-pharmacy-delivery.jpg`, `og-consultations.jpg` (1200x630).
-
 ## Hero slideshows
 Each page's hero crossfades through several photos (config: `heroPhotos` in `src/config/services.ts`, and the `photos` prop in `src/app/page.tsx` and `src/app/proposals/page.tsx`). New photos live in `hero/` (from the XV rancho event). Use 2000px-wide JPGs; add `position` ("50% 40%") to choose what stays visible when cropped on phones.

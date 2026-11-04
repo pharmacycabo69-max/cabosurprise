@@ -15,9 +15,6 @@ const pages: [string, number][] = [
   ["/private-beach-horse-experience/", 0.9],
   ["/bachelorette-ranch-party/", 0.9],
   ["/quote/", 0.8],
-  ["/iv-therapy/", 0.8],
-  ["/pharmacy-delivery/", 0.8],
-  ["/consultations/", 0.8],
   ["/privacy/", 0.3],
   ["/terms/", 0.3],
 ];
