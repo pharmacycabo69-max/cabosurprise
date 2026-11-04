@@ -11,6 +11,7 @@ export type Payable = {
   quoted: boolean;
   payOnline: boolean;
   depositPercent: number;
+  balanceDays: number;
   unit?: string;
   party: Party;
   stay: boolean;
@@ -24,12 +25,12 @@ export const tierPrice = (tiers: PriceTier[], guests: number): number | null => 
 const pct = (from: number, percent: number) => Math.round((from * percent) / 100);
 
 // Deposit = depositPercent of the starting price. Amounts are always computed on the server.
-type Source = { id: string; name: string; from: number; unit?: string; quoted?: boolean; depositPercent?: number; payOnline?: boolean; party?: Party; stay?: boolean; addons?: AddOn[]; tiers?: PriceTier[] };
+type Source = { id: string; name: string; from: number; unit?: string; quoted?: boolean; depositPercent?: number; payOnline?: boolean; party?: Party; stay?: boolean; addons?: AddOn[]; tiers?: PriceTier[]; balanceDays?: number };
 const make = (p: Source): Payable => {
   const depositPercent = p.depositPercent ?? policy.depositPercent;
   return {
     id: p.id, name: p.name, from: p.from, unit: p.unit, quoted: !!p.quoted, depositPercent,
-    payOnline: p.payOnline !== false, deposit: pct(p.from, depositPercent), party: p.party ?? defaultParty, stay: !!p.stay, addons: p.addons ?? [], tiers: p.tiers,
+    balanceDays: p.balanceDays ?? policy.balanceDays, payOnline: p.payOnline !== false, deposit: pct(p.from, depositPercent), party: p.party ?? defaultParty, stay: !!p.stay, addons: p.addons ?? [], tiers: p.tiers,
   };
 };
 

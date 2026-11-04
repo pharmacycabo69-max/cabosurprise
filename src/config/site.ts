@@ -17,6 +17,8 @@ export const policy = {
   depositPercent: 50,
   /** Cancel more than this many days before the date and the amount paid is refunded. */
   refundDays: 2,
+  /** The balance is due this many days before the date (weddings override it on the package). */
+  balanceDays: 7,
 };
 
 // Rancho McCoy, from the Google Maps listing "Rancho Mc Coy | Cabo Wedding & Event Venue".
@@ -60,6 +62,8 @@ export type Pkg = {
   tiers?: PriceTier[];
   /** "per experience", "per night"... shown next to the price. */
   unit?: string;
+  /** Days before the date when the balance is due. Defaults to policy.balanceDays. */
+  balanceDays?: number;
   /** Deposit % to hold the date. Defaults to policy.depositPercent. */
   depositPercent?: number;
   /** false = "Request a Custom Quote" only (no online deposit). Default true. */
@@ -191,6 +195,7 @@ export const featuredPackages: Pkg[] = [
     tiers: [{ upTo: 30, price: 6500 }, { upTo: 50, price: 9500 }, { upTo: 80, price: 13500 }, { upTo: 120, price: 18500 }, { upTo: 150, price: 23500 }, { upTo: 180, price: 27500 }],
     unit: "per event",
     depositPercent: 50,
+    balanceDays: 30,
     payOnline: true,
     party: { question: "How many guests?", label: "Number of guests", min: 10, max: 180, start: 50, quick: [30, 50, 80, 120, 180] },
     addons: [
