@@ -142,7 +142,7 @@ export const products: Product[] = [
     intro:
       "Two private cabins at Rancho McCoy in Cabo San Lucas for up to four guests (two per cabin), with access to the permitted areas of the ranch. $425 USD per night.",
     heroSubtitle: "Two private cabins, one ranch.",
-    heroPhotos: [{ src: "ranch/lounge-deck.jpg", position: "50% 50%" }, { src: "hero/cabin-stairs.jpg", position: "50% 50%" }, "ranch/palapa-dusk.jpg"],
+    heroPhotos: [{ src: "ranch/cabin-facade.jpg", position: "50% 50%" }, { src: "ranch/lounge-deck.jpg", position: "50% 50%" }, "ranch/palapa-dusk.jpg"],
     cta: "Request a custom quote",
     message: "Hi, I'd like a custom quote for a stay in the two cabins at Rancho McCoy for [dates], [number] guests.",
     goodToKnow: [
