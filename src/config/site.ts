@@ -237,7 +237,7 @@ export const featuredPackages: Pkg[] = [
       { id: "photographer", name: "Photographer" },
       { id: "horses", name: "Horse experience" },
     ],
-    photo: "ranch/cabin-facade.jpg",
+    photo: "ranch/cabin-balcony.jpg",
     photoPosition: "50% 50%",
     href: "/ranch-cabin-stay/",
     occasions: ["Wedding", "Bachelorette", "Honeymoon", "Birthday", "Just Because"],
