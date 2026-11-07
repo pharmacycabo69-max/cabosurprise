@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   }
   const r = Number(process.env.MXN_PER_USD);
   const rate = Number.isFinite(r) && r > 0 ? r : null;
-  const res = depositFor(String(b.item ?? ""), b.guests, b.tier, rate, nightsBetween(b.date, b.endDate));
+  const res = depositFor(String(b.item ?? ""), b.guests, b.tier, rate, nightsBetween(b.date, b.endDate), b.variant);
   if (!res.ok) return NextResponse.json({ error: res.error }, { status: res.status });
   const p = res.plan;
   return NextResponse.json({

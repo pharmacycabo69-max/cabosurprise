@@ -48,6 +48,9 @@ export const defaultParty: Party = { question: "How many guests?", label: "Numbe
 /** Price by group size: the first tier whose upTo covers the guest count. Above the last tier the team quotes. */
 export type PriceTier = { upTo: number; price: number };
 
+/** A named package inside one experience (e.g. 1 hour / 1.5 hours / 2 hours). The visitor picks one when booking. */
+export type Variant = { id: string; name: string; price: number; includes: string[]; popular?: boolean };
+
 export type Pkg = {
   id: string;
   name: string;
@@ -60,6 +63,8 @@ export type Pkg = {
   quoted?: boolean;
   /** Price by number of guests (USD per event). `from` is the lowest tier. */
   tiers?: PriceTier[];
+  /** Named packages with a fixed price each. `from` is the lowest one. The visitor picks one in the booking modal. */
+  variants?: Variant[];
   /** "per experience", "per night"... shown next to the price. */
   unit?: string;
   /** Days before the date when the balance is due. Defaults to policy.balanceDays. */
@@ -170,10 +175,15 @@ export const featuredPackages: Pkg[] = [
   {
     id: "private-beach-horse-photoshoot",
     name: "Private Beach Horse Photoshoot",
-    blurb: "A private 90-minute session on the beach with two horses and a professional photographer.",
-    includes: ["90-minute private session", "Two horses", "Professional photographer", "Coordination"],
-    from: 1250,
+    blurb: "A private session on the beach with two horses and a professional photographer. Choose 1 hour, 1.5 hours or 2 hours.",
+    includes: ["Two horses", "Professional photographer", "30 to 100 professional photos", "Coordination"],
+    from: 999,
     unit: "per session",
+    variants: [
+      { id: "essential", name: "Essential", price: 999, includes: ["1-hour private session", "30 professional photos", "Two horses"] },
+      { id: "signature", name: "Signature", price: 1450, popular: true, includes: ["1.5-hour private session", "60 professional photos", "Two horses"] },
+      { id: "premium", name: "Premium", price: 1950, includes: ["2-hour session with sunset light", "100 professional photos", "Two horses", "Short vertical video for social media"] },
+    ],
     depositPercent: 50,
     payOnline: true,
     party: { question: "How many people will be in the session?", label: "People in the session", min: 1, max: 2, start: 2, quick: [1, 2] },

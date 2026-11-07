@@ -54,6 +54,9 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const [transport, setTransport] = useState(false);
   const [picked, setPicked] = useState<string[]>([]); // add-on ids
   const [tier, setTier] = useState<Tier>("");
+  const variants = it?.variants ?? [];
+  const [variantId, setVariantId] = useState(variants.find((v) => v.popular)?.id ?? ""); // the popular package is preselected
+  const variant = variants.find((v) => v.id === variantId);
   const [est, setEst] = useState<Estimate | null>(null);
   const [estError, setEstError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -76,7 +79,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
   const tooMany = Number.isInteger(guests) && guests > limit;
   const guestsOk = Number.isInteger(guests) && guests >= party.min && guests <= limit;
   const TITLES = [stay ? "Choose your stay" : "Choose your date", party.question, quoteMode ? "Review your request" : "Your details"];
-  const canContinue = guestsOk && (!quoted || tier !== "");
+  const canContinue = guestsOk && (!quoted || tier !== "") && (variants.length === 0 || !!variant);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -102,7 +105,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
       const res = await fetch("/api/estimate/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ item, guests, tier: tier || undefined, date, endDate: stay ? endDate : undefined }),
+        body: JSON.stringify({ item, guests, tier: tier || undefined, variant: variantId || undefined, date, endDate: stay ? endDate : undefined }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "We could not prepare your quote.");
@@ -122,7 +125,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          item, date, endDate: stay ? endDate : undefined, guests, tier: tier || undefined, transport, addons: picked,
+          item, date, endDate: stay ? endDate : undefined, guests, tier: tier || undefined, variant: variantId || undefined, transport, addons: picked,
           name: f.get("name"), email: f.get("email"), venue: f.get("venue"), company: f.get("company"),
           terms: f.get("terms") === "on",
         }),
@@ -171,7 +174,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
             ) : (
               !quoted && step < 3 && (
                 <p className="mt-1 text-sm text-ink/65">
-                  {it.tiers ? `From $${it.from.toLocaleString("en-US")} USD${it.unit ? ` · ${it.unit}` : ""} · ${it.depositPercent}% deposit` : `Deposit today $${it.deposit.toLocaleString("en-US")} USD (${it.depositPercent}%)`}
+                  {it.tiers || it.variants ? `From $${it.from.toLocaleString("en-US")} USD${it.unit ? ` · ${it.unit}` : ""} · ${it.depositPercent}% deposit` : `Deposit today $${it.deposit.toLocaleString("en-US")} USD (${it.depositPercent}%)`}
                 </p>
               )
             )}
@@ -216,6 +219,24 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                 <span className="text-ink/60">{stay ? "Your stay:" : "Event date:"}</span> <strong className="font-medium">{stay ? `${short(date)} → ${short(endDate)} · ${nights} ${nights === 1 ? "night" : "nights"}` : pretty(date)}</strong>{" "}
                 <button type="button" onClick={() => setStep(1)} className="ml-1 text-terracotta underline">Change</button>
               </p>
+
+              {variants.length > 0 && (
+                <div className="mt-6">
+                  <p className="text-sm font-medium">Choose your package</p>
+                  <div className="mt-2 space-y-2">
+                    {variants.map((v) => (
+                      <label key={v.id} className={`block cursor-pointer rounded-sm border px-4 py-3 text-sm transition ${variantId === v.id ? "border-terracotta bg-terracotta/5" : "border-ink/15 hover:border-ink/40"}`}>
+                        <input type="radio" name="variant" value={v.id} checked={variantId === v.id} onChange={() => setVariantId(v.id)} className="sr-only" />
+                        <span className="flex items-baseline justify-between gap-3">
+                          <span className="font-medium">{v.name}{v.popular && <span className="ml-2 rounded-full bg-champagne/60 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-ink/70">Most booked</span>}</span>
+                          <span className="font-serif text-lg">${v.price.toLocaleString("en-US")}</span>
+                        </span>
+                        <span className="mt-1 block text-ink/60">{v.includes.join(" · ")}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <p className="mt-6 text-center text-sm font-medium">{party.label}</p>
               <div className="mt-3 flex items-center justify-center gap-4">
@@ -367,7 +388,7 @@ export default function DepositModal({ item, onClose, onBack, extraStep = false 
                   </>
                 ) : est.packageUsd ? (
                   <div className="mt-3 flex justify-between gap-4 text-ink/75">
-                    <span>Package price for {guests} {noun}</span>
+                    <span>{variant ? `${variant.name} package` : `Package price for ${guests} ${noun}`}</span>
                     <span className="shrink-0 font-serif text-lg text-ink">${money(est.packageUsd, 0)} USD</span>
                   </div>
                 ) : (

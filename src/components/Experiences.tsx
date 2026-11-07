@@ -21,7 +21,7 @@ function Chapter({ p, i, total }: { p: Pkg; i: number; total: number }) {
   const pay = payableItems.find((x) => x.id === p.id);
   const deposit = pay?.stay ? undefined : pay?.deposit; // per-night stays: the deposit depends on the nights chosen
   const right = i % 2 === 1;
-  const cta = p.payOnline === false ? "Request a custom quote" : p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? ` $${deposit.toLocaleString("en-US")}` : ""}`;
+  const cta = p.payOnline === false ? "Request a custom quote" : p.quoted ? "Get quote & pay deposit" : `Pay deposit${deposit ? `${p.variants ? " from" : ""} $${deposit.toLocaleString("en-US")}` : ""}`;
 
   return (
     <section ref={ref} id={p.id} data-chapter={i} className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-ink text-white">

@@ -38,7 +38,7 @@ const bad = (error: string, status = 400): Result => ({ ok: false, error, status
  * Single place that turns (item, guests, rate tier) into the deposit to charge, always on the server.
  * Quoted items use the ranch price sheet; the rest use the fixed deposit from the product list.
  */
-export function depositFor(itemId: string, guestsRaw: unknown, tierRaw: unknown, rate: number | null, nights: number | null = null): Result {
+export function depositFor(itemId: string, guestsRaw: unknown, tierRaw: unknown, rate: number | null, nights: number | null = null, variantRaw: unknown = undefined): Result {
   const item = payableItems.find((p) => p.id === itemId);
   if (!item) return bad("Please choose a package.");
   if (!item.payOnline) return bad("Online deposits are not available for this experience yet. Please request a custom quote.", 403);
@@ -61,6 +61,25 @@ export function depositFor(itemId: string, guestsRaw: unknown, tierRaw: unknown,
         nights,
         metadata: { service: item.name, nights: String(nights), ...(guests ? { guests: String(guests) } : {}), package_price_usd: String(item.from * nights), deposit_percent: String(item.depositPercent), balance_days: String(item.balanceDays) },
         description: `${item.name}, ${nights} ${nights === 1 ? "night" : "nights"}${guests ? `, ${guests} guests` : ""}`,
+      },
+    };
+  }
+
+  if (item.variants) {
+    const v = item.variants.find((x) => x.id === variantRaw);
+    if (!v) return bad("Please choose a package.");
+    const name = `${item.name}: ${v.name}`;
+    // deposit = percent of the chosen package price, in cents
+    return {
+      ok: true,
+      plan: {
+        usdCents: Math.ceil((v.price * item.depositPercent) / 100) * 100, // whole dollars: 50% of $999 is $500
+        name,
+        quoted: false,
+        guests,
+        packageUsd: v.price,
+        metadata: { service: name, package: v.name, ...(guests ? { guests: String(guests) } : {}), package_price_usd: String(v.price), deposit_percent: String(item.depositPercent), balance_days: String(item.balanceDays) },
+        description: `${name}${guests ? `, ${guests} ${guests === 1 ? "person" : "people"}` : ""}. Package price $${v.price} USD, ${item.depositPercent}% deposit.`,
       },
     };
   }

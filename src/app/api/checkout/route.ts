@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     description = label;
   } else {
     const r = Number(process.env.MXN_PER_USD);
-    const res = depositFor(itemId, b.guests, b.tier, Number.isFinite(r) && r > 0 ? r : null, nightsBetween(date, b.endDate));
+    const res = depositFor(itemId, b.guests, b.tier, Number.isFinite(r) && r > 0 ? r : null, nightsBetween(date, b.endDate), b.variant);
     if (!res.ok) return fail(res.error, res.status);
     cents = res.plan.usdCents;
     label = res.plan.name;
